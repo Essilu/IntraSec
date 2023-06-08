@@ -2,6 +2,7 @@
   "name": "intrasec-api",
   "version": "1.0.0",
   "description": "",
+  "private": true,
   "main": "src/main.ts",
   "scripts": {
     "build": "tsc",
