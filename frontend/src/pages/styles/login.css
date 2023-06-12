@@ -1,0 +1,20 @@
+.signin {
+    
+    border-radius: 10px;
+    margin-left: 65vw;
+    margin-right: 5vw;
+    padding: 40px;
+    background-color:  #FFFFF0;
+    
+}
+
+.parent {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-image: url("src/assets/background.jpg");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+}
