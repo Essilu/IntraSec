@@ -1,8 +1,16 @@
-import { TextInput, Checkbox, Button, Group, Box, Image, BackgroundImage } from "@mantine/core";
+import {
+  TextInput,
+  Checkbox,
+  Button,
+  Group,
+  Box,
+  Image,
+  BackgroundImage,
+} from "@mantine/core";
 import { useForm } from "@mantine/form";
 import axios from "axios";
 
-import "./styles/login.css";
+import "../styles/login.css";
 
 export default function Login() {
   const form = useForm({
@@ -23,33 +31,33 @@ export default function Login() {
         console.log(res);
         console.log(res.data);
       });
-    };
+  };
 
   return (
     <div className="parent">
-    <Box maw={500} mx="auto" className="signin">
-    <Image withPlaceholder src="/src/assets/logo.png"/>
-      <form className="text" onSubmit={form.onSubmit(submit)}>
-        <TextInput
-          withAsterisk
-          style={{ fontSize: '16px' }}
-          label="Email"
-          placeholder="your@email.com"
-          {...form.getInputProps("email")}
-        />
+      <Box maw={500} mx="auto" className="signin">
+        <Image withPlaceholder src="/src/assets/logo.png" />
+        <form className="text" onSubmit={form.onSubmit(submit)}>
+          <TextInput
+            withAsterisk
+            style={{ fontSize: "16px" }}
+            label="Email"
+            placeholder="your@email.com"
+            {...form.getInputProps("email")}
+          />
 
-        <TextInput
-          withAsterisk
-          label="Password"
-          placeholder="my_secure_password123"
-          {...form.getInputProps("password")}
-        />
+          <TextInput
+            withAsterisk
+            label="Password"
+            placeholder="my_secure_password123"
+            {...form.getInputProps("password")}
+          />
 
-        <Group position="right" mt="md">
-          <Button type="submit">Sign in</Button>
-        </Group>
-      </form>
-    </Box>
+          <Group position="right" mt="md">
+            <Button type="submit">Sign in</Button>
+          </Group>
+        </form>
+      </Box>
     </div>
   );
 }
