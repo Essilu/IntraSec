@@ -60,10 +60,10 @@ export default function Navbar({ children }) {
             icon={<IconWorld size="1rem" stroke={1.5} />}
             childrenOffset={28}
           >
-            <Link to="/">
+            <Link to="/companyList">
               <NavLink label="Entreprise partenaire" />
             </Link>
-            <Link to="/">
+            <Link to="/schoolList">
               <NavLink label="Ecole partenaire" />
             </Link>
           </NavLink>
