@@ -1,20 +1,70 @@
-import "../styles/Comptability.css"
-import DonutChart from 'react-donut-chart';
-import { Table } from '@mantine/core';
+import "../styles/Comptability.css";
+import DonutChart from "react-donut-chart";
+import { Table } from "@mantine/core";
+import { Link } from "react-router-dom";
 
 export default function Comptability() {
   const elements = [
-    { Company: 'Company 1', TransactionType:'Deposit', PayementMethod: 'Bank Transfer', Amount: 1000 },
-    { Company:'Company 1' , TransactionType:'Deposit', PayementMethod: 'Bank Transfer', Amount: 1000 },
-    { Company: 'Company 1', TransactionType:'Deposit', PayementMethod: 'Bank Transfer', Amount: 1000 },
-    { Company: 'Company 1', TransactionType:'Deposit', PayementMethod: 'Bank Transfer', Amount: 1000 },
-    { Company: 'Company 1', TransactionType: 'Deposit' ,PayementMethod: 'Bank Transfer', Amount: 1000 },
-    { Company: 'Company 1', TransactionType: 'Deposit' ,PayementMethod: 'Bank Transfer', Amount: 1000 },
-    { Company: 'Company 1', TransactionType: 'Deposit' ,PayementMethod: 'Bank Transfer', Amount: 1000 },
-    { Company: 'Company 1', TransactionType: 'Deposit' ,PayementMethod: 'Bank Transfer', Amount: 1000 },
-    { Company: 'Company 1', TransactionType: 'Deposit' ,PayementMethod: 'Bank Transfer', Amount: 1000 },
-    { Company: 'Company 1', TransactionType: 'Deposit' ,PayementMethod: 'Bank Transfer', Amount: 1000 },
-
+    {
+      Company: "Entreprise 1",
+      TransactionType: "Dépot",
+      PayementMethod: "Chèque",
+      Amount: 1000,
+    },
+    {
+      Company: "Entreprise 1",
+      TransactionType: "Dépot",
+      PayementMethod: "Chèque",
+      Amount: 1000,
+    },
+    {
+      Company: "Entreprise 1",
+      TransactionType: "Dépot",
+      PayementMethod: "Chèque",
+      Amount: 1000,
+    },
+    {
+      Company: "Entreprise 1",
+      TransactionType: "Dépot",
+      PayementMethod: "Chèque",
+      Amount: 1000,
+    },
+    {
+      Company: "Entreprise 1",
+      TransactionType: "Dépot",
+      PayementMethod: "Chèque",
+      Amount: 1000,
+    },
+    {
+      Company: "Entreprise 1",
+      TransactionType: "Dépot",
+      PayementMethod: "Chèque",
+      Amount: 1000,
+    },
+    {
+      Company: "Entreprise 1",
+      TransactionType: "Dépot",
+      PayementMethod: "Chèque",
+      Amount: 1000,
+    },
+    {
+      Company: "Entreprise 1",
+      TransactionType: "Dépot",
+      PayementMethod: "Chèque",
+      Amount: 1000,
+    },
+    {
+      Company: "Entreprise 1",
+      TransactionType: "Dépot",
+      PayementMethod: "Chèque",
+      Amount: 1000,
+    },
+    {
+      Company: "Entreprise 1",
+      TransactionType: "Dépot",
+      PayementMethod: "Chèque",
+      Amount: 1000,
+    },
   ];
   const rows = elements.map((element) => (
     <tr key={element.name}>
@@ -25,65 +75,68 @@ export default function Comptability() {
     </tr>
   ));
   return (
-
     <div>
-      <h1>Comptability
-      </h1>
+      <h1>Comptabilité</h1>
       <div className="Revenue">
-        <div className="Chart"><h2>Revenue per company  :</h2>
+        <div className="Chart">
+          <h2>Revenus par entreprises</h2>
           <div>
-            <DonutChart height={350} width={550}
-
+            <DonutChart
+              height={350}
+              width={550}
               data={[
                 {
-                  label: 'Company 1',
+                  label: "Entreprise 1",
                   value: 13750,
                 },
                 {
-                  label: 'Company 2',
+                  label: "Entreprise 2",
                   value: 7300,
                 },
                 {
-                  label: 'Company 3',
+                  label: "Entreprise 3",
                   value: 15600,
-                }, {
-                  label: 'Company 4',
+                },
+                {
+                  label: "Entreprise 4",
                   value: 13200,
                 },
                 {
-                  label: 'Company 5',
+                  label: "Entreprise 5",
                   value: 20700,
-                }, {
-                  label: 'Others',
+                },
+                {
+                  label: "Autres",
                   value: 6000,
                 },
               ]}
-
-            />;</div>
+            />
+            ;
+          </div>
         </div>
-        <div className="Balance"><h2>Total revenue this year : </h2>
+        <div className="Balance">
+          <h2>Revenus totaux sur l'année : </h2>
           <h1 className="money">197 800 $ </h1>
         </div>
       </div>
 
-
-
       <div>
-
-        <h3>Latest transactions :</h3>
+        <h3>Dernières transactions:</h3>
         <div>
           <Table>
             <thead>
               <tr>
-                <th>Company</th>
-                <th>Transaction Type</th>
-                <th>Payement Method </th>
-                <th>Amount</th>
+                <th>Entreprise</th>
+                <th>Dépot/Retrait </th>
+                <th>Mode de paiement</th>
+                <th>Montant</th>
               </tr>
             </thead>
             <tbody>{rows}</tbody>
           </Table>
-            <a className="button" href="/Historique transactions">Voir la liste de toutes les transactions</a>
+          <Link to="/TransactionsHistory" className="seeTransactions">
+            Voir toutes les transactions
+          </Link>
         </div>
       </div>
     </div>
