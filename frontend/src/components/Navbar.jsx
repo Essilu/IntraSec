@@ -7,10 +7,11 @@ import {
 } from "@mantine/core";
 import { IconHome2, IconUserBolt, IconHelp, IconUsersGroup, IconWorld, IconAd, Icon123 } from "@tabler/icons-react";
 import { Link } from "react-router-dom";
-import "../styles/navbar.css";
+import "../styles/components.css";
 import UserButton from "./UserButton";
 
 export default function Navbar({ children }) {
+  
   return (
     <AppShell
       padding="md"
@@ -42,7 +43,7 @@ export default function Navbar({ children }) {
             <Link to="/comptability">
               <NavLink label="Récentes" />
             </Link>
-            <Link to="/TransactionHistory">
+            <Link to="/TransactionsHistory">
               <NavLink label="Historiques des factures" />
             </Link>
           </NavLink>
