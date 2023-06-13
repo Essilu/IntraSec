@@ -7,7 +7,7 @@ import Navbar from "./components/navbar";
 import Comptability from "./pages/Comptability";
 import TransactionsHistory from "./pages/TransactionsHistory";
 import EmployeesAdmin from "./pages/EmployeesAdmin";
-
+import EmployeesList from "./pages/EmployeesList";
 function App() {
   return (
     <MantineProvider withGlobalStyles withNormalizeCSS>
@@ -18,6 +18,8 @@ function App() {
           <Route path="/comptability" element={<Navbar><Comptability /></Navbar>}></Route>
           <Route path="/TransactionsHistory" element={<Navbar><TransactionsHistory /></Navbar>}></Route>
           <Route path="/EmployeesAdmin" element={<Navbar><EmployeesAdmin /></Navbar>}></Route>
+          <Route path="/EmployeesList" element={<Navbar><EmployeesList /></Navbar>}></Route>
+
 
         </Routes>
       </BrowserRouter>
