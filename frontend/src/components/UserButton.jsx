@@ -9,6 +9,7 @@ import {
 } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { IconChevronRight } from "@tabler/icons-react";
+import { Link } from "react-router-dom";
 import "../styles/components.css";
 
 const useStyles = createStyles((theme) => ({
@@ -39,13 +40,22 @@ export default function UserButton({ image, name, email, icon, ...others }) {
         title="Are you sure you want to log out?"
         centered
       >
-        <div className="modal_parent">
-          <Button className="modal_confirmation_button" variant="outline">
-            Exit
-          </Button>
-          <Button className="modal_confirmation_button" color="red">
-            Log Out
-          </Button>
+        <div className="modal_subtext">
+          <Text size="sm" color="dimmed">
+            You will be redirected to the login page.
+          </Text>
+
+          <div onClick={close} className="modal_parent">
+            <Button className="modal_confirmation_button" variant="outline">
+              Exit
+            </Button>
+
+            <Link to="/login">
+              <Button className="modal_confirmation_button" color="red">
+                Log Out
+              </Button>
+            </Link>
+          </div>
         </div>
       </Modal>
       <UnstyledButton onClick={open} className={classes.user} {...others}>

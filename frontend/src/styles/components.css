@@ -2,12 +2,18 @@ a {
     text-decoration: none;
   }
 
-.modal_confirmation_button{
-  padding:4px;
-  margin:12px;
-  margin-right:30px;
+.modal_parent{
+  display: flex;
+  justify-content: flex-end;
+  gap:6px;
 }
 
-.modal_parent{
-  
+.modal_confirmation_button{
+  margin-right: 10px;
+}
+
+.modal_subtext{
+  display: flex;
+  flex-direction: column;
+  gap:15px;
 }
