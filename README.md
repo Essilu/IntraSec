@@ -1,7 +1,7 @@
 Welcome to our Cybersecurity Student Project - Intrasec the Intranet with RBAC
 
 
-👋 Hello and welcome to our GitHub repository! This project is a collaborative effort by our team of five students: Eliot, Ulysse, Clément, Audrey, and Esteban. We are currently pursuing our studies in cybersecurity at EFREI, and our goal is to develop an intranet application with Role-Based Access Control (RBAC) capabilities.
+👋 Hello and welcome to our GitHub repository! This project is a collaborative effort by our team of five students: Elliot, Ulysse, Clément, Audrey, and Esteban. We are currently pursuing our studies in cybersecurity at EFREI, and our goal is to develop an intranet application with Role-Based Access Control (RBAC) capabilities.
 
 
 Project Overview
