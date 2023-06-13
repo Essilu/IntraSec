@@ -1,3 +1,6 @@
+import 'dotenv/config';
+import './passport';
+import './database';
 import { app } from './app';
 
 const port = app.get('port');
