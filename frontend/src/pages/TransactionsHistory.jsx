@@ -83,10 +83,10 @@ export default function Comptability() {
           <Table>
             <thead>
               <tr>
-                <th>Company</th>
-                <th>Transaction Type</th>
-                <th>Payement Method </th>
-                <th>Amount</th>
+                <th>Entreprise</th>
+                <th>Dépot/Retrait </th>
+                <th>Mode de paiement</th>
+                <th>Montant</th>
               </tr>
             </thead>
             <tbody>{rows}</tbody>
