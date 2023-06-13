@@ -42,7 +42,7 @@ export default function Navbar({ children }) {
             <Link to="/comptability">
               <NavLink label="Récentes" />
             </Link>
-            <Link to="/comptability">
+            <Link to="/TransactionHistory">
               <NavLink label="Historiques des factures" />
             </Link>
           </NavLink>
