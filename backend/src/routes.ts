@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import * as auth from './controllers/auth';
+import * as posts from './controllers/posts';
 import * as transactions from './controllers/transactions';
 import * as users from './controllers/users';
 import ensureAuthenticated from './middlewares/ensureAuthenticated';
@@ -36,3 +37,12 @@ router.route('/transactions/:id')
   .patch(ensureAuthenticated, transactions.update)
   .delete(ensureAuthenticated, transactions.remove);
 
+// Posts
+router.route('/posts')
+  .get(ensureAuthenticated, posts.findAll)
+  .post(ensureAuthenticated, posts.create);
+
+router.route('/posts/:id')
+  .get(ensureAuthenticated, posts.findOne)
+  .patch(ensureAuthenticated, posts.update)
+  .delete(ensureAuthenticated, posts.remove);
