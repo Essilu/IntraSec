@@ -5,9 +5,10 @@ import {
   Image,
   NavLink,
 } from "@mantine/core";
-import { IconGauge, IconFingerprint, IconHome2, IconUserBolt, IconHelp, IconUsersGroup, IconWorld, IconAd, Icon123 } from "@tabler/icons-react";
+import { IconHome2, IconUserBolt, IconHelp, IconUsersGroup, IconWorld, IconAd, Icon123 } from "@tabler/icons-react";
 import { Link } from "react-router-dom";
 import "../styles/navbar.css";
+import UserButton from "./UserButton";
 
 export default function Navbar({ children }) {
   return (
@@ -25,6 +26,7 @@ export default function Navbar({ children }) {
       }
       navbar={
         <Shell width={{ base: 300 }} p="xs">
+          <Shell.Section grow> 
           <Link to="/">
           <NavLink
             label="Accueil"
@@ -58,15 +60,15 @@ export default function Navbar({ children }) {
             icon={<IconWorld size="1rem" stroke={1.5} />}
             childrenOffset={28}
           >
-            <Link to="/">
+            <Link to="/companyList">
               <NavLink label="Entreprise partenaire" />
             </Link>
-            <Link to="/">
+            <Link to="/schoolList">
               <NavLink label="Ecole partenaire" />
             </Link>
           </NavLink>
           <NavLink
-            label="Relation Humaines"
+            label="Relations Humaines"
             icon={<IconUsersGroup size="1rem" stroke={1.5} />}
             childrenOffset={28}
           >
@@ -106,6 +108,14 @@ export default function Navbar({ children }) {
               <NavLink label="Logs" />
             </Link>
           </NavLink>
+          </Shell.Section>
+          <Shell.Section>
+        <UserButton
+          image="https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=255&q=80"
+          name="Ann Nullpointer"
+          email="anullpointer@yahoo.com"
+        />
+      </Shell.Section>
         </Shell>
       }
       styles={(theme) => ({
