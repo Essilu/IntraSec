@@ -111,7 +111,7 @@ export default function Comptability() {
                 },
               ]}
             />
-            ;
+            
           </div>
         </div>
         <div className="Balance">
