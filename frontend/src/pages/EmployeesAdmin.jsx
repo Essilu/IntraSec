@@ -85,18 +85,23 @@ export default function UsersRolesTable() {
   ));
 
   return (
-    <ScrollArea>
-      <Table miw={800} verticalSpacing="sm">
-        <thead>
-          <tr>
-            <th>Employee</th>
-            <th>Role</th>
-            <th>Last active</th>
-            <th>Status</th>
-          </tr>
-        </thead>
-        <tbody>{rows}</tbody>
-      </Table>
-    </ScrollArea>
+    <>
+      <div>
+        <h1>Gestion des employés</h1>
+      </div>
+      <ScrollArea>
+        <Table miw={800} verticalSpacing="sm">
+          <thead>
+            <tr>
+              <th>Employee</th>
+              <th>Role</th>
+              <th>Last active</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>{rows}</tbody>
+        </Table>
+      </ScrollArea>
+    </>
   );
 }
