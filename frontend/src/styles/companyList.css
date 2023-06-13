@@ -1,0 +1,12 @@
+.company-list-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  
+  .company-card {
+    flex-basis: calc(100% / 3); /* Répartir les blocs sur 3 colonnes */
+    margin: 10px; /* Espacement entre les blocs */
+    max-width: 300px; /* Largeur maximale des blocs */
+  }
+  
