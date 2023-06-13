@@ -72,6 +72,6 @@ If you encounter any issues or have any questions regarding our project, please 
 
 License
 
-Our project is allowing for open-source contributions and use.
+Our project is under MIT License and allowing for open-source contributions and use.
 
 Thank you for your interest in our Cybersecurity Student Project - Intrasec the Intranet with RBAC! We hope you find it valuable and informative. 🚀
