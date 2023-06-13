@@ -83,7 +83,7 @@ export default function Comptability() {
             </thead>
             <tbody>{rows}</tbody>
           </Table>
-            <a href="/Historique transactions">Voir la liste de toutes les transactions</a>
+            <a className="button" href="/Historique transactions">Voir la liste de toutes les transactions</a>
         </div>
       </div>
     </div>
