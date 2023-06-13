@@ -1,4 +1,3 @@
-import 'dotenv/config';
 import { PrismaSessionStore } from '@quixo3/prisma-session-store';
 import bodyParser from 'body-parser';
 import cors from 'cors';

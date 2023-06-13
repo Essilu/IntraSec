@@ -5,7 +5,7 @@ import { Strategy as LocalStrategy } from 'passport-local';
 import { db } from './database';
 
 passport.use('local', new LocalStrategy(
-  { usernameField: 'username', passwordField: 'password' },
+  { usernameField: 'email', passwordField: 'password' },
   async (emailOrUsername, password, done) => {
     const user = await db.user.findFirst({
       where: { email: emailOrUsername },
