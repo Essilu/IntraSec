@@ -1,5 +1,5 @@
 -- CreateEnum
-CREATE TYPE "TransactionType" AS ENUM ('DEPOSIT', 'WITHDRAW');
+CREATE TYPE "TransactionType" AS ENUM ('DEBIT', 'CREDIT');
 
 -- CreateEnum
 CREATE TYPE "TransactionMean" AS ENUM ('CASH', 'CARD', 'CHECK', 'TRANSFER');

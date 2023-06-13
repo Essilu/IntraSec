@@ -63,8 +63,8 @@ model Comment {
 }
 
 enum TransactionType {
-  DEPOSIT
-  WITHDRAW
+  DEBIT
+  CREDIT
 }
 
 enum TransactionMean {
