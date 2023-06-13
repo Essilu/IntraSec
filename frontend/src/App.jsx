@@ -5,7 +5,7 @@ import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Navbar from "./components/navbar";
 import Comptability from "./pages/Comptability";
-import CompanyList from "./pages/companyList";
+import TransactionsHistory from "./pages/TransactionsHistory";
 
 
 function App() {
@@ -16,7 +16,7 @@ function App() {
           <Route path="/" element={<Navbar><Home /></Navbar>}></Route>
           <Route path="/login" element={<Login />}></Route>
           <Route path="/comptability" element={<Navbar><Comptability /></Navbar>}></Route>
-          <Route path="/companyList" element={<Navbar><CompanyList /></Navbar>}></Route>
+          <Route path="/TransactionsHistory" element={<Navbar><TransactionsHistory /></Navbar>}></Route>
         </Routes>
       </BrowserRouter>
     </MantineProvider>

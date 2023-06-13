@@ -8,7 +8,7 @@ export const createUser = z.object({
 }).strict();
 
 export const findOneUser = z.object({
-  id: z.number().int().positive(),
+  id: z.coerce.number().int().positive(),
 }).strict();
 
 export const updateUser = createUser.partial().strict();
