@@ -1,6 +1,6 @@
 import "../styles/Comptability.css";
 import DonutChart from "react-donut-chart";
-import { Table } from "@mantine/core";
+import { Table,Button } from "@mantine/core";
 import { Link } from "react-router-dom";
 
 export default function Comptability() {
@@ -111,7 +111,6 @@ export default function Comptability() {
                 },
               ]}
             />
-            
           </div>
         </div>
         <div className="Balance">
@@ -135,7 +134,9 @@ export default function Comptability() {
             <tbody>{rows}</tbody>
           </Table>
           <Link to="/TransactionsHistory" className="seeTransactions">
-            Voir toutes les transactions
+            <Button variant="outline" color="indigo">
+              Voir toutes les transactions
+            </Button>
           </Link>
         </div>
       </div>
