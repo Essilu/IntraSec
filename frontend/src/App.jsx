@@ -9,6 +9,7 @@ import TransactionsHistory from "./pages/TransactionsHistory";
 import EmployeesAdmin from "./pages/EmployeesAdmin";
 import EmployeesList from "./pages/EmployeesList";
 import NewTicket from "./pages/NewTicket";
+import Tickets from "./pages/Tickets";
 
 function App() {
   return (
@@ -22,8 +23,10 @@ function App() {
           <Route path="/EmployeesAdmin" element={<Navbar><EmployeesAdmin /></Navbar>}></Route>
           <Route path="/EmployeesList" element={<Navbar><EmployeesList /></Navbar>}></Route>
           <Route path="/NewTicket" element={<Navbar><NewTicket /></Navbar>}></Route>
-
+          <Route path="/Tickets" element={<Navbar><Tickets /></Navbar>}></Route>
         </Routes>
+
+
       </BrowserRouter>
     </MantineProvider>
   );
