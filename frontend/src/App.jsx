@@ -9,7 +9,7 @@ import TransactionsHistory from "./pages/TransactionsHistory";
 import EmployeesAdmin from "./pages/EmployeesAdmin";
 import EmployeesList from "./pages/EmployeesList";
 import NewTicket from "./pages/NewTicket";
-import Marketing from "./pages/Marketing";
+import Tickets from "./pages/Tickets";
 
 function App() {
   return (
@@ -26,6 +26,8 @@ function App() {
           <Route path="/Marketing" element={<Navbar><Marketing /></Navbar>}></Route>
 
         </Routes>
+
+
       </BrowserRouter>
     </MantineProvider>
   );

@@ -48,7 +48,7 @@ export default function Navbar({ children }) {
             </Link>
           </NavLink>
 
-          <Link to="/">
+          <Link to="/Marketing">
             <NavLink
               label="Marketing"
               icon={<IconAd size="1rem" stroke={1.5} />}
@@ -89,7 +89,7 @@ export default function Navbar({ children }) {
             <Link to="/NewTicket">
               <NavLink label="Nouveau ticket" />
             </Link>
-            <Link to="/">
+            <Link to="/Tickets">
               <NavLink label="Tickets ouverts" />
             </Link>
           </NavLink>
