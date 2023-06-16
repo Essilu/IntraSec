@@ -9,6 +9,7 @@ import TransactionsHistory from "./pages/TransactionsHistory";
 import EmployeesAdmin from "./pages/EmployeesAdmin";
 import EmployeesList from "./pages/EmployeesList";
 import NewTicket from "./pages/NewTicket";
+import Marketing from "./pages/Marketing";
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
           <Route path="/EmployeesAdmin" element={<Navbar><EmployeesAdmin /></Navbar>}></Route>
           <Route path="/EmployeesList" element={<Navbar><EmployeesList /></Navbar>}></Route>
           <Route path="/NewTicket" element={<Navbar><NewTicket /></Navbar>}></Route>
+          <Route path="/Marketing" element={<Navbar><Marketing /></Navbar>}></Route>
 
         </Routes>
       </BrowserRouter>
