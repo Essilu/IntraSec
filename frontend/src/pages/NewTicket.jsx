@@ -51,8 +51,6 @@ import {
       boxShadow: theme.shadows.lg,
     },
     
-    Group: {
-        padding:
   
     social: {
       color: theme.white,
