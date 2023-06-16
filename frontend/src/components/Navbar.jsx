@@ -86,7 +86,7 @@ export default function Navbar({ children }) {
             icon={<IconHelp size="1rem" stroke={1.5} />}
             childrenOffset={28}
           >
-            <Link to="/">
+            <Link to="/NewTicket">
               <NavLink label="Nouveau ticket" />
             </Link>
             <Link to="/">
