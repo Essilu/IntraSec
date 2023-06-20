@@ -109,7 +109,7 @@ const data = [
     image:
       'https://images.unsplash.com/photo-1508193638397-1c4234db14d8?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=400&q=80',
     titleCard: 'Audit et Securité Offensive',
-    category: 'Surêté',
+    category: 'Sécurité',
   },
   {
     image:
@@ -126,8 +126,8 @@ const data = [
   {
     image:
       'https://images.unsplash.com/photo-1507272931001-fc06c17e4f43?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=400&q=80',
-    titleCard: 'I-CERT',
-    category: 'Formation',
+    titleCard: 'Sécurité des réseaux et des infrastructures',
+    category: 'Surêté',
   },
   {
     image:
@@ -138,16 +138,15 @@ const data = [
   {
     image:
       'https://images.unsplash.com/photo-1582721478779-0ae163c05a60?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=400&q=80',
-    titleCard: '',
-    category: 'nature',
+    titleCard: "Services de test d'intrusion et de sécurité des systèmes",
+    category: 'Surêté',
   },
 ];
 
 function Card({ image, titleCard, category }) {
   const { classes } = useStyles();
   const handleViewMore = () => {
-    // Redirigez l'utilisateur vers la page de l'article complet
-    window.location.href = '/Article'; // Remplacez '/article' par l'URL de l'article approprié
+    window.location.href = '/Article'; 
   };
 
   return (
