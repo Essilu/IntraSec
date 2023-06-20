@@ -12,7 +12,7 @@ import NewTicket from "./pages/NewTicket";
 import Tickets from "./pages/Tickets";
 import Marketing from "./pages/Marketing";
 import CompanyList from "./pages/CompanyList";
-import Article from "./pages/Article"
+import Article from "./pages/Article";
 
 function App() {
   return (

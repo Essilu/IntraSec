@@ -73,7 +73,7 @@ const useStyles = createStyles((theme) => ({
   },
 }));
 
-export function HeroImageRight() {
+export default function Article() {
   const { classes } = useStyles();
   return (
     <div className={classes.root}>
