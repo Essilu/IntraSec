@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 import "../styles/home.css";
 
 export default function Home() {
   const [currentTime, setCurrentTime] = useState(new Date());
-  const user = 'Adrien Tabouret'; // Replace 'John Doe' with the current user's name
+  const user = "Adrien Tabouret"; // Replace 'John Doe' with the current user's name
 
   useEffect(() => {
     const timer = setInterval(() => {

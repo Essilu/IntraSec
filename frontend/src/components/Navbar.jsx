@@ -2,7 +2,6 @@ import {
   AppShell,
   Navbar as Shell,
   Header,
-  Image,
   NavLink,
 } from "@mantine/core";
 import { IconHome2, IconUserBolt, IconHelp, IconUsersGroup, IconWorld, IconAd, Icon123 } from "@tabler/icons-react";
@@ -17,10 +16,8 @@ export default function Navbar({ children }) {
       padding="md"
       header={
         <Header height={60}>
-          <Image
-            height={60}
-            ml="10px"
-            withPlaceholder
+          <img
+            className="navbarLogo"
             src="/src/assets/logo.png"
           />
         </Header>
