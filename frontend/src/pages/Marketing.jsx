@@ -3,6 +3,7 @@ import { Carousel } from '@mantine/carousel';
 import { useMediaQuery } from '@mantine/hooks';
 import { Paper, useMantineTheme } from '@mantine/core';
 import { Link } from "react-router-dom";
+import React from 'react';
 
 const useStyles = createStyles((theme) => ({
   wrapper: {
@@ -144,12 +145,11 @@ const data = [
 
 function Card({ image, titleCard, category }) {
   const { classes } = useStyles();
-  const history = Link();
-
   const handleViewMore = () => {
     // Redirigez l'utilisateur vers la page de l'article complet
-    history.push('/articles/1'); // Remplacez '/articles/1' par l'URL de l'article approprié
+    window.location.href = '/Article'; // Remplacez '/article' par l'URL de l'article approprié
   };
+
   return (
     <Paper
       shadow="md"
@@ -166,9 +166,9 @@ function Card({ image, titleCard, category }) {
           {titleCard}
         </Title>
       </div>
-      <Button variant="white" color="dark"  onClick={handleViewMore}>
-        Voir plus
-      </Button>
+      <Button variant="white" color="dark" onClick={handleViewMore}>
+      Voir plus
+    </Button>
     </Paper>
   );
 }
