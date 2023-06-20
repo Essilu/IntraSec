@@ -11,6 +11,7 @@ import EmployeesList from "./pages/EmployeesList";
 import NewTicket from "./pages/NewTicket";
 import Tickets from "./pages/Tickets";
 import Marketing from "./pages/Marketing";
+import CompanyList from "./pages/CompanyList";
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
           <Route path="/NewTicket" element={<Navbar><NewTicket /></Navbar>}></Route>
           <Route path="/Tickets" element={<Navbar><Tickets /></Navbar>}></Route>
           <Route path="/Marketing" element={<Navbar><Marketing /></Navbar>}></Route>
+          <Route path="/CompanyList" element={<Navbar><CompanyList /></Navbar>}></Route>
 
         </Routes>
 
