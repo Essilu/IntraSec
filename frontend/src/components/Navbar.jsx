@@ -2,7 +2,6 @@ import {
   AppShell,
   Navbar as Shell,
   Header,
-  Image,
   NavLink,
 } from "@mantine/core";
 import { IconHome2, IconUserBolt, IconHelp, IconUsersGroup, IconWorld, IconAd, Icon123 } from "@tabler/icons-react";
