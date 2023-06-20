@@ -1,11 +1,9 @@
 import {
   TextInput,
-  Checkbox,
   Button,
   Group,
   Box,
   Image,
-  BackgroundImage,
 } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import axios from "axios";
