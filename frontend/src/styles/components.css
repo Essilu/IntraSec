@@ -17,3 +17,8 @@ a {
   flex-direction: column;
   gap:15px;
 }
+
+.navbarLogo{
+  height:60px;
+  margin-left:10px;
+}

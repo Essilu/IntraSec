@@ -17,10 +17,8 @@ export default function Navbar({ children }) {
       padding="md"
       header={
         <Header height={60}>
-          <Image
-            height={60}
-            ml="10px"
-            withPlaceholder
+          <img
+            className="navbarLogo"
             src="/src/assets/logo.png"
           />
         </Header>
