@@ -16,8 +16,8 @@ model User {
   password  String
   firstname String
   lastname  String
-  Post      Post[]
-  Comment   Comment[]
+  posts     Post[]
+  comments  Comment[]
   roles     Role[]
 }
 
@@ -48,16 +48,16 @@ model Post {
   id       Int       @id @default(autoincrement())
   title    String
   content  String
-  author   User      @relation(fields: [authorId], references: [id])
+  author   User      @relation(fields: [authorId], references: [id], onDelete: Cascade)
   authorId Int
-  Comment  Comment[]
+  comments Comment[]
 }
 
 model Comment {
   id       Int    @id @default(autoincrement())
   content  String
-  author   User   @relation(fields: [authorId], references: [id])
-  post     Post   @relation(fields: [postId], references: [id])
+  author   User   @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  post     Post   @relation(fields: [postId], references: [id], onDelete: Cascade)
   postId   Int
   authorId Int
 }

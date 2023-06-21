@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import * as auth from './controllers/auth';
+import * as comments from './controllers/comments';
 import * as posts from './controllers/posts';
 import * as transactions from './controllers/transactions';
 import * as users from './controllers/users';
@@ -46,3 +47,13 @@ router.route('/posts/:id')
   .get(ensureAuthenticated, posts.findOne)
   .patch(ensureAuthenticated, posts.update)
   .delete(ensureAuthenticated, posts.remove);
+
+// Comments
+router.route('/posts/:postId/comments')
+  .get(ensureAuthenticated, comments.findAll)
+  .post(ensureAuthenticated, comments.create);
+
+router.route('/posts/:postId/comments/:id')
+  .get(ensureAuthenticated, comments.findOne)
+  .patch(ensureAuthenticated, comments.update)
+  .delete(ensureAuthenticated, comments.remove);
