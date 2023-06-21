@@ -7,6 +7,8 @@ import helmet from 'helmet';
 import logger from 'morgan';
 import passport from 'passport';
 
+import 'express-async-errors';
+
 import { db } from './database';
 import { errorHandler, errorNotFoundHandler } from './middlewares/errorHandler';
 

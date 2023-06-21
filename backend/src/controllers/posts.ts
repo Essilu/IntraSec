@@ -1,15 +1,10 @@
-import type { NextFunction, Response } from 'express';
+import type { Response } from 'express';
 import { db } from '../database';
 import type { Request } from '../utils/types';
-import { validate } from '../utils/validate';
 import { createPost, findOnePost, updatePost } from '../validators/posts';
 
-export async function create(req: Request, res: Response, next: NextFunction): Promise<void> {
-  const { success, data, error } = validate(createPost, req.body);
-  if (!success) {
-    next(error);
-    return;
-  }
+export async function create(req: Request, res: Response): Promise<void> {
+  const data = createPost.parse(req.body);
 
   const post = await db.post.create({
     data: {
@@ -29,15 +24,11 @@ export async function findAll(req: Request, res: Response): Promise<void> {
   res.status(200).json(posts);
 }
 
-export async function findOne(req: Request, res: Response, next: NextFunction): Promise<void> {
-  const { success, data, error } = validate(findOnePost, req.params);
-  if (!success) {
-    next(error);
-    return;
-  }
+export async function findOne(req: Request, res: Response): Promise<void> {
+  const { id: postId } = findOnePost.parse(req.params);
 
   const post = await db.post.findUnique({
-    where: { id: data.id },
+    where: { id: postId },
   });
 
   if (!post) {
@@ -48,15 +39,11 @@ export async function findOne(req: Request, res: Response, next: NextFunction): 
   res.status(200).json(post);
 }
 
-export async function update(req: Request, res: Response, next: NextFunction): Promise<void> {
-  const { success, data, error } = validate(findOnePost, req.params);
-  if (!success) {
-    next(error);
-    return;
-  }
+export async function update(req: Request, res: Response): Promise<void> {
+  const { id: postId } = findOnePost.parse(req.params);
 
   const post = await db.post.findUnique({
-    where: { id: data.id },
+    where: { id: postId },
   });
 
   if (!post) {
@@ -64,39 +51,27 @@ export async function update(req: Request, res: Response, next: NextFunction): P
     return;
   }
 
-  const { success: successBody, data: dataBody, error: errorBody } = validate(updatePost, req.body);
-  if (!successBody) {
-    next(errorBody);
-    return;
-  }
+  const data = updatePost.parse(req.body);
 
   const updatedPost = await db.post.update({
-    where: { id: data.id },
-    data: dataBody,
+    where: { id: postId },
+    data,
   });
 
   res.status(200).json(updatedPost);
 }
 
-export async function remove(req: Request, res: Response, next: NextFunction): Promise<void> {
-  const { success, data, error } = validate(findOnePost, req.params);
-  if (!success) {
-    next(error);
-    return;
-  }
+export async function remove(req: Request, res: Response): Promise<void> {
+  const { id: postId } = findOnePost.parse(req.params);
 
-  const post = await db.post.findUnique({
-    where: { id: data.id },
-  });
+  const post = await db.post.findUnique({ where: { id: postId } });
 
   if (!post) {
     res.status(404).json({ message: 'Post not found' });
     return;
   }
 
-  await db.post.delete({
-    where: { id: data.id },
-  });
+  await db.post.delete({ where: { id: postId } });
 
   res.status(201).json();
 }

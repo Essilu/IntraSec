@@ -1,15 +1,10 @@
-import type { NextFunction, Response } from 'express';
+import type { Response } from 'express';
 import { db } from '../database';
 import type { Request } from '../utils/types';
-import { validate } from '../utils/validate';
 import { createTransaction, findOneTransaction, updateTransaction } from '../validators/transactions';
 
-export async function create(req: Request, res: Response, next: NextFunction): Promise<void> {
-  const { success, data, error } = validate(createTransaction, req.body);
-  if (!success) {
-    next(error);
-    return;
-  }
+export async function create(req: Request, res: Response): Promise<void> {
+  const data = createTransaction.parse(req.body);
 
   const transaction = await db.transaction.create({ data });
 
@@ -22,15 +17,11 @@ export async function findAll(req: Request, res: Response): Promise<void> {
   res.status(200).json(transactions);
 }
 
-export async function findOne(req: Request, res: Response, next: NextFunction): Promise<void> {
-  const { success, data, error } = validate(findOneTransaction, req.params);
-  if (!success) {
-    next(error);
-    return;
-  }
+export async function findOne(req: Request, res: Response): Promise<void> {
+  const { id: transactionId } = findOneTransaction.parse(req.params);
 
   const transaction = await db.transaction.findUnique({
-    where: { id: data.id },
+    where: { id: transactionId },
   });
 
   if (!transaction) {
@@ -41,15 +32,11 @@ export async function findOne(req: Request, res: Response, next: NextFunction): 
   res.status(200).json(transaction);
 }
 
-export async function update(req: Request, res: Response, next: NextFunction): Promise<void> {
-  const { success, data, error } = validate(findOneTransaction, req.params);
-  if (!success) {
-    next(error);
-    return;
-  }
+export async function update(req: Request, res: Response): Promise<void> {
+  const { id: transactionId } = findOneTransaction.parse(req.params);
 
   const transaction = await db.transaction.findUnique({
-    where: { id: data.id },
+    where: { id: transactionId },
   });
 
   if (!transaction) {
@@ -57,29 +44,21 @@ export async function update(req: Request, res: Response, next: NextFunction): P
     return;
   }
 
-  const { success: successBody, data: dataBody, error: errorBody } = validate(updateTransaction, req.body);
-  if (!successBody) {
-    next(errorBody);
-    return;
-  }
+  const data = updateTransaction.parse(req.body);
 
   const updatedTransaction = await db.transaction.update({
-    where: { id: data.id },
-    data: dataBody,
+    where: { id: transactionId },
+    data,
   });
 
   res.status(200).json(updatedTransaction);
 }
 
-export async function remove(req: Request, res: Response, next: NextFunction): Promise<void> {
-  const { success, data, error } = validate(findOneTransaction, req.params);
-  if (!success) {
-    next(error);
-    return;
-  }
+export async function remove(req: Request, res: Response): Promise<void> {
+  const { id: transactionId } = findOneTransaction.parse(req.params);
 
   const transaction = await db.transaction.findUnique({
-    where: { id: data.id },
+    where: { id: transactionId },
   });
 
   if (!transaction) {
@@ -88,7 +67,7 @@ export async function remove(req: Request, res: Response, next: NextFunction): P
   }
 
   await db.transaction.delete({
-    where: { id: data.id },
+    where: { id: transactionId },
   });
 
   res.status(201).json();

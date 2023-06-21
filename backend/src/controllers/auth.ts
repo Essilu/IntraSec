@@ -2,16 +2,10 @@ import type { NextFunction, Response } from 'express';
 import passport from 'passport';
 import { safeUser } from '../utils/safeUser';
 import type { Request } from '../utils/types';
-import { validate } from '../utils/validate';
 import { loginUser } from '../validators/auth';
 
 export function logIn(req: Request, res: Response, next: NextFunction): void {
-  const { success, error } = validate(loginUser, req.body);
-  if (!success) {
-    next(error);
-    return;
-  }
-
+  loginUser.parse(req.body);
   passport.authenticate('local', { successMessage: 'Logged In' })(req, res, next);
 }
 
