@@ -1,5 +1,6 @@
 import type { Response } from 'express';
 import { db } from '../database';
+import { safeUser } from '../utils/safeUser';
 import type { Request } from '../utils/types';
 import { createPost, findOnePost, updatePost } from '../validators/posts';
 
@@ -19,9 +20,9 @@ export async function create(req: Request, res: Response): Promise<void> {
 }
 
 export async function findAll(req: Request, res: Response): Promise<void> {
-  const posts = await db.post.findMany();
+  const posts = await db.post.findMany({ include: { author: true } });
 
-  res.status(200).json(posts);
+  res.status(200).json(posts.map(post => ({ ...post, author: safeUser(post.author) })));
 }
 
 export async function findOne(req: Request, res: Response): Promise<void> {
@@ -29,6 +30,7 @@ export async function findOne(req: Request, res: Response): Promise<void> {
 
   const post = await db.post.findUnique({
     where: { id: postId },
+    include: { author: true },
   });
 
   if (!post) {
@@ -36,7 +38,7 @@ export async function findOne(req: Request, res: Response): Promise<void> {
     return;
   }
 
-  res.status(200).json(post);
+  res.status(200).json({ ...post, author: safeUser(post.author) });
 }
 
 export async function update(req: Request, res: Response): Promise<void> {
@@ -73,5 +75,5 @@ export async function remove(req: Request, res: Response): Promise<void> {
 
   await db.post.delete({ where: { id: postId } });
 
-  res.status(201).json();
+  res.status(204).json();
 }

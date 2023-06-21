@@ -90,5 +90,5 @@ export async function remove(req: Request, res: Response): Promise<void> {
     where: { id: userId },
   });
 
-  res.status(201).json();
+  res.status(204).json();
 }
