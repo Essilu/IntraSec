@@ -1,3 +1,4 @@
+import { PostKind } from '@prisma/client';
 import type { Response } from 'express';
 import { db } from '../database';
 import { safeUser } from '../utils/safeUser';
@@ -9,12 +10,20 @@ import {
   updateComment,
 } from '../validators/comments';
 
+const UNCOMMENTABLE_POSTS = new Set<PostKind>([PostKind.PARTNER_COMPANY, PostKind.PARTNER_SCHOOL]);
+const UNCOMMENTABLE_POST_ERROR = 'Comments are not allowed on partner posts';
+
 export async function create(req: Request, res: Response): Promise<void> {
   const { postId } = findOnePost.parse(req.params);
 
   const post = await db.post.findUnique({ where: { id: postId } });
   if (!post) {
     res.status(404).json({ message: 'Post not found' });
+    return;
+  }
+
+  if (UNCOMMENTABLE_POSTS.has(post.kind)) {
+    res.status(400).json({ message: UNCOMMENTABLE_POST_ERROR });
     return;
   }
 
@@ -38,9 +47,14 @@ export async function create(req: Request, res: Response): Promise<void> {
 export async function findAll(req: Request, res: Response): Promise<void> {
   const { postId } = findOnePost.parse(req.params);
 
-  const posts = await db.post.findUnique({ where: { id: postId } });
-  if (!posts) {
+  const post = await db.post.findUnique({ where: { id: postId } });
+  if (!post) {
     res.status(404).json({ message: 'Post not found' });
+    return;
+  }
+
+  if (UNCOMMENTABLE_POSTS.has(post.kind)) {
+    res.status(400).json({ message: UNCOMMENTABLE_POST_ERROR });
     return;
   }
 
@@ -58,6 +72,11 @@ export async function findOne(req: Request, res: Response): Promise<void> {
   const post = await db.post.findUnique({ where: { id: postId } });
   if (!post) {
     res.status(404).json({ message: 'Post not found' });
+    return;
+  }
+
+  if (UNCOMMENTABLE_POSTS.has(post.kind)) {
+    res.status(400).json({ message: UNCOMMENTABLE_POST_ERROR });
     return;
   }
 
@@ -82,6 +101,11 @@ export async function update(req: Request, res: Response): Promise<void> {
     return;
   }
 
+  if (UNCOMMENTABLE_POSTS.has(post.kind)) {
+    res.status(400).json({ message: UNCOMMENTABLE_POST_ERROR });
+    return;
+  }
+
   const data = updateComment.parse(req.body);
 
   const comment = await db.comment.update({
@@ -98,6 +122,11 @@ export async function remove(req: Request, res: Response): Promise<void> {
   const post = await db.post.findUnique({ where: { id: postId } });
   if (!post) {
     res.status(404).json({ message: 'Post not found' });
+    return;
+  }
+
+  if (UNCOMMENTABLE_POSTS.has(post.kind)) {
+    res.status(400).json({ message: UNCOMMENTABLE_POST_ERROR });
     return;
   }
 

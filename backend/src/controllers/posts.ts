@@ -2,7 +2,12 @@ import type { Response } from 'express';
 import { db } from '../database';
 import { safeUser } from '../utils/safeUser';
 import type { Request } from '../utils/types';
-import { createPost, findOnePost, updatePost } from '../validators/posts';
+import {
+  createPost,
+  findManyPosts,
+  findOnePost,
+  updatePost,
+} from '../validators/posts';
 
 export async function create(req: Request, res: Response): Promise<void> {
   const data = createPost.parse(req.body);
@@ -20,7 +25,12 @@ export async function create(req: Request, res: Response): Promise<void> {
 }
 
 export async function findAll(req: Request, res: Response): Promise<void> {
-  const posts = await db.post.findMany({ include: { author: true } });
+  const { kind } = findManyPosts.parse(req.query);
+
+  const posts = await db.post.findMany({
+    where: { kind },
+    include: { author: true },
+  });
 
   res.status(200).json(posts.map(post => ({ ...post, author: safeUser(post.author) })));
 }

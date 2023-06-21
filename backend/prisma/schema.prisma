@@ -48,6 +48,7 @@ model Post {
   id       Int       @id @default(autoincrement())
   title    String
   content  String
+  kind     PostKind
   author   User      @relation(fields: [authorId], references: [id], onDelete: Cascade)
   authorId Int
   comments Comment[]
@@ -72,4 +73,11 @@ enum TransactionMean {
   CARD
   CHECK
   TRANSFER
+}
+
+enum PostKind {
+  MARKETING_POST
+  PARTNER_COMPANY
+  PARTNER_SCHOOL
+  SUPPORT_TICKET
 }
