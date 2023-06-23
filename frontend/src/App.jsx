@@ -1,6 +1,6 @@
-//import "./styles/App.css";
-import { Button, MantineProvider } from "@mantine/core";
-import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
+import { MantineProvider } from "@mantine/core";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { useAuthStore } from "./stores/auth";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Navbar from "./components/navbar";
@@ -14,28 +14,46 @@ import Marketing from "./pages/Marketing";
 import CompanyList from "./pages/CompanyList";
 import SchoolList from "./pages/SchoolList";
 import Article from "./pages/Article";
+import Protected from "./components/Protected";
+import { useMemo } from 'react';
 
 function App() {
+  const [isLogged, fetchMe] = useAuthStore(state => [state.isLogged, state.fetchMe]);
+
+  // Fetch user data on app start
+  useMemo(() => {
+    fetchMe();
+  }, [fetchMe]);
+
+  const makePage = (page) => (
+    <Protected isLoggedIn={isLogged()}>
+      <Navbar>
+        {page}
+      </Navbar>
+    </Protected>
+  );
+
   return (
     <MantineProvider withGlobalStyles withNormalizeCSS>
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Navbar><Home /></Navbar>}></Route>
-          <Route path="/login" element={<Login />}></Route>
-          <Route path="/comptability" element={<Navbar><Comptability /></Navbar>}></Route>
-          <Route path="/TransactionsHistory" element={<Navbar><TransactionsHistory /></Navbar>}></Route>
-          <Route path="/EmployeesAdmin" element={<Navbar><EmployeesAdmin /></Navbar>}></Route>
-          <Route path="/EmployeesList" element={<Navbar><EmployeesList /></Navbar>}></Route>
-          <Route path="/NewTicket" element={<Navbar><NewTicket /></Navbar>}></Route>
-          <Route path="/Tickets" element={<Navbar><Tickets /></Navbar>}></Route>
-          <Route path="/Marketing" element={<Navbar><Marketing /></Navbar>}></Route>
-          <Route path="/CompanyList" element={<Navbar><CompanyList /></Navbar>}></Route>
-          <Route path="/SchoolList" element={<Navbar><SchoolList /></Navbar>}></Route>
-          <Route path="/Article" element={<Navbar><Article/></Navbar>}></Route>
-
+          <Route path="/" element={makePage(<Home />)} />
+          <Route path="/login" element={
+            isLogged()
+              ? <Navigate to="/" replace />
+              : <Login />
+          } />
+          <Route path="/comptability" element={makePage(<Comptability />)} />
+          <Route path="/TransactionsHistory" element={makePage(<TransactionsHistory />)} />
+          <Route path="/EmployeesAdmin" element={makePage(<EmployeesAdmin />)} />
+          <Route path="/EmployeesList" element={makePage(<EmployeesList />)} />
+          <Route path="/NewTicket" element={makePage(<NewTicket />)} />
+          <Route path="/Tickets" element={makePage(<Tickets />)} />
+          <Route path="/Marketing" element={makePage(<Marketing />)} />
+          <Route path="/CompanyList" element={makePage(<CompanyList />)} />
+          <Route path="/Article" element={makePage(<Article/>)} />
+          <Route path="/SchoolList" element={makePage(<SchoolList />)} />
         </Routes>
-
-
       </BrowserRouter>
     </MantineProvider>
   );

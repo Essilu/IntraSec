@@ -8,6 +8,7 @@ import {
   Button,
 } from "@mantine/core";
 
+// Create custom styles using the createStyles function
 const useStyles = createStyles((theme) => ({
   header: {
     position: "sticky",
@@ -35,7 +36,9 @@ const useStyles = createStyles((theme) => ({
   },
 }));
 
+// Define the TableScrollArea component
 export default function TableScrollArea() {
+  // Define data for the table rows
   const data = [
     {
       ti_number: 1,
@@ -98,10 +101,13 @@ export default function TableScrollArea() {
       name: "Henry Hudson",
     },
   ];
+    // ... more data objects ...
 
+  // Get the styles and classes from the useStyles hook
   const { classes, cx } = useStyles();
   const [scrolled, setScrolled] = useState(false);
 
+  // Map the data to table rows
   const rows = data.map((row) => (
     <tr key={row.ti_number}>
       <td>{row.ti_number}</td>
@@ -117,12 +123,16 @@ export default function TableScrollArea() {
 
   return (
     <>
+      {/* Display a title */}
       <Title order={1}>Tickets ouverts : </Title>
+      {/* Create a scrollable area */}
       <ScrollArea
         h={300}
         onScrollPositionChange={({ y }) => setScrolled(y !== 0)}
       >
+        {/* Render a table */}
         <Table miw={700}>
+          {/* Render the table header */}
           <thead
             className={cx(classes.header, { [classes.scrolled]: scrolled })}
           >
@@ -130,9 +140,10 @@ export default function TableScrollArea() {
               <th>Nom</th>
               <th>Ticket n°</th>
               <th>Titre</th>
-              <th>Description   </th>
+              <th>Description</th>
             </tr>
           </thead>
+          {/* Render the table body */}
           <tbody>{rows}</tbody>
         </Table>
       </ScrollArea>

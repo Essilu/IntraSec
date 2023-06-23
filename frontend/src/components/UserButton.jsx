@@ -9,8 +9,9 @@ import {
 } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { IconChevronRight } from "@tabler/icons-react";
-import { Link } from "react-router-dom";
+import { Link, redirect } from "react-router-dom";
 import "../styles/components.css";
+import { useAuthStore } from '../stores/auth';
 
 // Define custom styles using createStyles
 const useStyles = createStyles((theme) => ({
@@ -34,6 +35,13 @@ export default function UserButton({ image, name, email, icon, ...others }) {
   const { classes } = useStyles();
   const [opened, { open, close }] = useDisclosure(false);
 
+  const logout = useAuthStore(state => state.logout);
+
+  const doLogout = async () => {
+    await logout();
+    redirect('/login');
+  }
+
   return (
     <>
       {/* Modal component for logout confirmation */}
@@ -56,7 +64,7 @@ export default function UserButton({ image, name, email, icon, ...others }) {
 
             <Link to="/login">
               {/* Button for confirming logout */}
-              <Button className="modal_confirmation_button" color="red">
+              <Button className="modal_confirmation_button" color="red" onClick={doLogout}>
                 Log Out
               </Button>
             </Link>

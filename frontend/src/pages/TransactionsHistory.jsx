@@ -1,78 +1,24 @@
 import "../styles/Comptability.css";
-import DonutChart from "react-donut-chart";
-import { Table } from "@mantine/core";
+import { Loader, Table } from "@mantine/core";
+import { useTransactionStore } from "../stores/transactions";
+import { useEffect, useState } from "react";
 
 export default function Comptability() {
-  const elements = [
-    {
-      Company: "Company 1",
-      TransactionType: "Deposit",
-      PayementMethod: "Bank Transfer",
-      Amount: 1000,
-    },
-    {
-      Company: "Company 1",
-      TransactionType: "Deposit",
-      PayementMethod: "Bank Transfer",
-      Amount: 1000,
-    },
-    {
-      Company: "Company 1",
-      TransactionType: "Deposit",
-      PayementMethod: "Bank Transfer",
-      Amount: 1000,
-    },
-    {
-      Company: "Company 1",
-      TransactionType: "Deposit",
-      PayementMethod: "Bank Transfer",
-      Amount: 1000,
-    },
-    {
-      Company: "Company 1",
-      TransactionType: "Deposit",
-      PayementMethod: "Bank Transfer",
-      Amount: 1000,
-    },
-    {
-      Company: "Company 1",
-      TransactionType: "Deposit",
-      PayementMethod: "Bank Transfer",
-      Amount: 1000,
-    },
-    {
-      Company: "Company 1",
-      TransactionType: "Deposit",
-      PayementMethod: "Bank Transfer",
-      Amount: 1000,
-    },
-    {
-      Company: "Company 1",
-      TransactionType: "Deposit",
-      PayementMethod: "Bank Transfer",
-      Amount: 1000,
-    },
-    {
-      Company: "Company 1",
-      TransactionType: "Deposit",
-      PayementMethod: "Bank Transfer",
-      Amount: 1000,
-    },
-    {
-      Company: "Company 1",
-      TransactionType: "Deposit",
-      PayementMethod: "Bank Transfer",
-      Amount: 1000,
-    },
-  ];
-  const rows = elements.map((element) => (
-    <tr key={element.name}>
-      <td>{element.Company}</td>
-      <td>{element.TransactionType}</td>
-      <td>{element.PayementMethod}</td>
-      <td>{element.Amount}</td>
-    </tr>
-  ));
+  const [isLoading, setLoading] = useState(true);
+  // Get the transactions from the store and the fetchAllTransactions function
+  const [transactions, fetchAllTransactions] = useTransactionStore(state => [state.transactions, state.fetchAll]);
+
+  // Fetch all transactions on page load
+  useEffect(() => {
+    async function fetchData() {
+      // Set loading to true and fetch all transactions
+      setLoading(true);
+      await fetchAllTransactions();
+      setLoading(false);
+    }
+    fetchData();
+  }, [fetchAllTransactions]);
+
   return (
     <div>
       <h1>Comptabilité</h1>
@@ -89,7 +35,18 @@ export default function Comptability() {
                 <th>Montant</th>
               </tr>
             </thead>
-            <tbody>{rows}</tbody>
+            {isLoading
+              ? <Loader />
+              : <tbody>
+                {transactions.map((element) => (
+                  <tr key={element.name}>
+                    <td>{element.otherCompany}</td>
+                    <td>{element.type}</td>
+                    <td>{element.mean}</td>
+                    <td>{element.amount}</td>
+                  </tr>
+                ))}
+            </tbody>}
           </Table>
         </div>
       </div>
