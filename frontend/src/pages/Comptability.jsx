@@ -1,6 +1,6 @@
 import "../styles/Comptability.css";
 import DonutChart from "react-donut-chart";
-import { Table,Button } from "@mantine/core";
+import { Table, Button } from "@mantine/core";
 import { Link } from "react-router-dom";
 
 export default function Comptability() {
