@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 export default function Comptability() {
   const elements = [
     {
-      Company: "Entreprise 1",
+      Company: "Total Energies",
       TransactionType: "Dépot",
       PayementMethod: "Chèque",
       Amount: 1000,

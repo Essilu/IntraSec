@@ -19,41 +19,49 @@ router.get('/auth/me', ensureAuthenticated, auth.me);
 router.post('/auth/logout', ensureAuthenticated, auth.logOut);
 
 // Users
-router.route('/users')
+router
+  .route('/users')
   .get(ensureAuthenticated, users.findAll)
   .post(ensureAuthenticated, users.create);
 
-router.route('/users/:id')
+router
+  .route('/users/:id')
   .get(ensureAuthenticated, users.findOne)
   .patch(ensureAuthenticated, users.update)
   .delete(ensureAuthenticated, users.remove);
 
 // Transactions
-router.route('/transactions')
+router
+  .route('/transactions')
   .get(ensureAuthenticated, transactions.findAll)
   .post(ensureAuthenticated, transactions.create);
 
-router.route('/transactions/:id')
+router
+  .route('/transactions/:id')
   .get(ensureAuthenticated, transactions.findOne)
   .patch(ensureAuthenticated, transactions.update)
   .delete(ensureAuthenticated, transactions.remove);
 
 // Posts
-router.route('/posts')
+router
+  .route('/posts')
   .get(ensureAuthenticated, posts.findAll)
   .post(ensureAuthenticated, posts.create);
 
-router.route('/posts/:id')
+router
+  .route('/posts/:id')
   .get(ensureAuthenticated, posts.findOne)
   .patch(ensureAuthenticated, posts.update)
   .delete(ensureAuthenticated, posts.remove);
 
 // Comments
-router.route('/posts/:postId/comments')
+router
+  .route('/posts/:postId/comments')
   .get(ensureAuthenticated, comments.findAll)
   .post(ensureAuthenticated, comments.create);
 
-router.route('/posts/:postId/comments/:id')
+router
+  .route('/posts/:postId/comments/:id')
   .get(ensureAuthenticated, comments.findOne)
   .patch(ensureAuthenticated, comments.update)
   .delete(ensureAuthenticated, comments.remove);
