@@ -12,6 +12,7 @@ import { IconChevronRight } from "@tabler/icons-react";
 import { Link } from "react-router-dom";
 import "../styles/components.css";
 
+// Define custom styles using createStyles
 const useStyles = createStyles((theme) => ({
   user: {
     display: "block",
@@ -29,11 +30,13 @@ const useStyles = createStyles((theme) => ({
 }));
 
 export default function UserButton({ image, name, email, icon, ...others }) {
+  // Use the useDisclosure hook to manage modal state
   const { classes } = useStyles();
   const [opened, { open, close }] = useDisclosure(false);
 
   return (
     <>
+      {/* Modal component for logout confirmation */}
       <Modal
         opened={opened}
         onClose={close}
@@ -46,11 +49,13 @@ export default function UserButton({ image, name, email, icon, ...others }) {
           </Text>
 
           <div onClick={close} className="modal_parent">
+            {/* Button for canceling logout */}
             <Button className="modal_confirmation_button" variant="outline">
               Exit
             </Button>
 
             <Link to="/login">
+              {/* Button for confirming logout */}
               <Button className="modal_confirmation_button" color="red">
                 Log Out
               </Button>
@@ -58,6 +63,8 @@ export default function UserButton({ image, name, email, icon, ...others }) {
           </div>
         </div>
       </Modal>
+
+      {/* User button with avatar and user information */}
       <UnstyledButton onClick={open} className={classes.user} {...others}>
         <Group>
           <Avatar src={image} radius="xl" />
