@@ -1,14 +1,14 @@
 import { Card, Image, Text, Badge, Button, Group, Modal, useMantineTheme } from '@mantine/core';
 import { useState } from 'react';
-import '../styles/companyList.css';
+import '../styles/schoolList.css';
 
-function CompanyList() {
+function SchoolList() {
   const [isEditModalOpen, setEditModalOpen] = useState(false);
   const [isInfoModalOpen, setInfoModalOpen] = useState(false);
   const [boxes, setBoxes] = useState([
-    { id: 1, title: 'Company 1' },
-    { id: 2, title: 'Company 2' },
-    { id: 3, title: 'Company 3' },
+    { id: 1, title: 'School 1' },
+    { id: 2, title: 'School 2' },
+    { id: 3, title: 'School 3' },
   ]);
   const theme = useMantineTheme();
 
@@ -36,16 +36,16 @@ function CompanyList() {
   const handleAddBox = () => {
     const newBox = {
       id: Date.now(),
-      title: `Company ${boxes.length + 1}`,
+      title: `School ${boxes.length + 1}`,
     };
     setBoxes((prevBoxes) => [...prevBoxes, newBox]);
   };
 
   return (
     <>
-      <div className="company-list-container">
+      <div className="school-list-container">
         {boxes.map((box) => (
-          <div className="company-list-item" key={box.id}>
+          <div className="school-list-item" key={box.id}>
             <Card shadow="sm" padding="lg" radius="md" withBorder>
               <Card.Section>
                 <Image
@@ -119,4 +119,4 @@ function CompanyList() {
   );
 }
 
-export default CompanyList;
+export default SchoolList;
