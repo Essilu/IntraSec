@@ -1,5 +1,5 @@
-import type { User } from "@prisma/client";
-import type { Request as ExpressRequest } from "express";
+import type { User } from '@prisma/client';
+import type { Request as ExpressRequest } from 'express';
 
 // Custom Request interface that extends ExpressRequest
 export interface Request extends ExpressRequest {

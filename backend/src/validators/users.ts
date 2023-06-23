@@ -5,7 +5,8 @@ export const createUser = z.object({
   email: z.string().email().min(1), // Validates the email field as a valid email address with minimum length 1
   firstname: z.string().min(1), // Validates the firstname field as a string with minimum length 1
   lastname: z.string().min(1), // Validates the lastname field as a string with minimum length 1
-  password: z.string().min(8).max(50), // Validates the password field as a string with minimum length 8 and maximum length 50
+  // Validates the password field as a string with minimum length 8 and maximum length 50
+  password: z.string().min(8).max(50),
 }).strict();
 
 // Validation schema for finding a user

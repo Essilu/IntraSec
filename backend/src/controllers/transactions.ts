@@ -1,11 +1,11 @@
-import type { Response } from "express";
-import { db } from "../database";
-import type { Request } from "../utils/types";
+import type { Response } from 'express';
+import { db } from '../database';
+import type { Request } from '../utils/types';
 import {
   createTransaction,
   findOneTransaction,
   updateTransaction,
-} from "../validators/transactions";
+} from '../validators/transactions';
 
 // Creates a new transaction
 export async function create(req: Request, res: Response): Promise<void> {
@@ -32,7 +32,7 @@ export async function findOne(req: Request, res: Response): Promise<void> {
   });
 
   if (!transaction) {
-    res.status(404).json({ message: "Transaction not found" });
+    res.status(404).json({ message: 'Transaction not found' });
     return;
   }
 
@@ -48,7 +48,7 @@ export async function update(req: Request, res: Response): Promise<void> {
   });
 
   if (!transaction) {
-    res.status(404).json({ message: "Transaction not found" });
+    res.status(404).json({ message: 'Transaction not found' });
     return;
   }
 
@@ -71,7 +71,7 @@ export async function remove(req: Request, res: Response): Promise<void> {
   });
 
   if (!transaction) {
-    res.status(404).json({ message: "Transaction not found" });
+    res.status(404).json({ message: 'Transaction not found' });
     return;
   }
 

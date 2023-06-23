@@ -1,14 +1,14 @@
-import type { User } from "@prisma/client";
-import bcrypt from "bcrypt";
-import passport from "passport";
-import { Strategy as LocalStrategy } from "passport-local";
-import { db } from "./database";
+import type { User } from '@prisma/client';
+import bcrypt from 'bcrypt';
+import passport from 'passport';
+import { Strategy as LocalStrategy } from 'passport-local';
+import { db } from './database';
 
 // Configure the local strategy for passport authentication
 passport.use(
-  "local",
+  'local',
   new LocalStrategy(
-    { usernameField: "email", passwordField: "password" },
+    { usernameField: 'email', passwordField: 'password' },
     async (emailOrUsername, password, done) => {
       try {
         // Find the user by email or username in the database
@@ -18,24 +18,26 @@ passport.use(
 
         if (!user) {
           // User not found
-          return done(null, false, { message: "Unknown user." });
+          done(null, false, { message: 'Unknown user.' });
+          return;
         }
 
         // Compare the provided password with the hashed password stored in the database
         const passwordMatch = await bcrypt.compare(password, user.password);
         if (!passwordMatch) {
           // Passwords do not match
-          return done(null, false, { message: "Unknown user." });
+          done(null, false, { message: 'Unknown user.' });
+          return;
         }
 
         // Authentication successful
-        return done(null, user);
+        done(null, user);
       } catch (error) {
         // Error occurred during authentication
-        return done(error);
+        done(error);
       }
-    }
-  )
+    },
+  ),
 );
 
 // Serialize the user into a session

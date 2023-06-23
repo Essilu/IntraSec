@@ -1,9 +1,9 @@
-import bcrypt from "bcrypt";
-import type { Response } from "express";
-import { db } from "../database";
-import { safeUser } from "../utils/safeUser";
-import type { Request } from "../utils/types";
-import { createUser, findOneUser, updateUser } from "../validators/users";
+import bcrypt from 'bcrypt';
+import type { Response } from 'express';
+import { db } from '../database';
+import { safeUser } from '../utils/safeUser';
+import type { Request } from '../utils/types';
+import { createUser, findOneUser, updateUser } from '../validators/users';
 
 // Creates a new user
 export async function create(req: Request, res: Response): Promise<void> {
@@ -14,7 +14,7 @@ export async function create(req: Request, res: Response): Promise<void> {
   });
 
   if (existingUser) {
-    res.status(400).json({ message: "User already exists" });
+    res.status(400).json({ message: 'User already exists' });
     return;
   }
 
@@ -23,7 +23,7 @@ export async function create(req: Request, res: Response): Promise<void> {
     data: {
       ...data,
       roles: {
-        connect: [{ name: "user" }],
+        connect: [{ name: 'user' }],
       },
       password,
     },
@@ -48,7 +48,7 @@ export async function findOne(req: Request, res: Response): Promise<void> {
   });
 
   if (!user) {
-    res.status(404).json({ message: "User not found" });
+    res.status(404).json({ message: 'User not found' });
     return;
   }
 
@@ -64,7 +64,7 @@ export async function update(req: Request, res: Response): Promise<void> {
   });
 
   if (!user) {
-    res.status(404).json({ message: "User not found" });
+    res.status(404).json({ message: 'User not found' });
     return;
   }
 
@@ -87,7 +87,7 @@ export async function remove(req: Request, res: Response): Promise<void> {
   });
 
   if (!user) {
-    res.status(404).json({ message: "User not found" });
+    res.status(404).json({ message: 'User not found' });
     return;
   }
 

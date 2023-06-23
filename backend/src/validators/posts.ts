@@ -1,5 +1,5 @@
-import { PostKind } from "@prisma/client";
-import { z } from "zod";
+import { PostKind } from '@prisma/client';
+import { z } from 'zod';
 
 // Validation schema for creating a post
 export const createPost = z
