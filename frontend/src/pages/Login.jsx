@@ -7,40 +7,38 @@ import {
   PasswordInput,
 } from "@mantine/core";
 import { useForm } from "@mantine/form";
-import axios from "axios";
 
 import "../styles/login.css";
+import { useAuthStore } from '../stores/auth';
+import { redirect } from 'react-router-dom';
 
 export default function Login() {
+  const login = useAuthStore(state => state.login);
+
   const form = useForm({
     initialValues: {
       email: "",
       password: "",
     },
-
     validate: {
       email: (value) => (/^\S+@\S+$/.test(value) ? null : "Invalid email"),
     },
   });
 
-  const submit = (formValues) => {
-    axios
-      .post(`${import.meta.env.VITE_API_URL}/auth/login`, formValues)
-      .then((res) => {
-        console.log(res);
-        console.log(res.data);
-      });
-  };
+  const doLogin = async (values) => {
+    login(values);
+    redirect('/');
+  }
 
   return (
     <div className="parent">
       <Box maw={500} mx="auto" className="signin">
         <Image withPlaceholder src="/src/assets/logo.png" />
-        <form className="text" onSubmit={form.onSubmit(submit)}>
+        <form className="text" onSubmit={form.onSubmit(doLogin)}>
           <TextInput
             withAsterisk
             style={{ fontSize: "16px" }}
-            label="Email"
+            label="email"
             placeholder="your@email.com"
             {...form.getInputProps("email")}
           />
