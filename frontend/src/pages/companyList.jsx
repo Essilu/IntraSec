@@ -1,15 +1,24 @@
-import { Card, Image, Text, Badge, Button, Group, Modal, useMantineTheme } from '@mantine/core';
-import { useState } from 'react';
-import '../styles/companyList.css';
+import {
+  Card,
+  Image,
+  Text,
+  Badge,
+  Button,
+  Group,
+  Modal,
+  useMantineTheme,
+} from "@mantine/core";
+import { useState } from "react";
+import "../styles/companyList.css";
 
 function CompanyList() {
   // State variables
   const [isEditModalOpen, setEditModalOpen] = useState(false);
   const [isInfoModalOpen, setInfoModalOpen] = useState(false);
   const [boxes, setBoxes] = useState([
-    { id: 1, title: 'Company 1' },
-    { id: 2, title: 'Company 2' },
-    { id: 3, title: 'Company 3' },
+    { id: 1, title: "Company 1" },
+    { id: 2, title: "Company 2" },
+    { id: 3, title: "Company 3" },
   ]);
 
   // Mantine theme
@@ -65,15 +74,20 @@ function CompanyList() {
                 {/* Company title */}
                 <Text weight={500}>{box.title}</Text>
                 {/* Edit button */}
-                <Badge color="pink" variant="light" onClick={handleEditButtonClick}>
+                <Badge
+                  color="pink"
+                  variant="light"
+                  onClick={handleEditButtonClick}
+                >
                   Edit
                 </Badge>
               </Group>
 
               {/* Company description */}
               <Text size="sm" color="dimmed">
-                With Fjord Tours you can explore more of the magical fjord landscapes with tours and
-                activities on and around the fjords of Norway
+                With Fjord Tours you can explore more of the magical fjord
+                landscapes with tours and activities on and around the fjords of
+                Norway
               </Text>
 
               {/* Button for booking */}

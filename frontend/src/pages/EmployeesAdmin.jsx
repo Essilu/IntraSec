@@ -9,6 +9,7 @@ import {
 } from "@mantine/core";
 
 const rolesData = ["Manager", "Collaborator", "Contractor"];
+
 const data = [
   {
     avatar:
@@ -16,7 +17,7 @@ const data = [
     name: "Robert Wolfkisser",
     job: "Engineer",
     email: "rob_wolf@gmail.com",
-    role: "Collaborator",
+    rate: 22,
   },
   {
     avatar:
@@ -24,7 +25,7 @@ const data = [
     name: "Jill Jailbreaker",
     job: "Engineer",
     email: "jj@breaker.com",
-    role: "Collaborator",
+    rate: 45,
   },
   {
     avatar:
@@ -32,7 +33,7 @@ const data = [
     name: "Henry Silkeater",
     job: "Designer",
     email: "henry@silkeater.io",
-    role: "Contractor",
+    rate: 76,
   },
   {
     avatar:
@@ -40,7 +41,7 @@ const data = [
     name: "Bill Horsefighter",
     job: "Designer",
     email: "bhorsefighter@gmail.com",
-    role: "Contractor",
+    rate: 15,
   },
   {
     avatar:
@@ -48,10 +49,12 @@ const data = [
     name: "Jeremy Footviewer",
     job: "Manager",
     email: "jeremy@foot.dev",
-    role: "Manager",
+    rate: 98,
   },
 ];
+
 export default function UsersRolesTable() {
+  // Create table rows
   const rows = data.map((item) => (
     <tr key={item.name}>
       <td>
@@ -67,7 +70,6 @@ export default function UsersRolesTable() {
           </div>
         </Group>
       </td>
-
       <td>
         <Select data={rolesData} defaultValue={item.role} variant="unstyled" />
       </td>
