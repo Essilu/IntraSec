@@ -4,6 +4,7 @@ import {
   Group,
   Box,
   Image,
+  PasswordInput,
 } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import axios from "axios";
@@ -44,10 +45,10 @@ export default function Login() {
             {...form.getInputProps("email")}
           />
 
-          <TextInput
+          <PasswordInput
             withAsterisk
             label="Password"
-            placeholder="my_secure_password123"
+            placeholder="Password"
             {...form.getInputProps("password")}
           />
 
