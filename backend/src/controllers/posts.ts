@@ -1,14 +1,15 @@
-import type { Response } from 'express';
-import { db } from '../database';
-import { safeUser } from '../utils/safeUser';
-import type { Request } from '../utils/types';
+import type { Response } from "express";
+import { db } from "../database";
+import { safeUser } from "../utils/safeUser";
+import type { Request } from "../utils/types";
 import {
   createPost,
   findManyPosts,
   findOnePost,
   updatePost,
-} from '../validators/posts';
+} from "../validators/posts";
 
+// Creates a new post
 export async function create(req: Request, res: Response): Promise<void> {
   const data = createPost.parse(req.body);
 
@@ -24,6 +25,7 @@ export async function create(req: Request, res: Response): Promise<void> {
   res.status(201).json(post);
 }
 
+// Retrieves all posts based on the provided query parameters
 export async function findAll(req: Request, res: Response): Promise<void> {
   const { kind } = findManyPosts.parse(req.query);
 
@@ -32,9 +34,12 @@ export async function findAll(req: Request, res: Response): Promise<void> {
     include: { author: true },
   });
 
-  res.status(200).json(posts.map(post => ({ ...post, author: safeUser(post.author) })));
+  res
+    .status(200)
+    .json(posts.map((post) => ({ ...post, author: safeUser(post.author) })));
 }
 
+// Retrieves a specific post by its ID
 export async function findOne(req: Request, res: Response): Promise<void> {
   const { id: postId } = findOnePost.parse(req.params);
 
@@ -44,13 +49,14 @@ export async function findOne(req: Request, res: Response): Promise<void> {
   });
 
   if (!post) {
-    res.status(404).json({ message: 'Post not found' });
+    res.status(404).json({ message: "Post not found" });
     return;
   }
 
   res.status(200).json({ ...post, author: safeUser(post.author) });
 }
 
+// Updates a specific post by its ID
 export async function update(req: Request, res: Response): Promise<void> {
   const { id: postId } = findOnePost.parse(req.params);
 
@@ -59,7 +65,7 @@ export async function update(req: Request, res: Response): Promise<void> {
   });
 
   if (!post) {
-    res.status(404).json({ message: 'Post not found' });
+    res.status(404).json({ message: "Post not found" });
     return;
   }
 
@@ -73,13 +79,14 @@ export async function update(req: Request, res: Response): Promise<void> {
   res.status(200).json(updatedPost);
 }
 
+// Removes a specific post by its ID
 export async function remove(req: Request, res: Response): Promise<void> {
   const { id: postId } = findOnePost.parse(req.params);
 
   const post = await db.post.findUnique({ where: { id: postId } });
 
   if (!post) {
-    res.status(404).json({ message: 'Post not found' });
+    res.status(404).json({ message: "Post not found" });
     return;
   }
 

@@ -1,8 +1,13 @@
-import type { Response } from 'express';
-import { db } from '../database';
-import type { Request } from '../utils/types';
-import { createTransaction, findOneTransaction, updateTransaction } from '../validators/transactions';
+import type { Response } from "express";
+import { db } from "../database";
+import type { Request } from "../utils/types";
+import {
+  createTransaction,
+  findOneTransaction,
+  updateTransaction,
+} from "../validators/transactions";
 
+// Creates a new transaction
 export async function create(req: Request, res: Response): Promise<void> {
   const data = createTransaction.parse(req.body);
 
@@ -11,12 +16,14 @@ export async function create(req: Request, res: Response): Promise<void> {
   res.status(201).json(transaction);
 }
 
+// Retrieves all transactions
 export async function findAll(req: Request, res: Response): Promise<void> {
   const transactions = await db.transaction.findMany();
 
   res.status(200).json(transactions);
 }
 
+// Retrieves a specific transaction by its ID
 export async function findOne(req: Request, res: Response): Promise<void> {
   const { id: transactionId } = findOneTransaction.parse(req.params);
 
@@ -25,13 +32,14 @@ export async function findOne(req: Request, res: Response): Promise<void> {
   });
 
   if (!transaction) {
-    res.status(404).json({ message: 'Transaction not found' });
+    res.status(404).json({ message: "Transaction not found" });
     return;
   }
 
   res.status(200).json(transaction);
 }
 
+// Updates a specific transaction by its ID
 export async function update(req: Request, res: Response): Promise<void> {
   const { id: transactionId } = findOneTransaction.parse(req.params);
 
@@ -40,7 +48,7 @@ export async function update(req: Request, res: Response): Promise<void> {
   });
 
   if (!transaction) {
-    res.status(404).json({ message: 'Transaction not found' });
+    res.status(404).json({ message: "Transaction not found" });
     return;
   }
 
@@ -54,6 +62,7 @@ export async function update(req: Request, res: Response): Promise<void> {
   res.status(200).json(updatedTransaction);
 }
 
+// Removes a specific transaction by its ID
 export async function remove(req: Request, res: Response): Promise<void> {
   const { id: transactionId } = findOneTransaction.parse(req.params);
 
@@ -62,7 +71,7 @@ export async function remove(req: Request, res: Response): Promise<void> {
   });
 
   if (!transaction) {
-    res.status(404).json({ message: 'Transaction not found' });
+    res.status(404).json({ message: "Transaction not found" });
     return;
   }
 

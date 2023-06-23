@@ -1,24 +1,31 @@
-import { PostKind } from '@prisma/client';
-import type { Response } from 'express';
-import { db } from '../database';
-import { safeUser } from '../utils/safeUser';
-import type { Request } from '../utils/types';
+import { PostKind } from "@prisma/client";
+import type { Response } from "express";
+import { db } from "../database";
+import { safeUser } from "../utils/safeUser";
+import type { Request } from "../utils/types";
 import {
   createComment,
   findOneCommentWithPost,
   findOnePost,
   updateComment,
-} from '../validators/comments';
+} from "../validators/comments";
 
-const UNCOMMENTABLE_POSTS = new Set<PostKind>([PostKind.PARTNER_COMPANY, PostKind.PARTNER_SCHOOL]);
-const UNCOMMENTABLE_POST_ERROR = 'Comments are not allowed on partner posts';
+// Set of post kinds that do not allow comments
+const UNCOMMENTABLE_POSTS = new Set<PostKind>([
+  PostKind.PARTNER_COMPANY,
+  PostKind.PARTNER_SCHOOL,
+]);
 
+// Error message for commenting on uncommentable posts
+const UNCOMMENTABLE_POST_ERROR = "Comments are not allowed on partner posts";
+
+// Creates a new comment on a post
 export async function create(req: Request, res: Response): Promise<void> {
   const { postId } = findOnePost.parse(req.params);
 
   const post = await db.post.findUnique({ where: { id: postId } });
   if (!post) {
-    res.status(404).json({ message: 'Post not found' });
+    res.status(404).json({ message: "Post not found" });
     return;
   }
 
@@ -44,12 +51,13 @@ export async function create(req: Request, res: Response): Promise<void> {
   res.status(201).json(comment);
 }
 
+// Retrieves all comments for a specific post
 export async function findAll(req: Request, res: Response): Promise<void> {
   const { postId } = findOnePost.parse(req.params);
 
   const post = await db.post.findUnique({ where: { id: postId } });
   if (!post) {
-    res.status(404).json({ message: 'Post not found' });
+    res.status(404).json({ message: "Post not found" });
     return;
   }
 
@@ -63,15 +71,23 @@ export async function findAll(req: Request, res: Response): Promise<void> {
     include: { author: true },
   });
 
-  res.status(200).json(comments.map(comment => ({ ...comment, author: safeUser(comment.author) })));
+  res
+    .status(200)
+    .json(
+      comments.map((comment) => ({
+        ...comment,
+        author: safeUser(comment.author),
+      }))
+    );
 }
 
+// Retrieves a specific comment for a post
 export async function findOne(req: Request, res: Response): Promise<void> {
   const { id: commentId, postId } = findOneCommentWithPost.parse(req.params);
 
   const post = await db.post.findUnique({ where: { id: postId } });
   if (!post) {
-    res.status(404).json({ message: 'Post not found' });
+    res.status(404).json({ message: "Post not found" });
     return;
   }
 
@@ -85,19 +101,20 @@ export async function findOne(req: Request, res: Response): Promise<void> {
     include: { author: true },
   });
   if (!comment) {
-    res.status(404).json({ message: 'Comment not found' });
+    res.status(404).json({ message: "Comment not found" });
     return;
   }
 
   res.status(200).json({ ...comment, author: safeUser(comment.author) });
 }
 
+// Updates a specific comment for a post
 export async function update(req: Request, res: Response): Promise<void> {
   const { id: commentId, postId } = findOneCommentWithPost.parse(req.params);
 
   const post = await db.post.findUnique({ where: { id: postId } });
   if (!post) {
-    res.status(404).json({ message: 'Post not found' });
+    res.status(404).json({ message: "Post not found" });
     return;
   }
 
@@ -116,12 +133,13 @@ export async function update(req: Request, res: Response): Promise<void> {
   res.status(200).json(comment);
 }
 
+// Removes a specific comment for a post
 export async function remove(req: Request, res: Response): Promise<void> {
   const { id: commentId, postId } = findOneCommentWithPost.parse(req.params);
 
   const post = await db.post.findUnique({ where: { id: postId } });
   if (!post) {
-    res.status(404).json({ message: 'Post not found' });
+    res.status(404).json({ message: "Post not found" });
     return;
   }
 
