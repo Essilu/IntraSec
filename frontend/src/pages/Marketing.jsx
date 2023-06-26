@@ -1,88 +1,95 @@
-import { createStyles, Title, Text, Button, Container, rem } from '@mantine/core';
-import { Carousel } from '@mantine/carousel';
-import { useMediaQuery } from '@mantine/hooks';
-import { Paper, useMantineTheme } from '@mantine/core';
+import {
+  createStyles,
+  Title,
+  Text,
+  Button,
+  Container,
+  rem,
+} from "@mantine/core";
+import { Carousel } from "@mantine/carousel";
+import { useMediaQuery } from "@mantine/hooks";
+import { Paper, useMantineTheme } from "@mantine/core";
 import { Link } from "react-router-dom";
-import React from 'react';
 
 const useStyles = createStyles((theme) => ({
   wrapper: {
-    position: 'relative',
+    position: "relative",
     paddingTop: rem(120),
     paddingBottom: rem(80),
 
-    [theme.fn.smallerThan('sm')]: {
+    [theme.fn.smallerThan("sm")]: {
       paddingTop: rem(80),
       paddingBottom: rem(60),
     },
   },
 
   inner: {
-    position: 'relative',
+    position: "relative",
     zIndex: 1,
   },
 
   title: {
-    textAlign: 'center',
+    textAlign: "center",
     fontWeight: 800,
     fontSize: rem(40),
     letterSpacing: -1,
-    color: theme.colorScheme === 'dark' ? theme.white : theme.black,
+    color: theme.colorScheme === "dark" ? theme.white : theme.black,
     marginBottom: theme.spacing.xs,
     fontFamily: `Greycliff CF, ${theme.fontFamily}`,
 
-    [theme.fn.smallerThan('xs')]: {
+    [theme.fn.smallerThan("xs")]: {
       fontSize: rem(28),
-      textAlign: 'left',
+      textAlign: "left",
     },
   },
 
   highlight: {
-    color: theme.colors[theme.primaryColor][theme.colorScheme === 'dark' ? 4 : 6],
+    color:
+      theme.colors[theme.primaryColor][theme.colorScheme === "dark" ? 4 : 6],
   },
 
   description: {
-    textAlign: 'center',
+    textAlign: "center",
 
-    [theme.fn.smallerThan('xs')]: {
-      textAlign: 'left',
+    [theme.fn.smallerThan("xs")]: {
+      textAlign: "left",
       fontSize: theme.fontSizes.md,
     },
   },
 
   controls: {
     marginTop: theme.spacing.lg,
-    display: 'flex',
-    justifyContent: 'center',
+    display: "flex",
+    justifyContent: "center",
 
-    [theme.fn.smallerThan('xs')]: {
-      flexDirection: 'column',
+    [theme.fn.smallerThan("xs")]: {
+      flexDirection: "column",
     },
   },
 
   control: {
-    '&:not(:first-of-type)': {
+    "&:not(:first-of-type)": {
       marginLeft: theme.spacing.md,
     },
 
-    [theme.fn.smallerThan('xs')]: {
+    [theme.fn.smallerThan("xs")]: {
       height: rem(42),
       fontSize: theme.fontSizes.md,
 
-      '&:not(:first-of-type)': {
+      "&:not(:first-of-type)": {
         marginTop: theme.spacing.md,
         marginLeft: 0,
       },
     },
-    },
+  },
   card: {
     height: rem(440),
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'space-between',
-    alignItems: 'flex-start',
-    backgroundSize: 'cover',
-    backgroundPosition: 'center',
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "space-between",
+    alignItems: "flex-start",
+    backgroundSize: "cover",
+    backgroundPosition: "center",
   },
 
   titleCard: {
@@ -98,56 +105,51 @@ const useStyles = createStyles((theme) => ({
     color: theme.white,
     opacity: 0.7,
     fontWeight: 700,
-    textTransform: 'uppercase',
-    },
-  
+    textTransform: "uppercase",
+  },
 }));
-
 
 const data = [
   {
     image:
-      'https://images.unsplash.com/photo-1508193638397-1c4234db14d8?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=400&q=80',
-    titleCard: 'Audit et Securité Offensive',
-    category: 'Sécurité',
+      "https://images.unsplash.com/photo-1508193638397-1c4234db14d8?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=400&q=80",
+    titleCard: "Audit et Securité Offensive",
+    category: "Sécurité",
   },
   {
     image:
-      'https://images.unsplash.com/photo-1559494007-9f5847c49d94?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=400&q=80',
-    titleCard: 'CyberSOC & Menace Intelligente',
-    category: 'Prévention',
+      "https://images.unsplash.com/photo-1559494007-9f5847c49d94?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=400&q=80",
+    titleCard: "CyberSOC & Menace Intelligente",
+    category: "Prévention",
   },
   {
     image:
-      'https://images.unsplash.com/photo-1608481337062-4093bf3ed404?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=400&q=80',
-    titleCard: 'Centre de Gestion des Vulnérabilités',
-    category: 'Prévention',
+      "https://images.unsplash.com/photo-1608481337062-4093bf3ed404?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=400&q=80",
+    titleCard: "Centre de Gestion des Vulnérabilités",
+    category: "Prévention",
   },
   {
     image:
-      'https://images.unsplash.com/photo-1507272931001-fc06c17e4f43?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=400&q=80',
-    titleCard: 'Sécurité des réseaux et des infrastructures',
-    category: 'Surêté',
+      "https://images.unsplash.com/photo-1507272931001-fc06c17e4f43?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=400&q=80",
+    titleCard: "Sécurité des réseaux et des infrastructures",
+    category: "Surêté",
   },
   {
     image:
-      'https://images.unsplash.com/photo-1510798831971-661eb04b3739?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=400&q=80',
-    titleCard: 'Formation en Cybersecurité',
-    category: 'Formation',
+      "https://images.unsplash.com/photo-1510798831971-661eb04b3739?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=400&q=80",
+    titleCard: "Formation en Cybersecurité",
+    category: "Formation",
   },
   {
     image:
-      'https://images.unsplash.com/photo-1582721478779-0ae163c05a60?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=400&q=80',
+      "https://images.unsplash.com/photo-1582721478779-0ae163c05a60?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=400&q=80",
     titleCard: "Services de test d'intrusion et de sécurité des systèmes",
-    category: 'Surêté',
+    category: "Surêté",
   },
 ];
 
 function Card({ image, titleCard, category }) {
   const { classes } = useStyles();
-  const handleViewMore = () => {
-    window.location.href = '/Article'; 
-  };
 
   return (
     <Paper
@@ -165,55 +167,56 @@ function Card({ image, titleCard, category }) {
           {titleCard}
         </Title>
       </div>
-      <Button variant="white" color="dark" onClick={handleViewMore}>
-      Voir plus
-    </Button>
+      <Link to="/Article">
+        <Button variant="white" color="dark">
+          Voir plus
+        </Button>
+      </Link>
     </Paper>
   );
 }
 
 export default function Marketing() {
-    const { classes } = useStyles();
-     const theme = useMantineTheme();
-    const mobile = useMediaQuery(`(max-width: ${theme.breakpoints.sm})`);
-    const slides = data.map((item) => (
-        <Carousel.Slide key={item.title}>
-        <Card {...item} />
-        </Carousel.Slide>
-    ));
+  const { classes } = useStyles();
+  const theme = useMantineTheme();
+  const mobile = useMediaQuery(`(max-width: ${theme.breakpoints.sm})`);
+  const slides = data.map((item) => (
+    <Carousel.Slide key={item.title}>
+      <Card {...item} />
+    </Carousel.Slide>
+  ));
 
-    return (
+  return (
     <>
-    <Container className={classes.wrapper} size={1400}>
+      <Container className={classes.wrapper} size={1400}>
+        <div className={classes.inner}>
+          <Title className={classes.title}>
+            Découvrez le{" "}
+            <Text component="span" className={classes.highlight} inherit>
+              future de la cybersecurité
+            </Text>{" "}
+            avec SecureCorp
+          </Title>
 
-      <div className={classes.inner}>
-        <Title className={classes.title}>
-          Découvrez le {' '}
-          <Text component="span" className={classes.highlight} inherit>
-            future de la cybersecurité
-          </Text>{' '}
-          avec SecureCorp
-        </Title>
+          <Container p={0} size={600}>
+            <Text size="lg" color="dimmed" className={classes.description}>
+              Découvrez nos solutions innovantes en matière de sécurité
+              informatique. Nous vous proposons des solutions adaptées à vos
+              besoins et à votre budget.
+            </Text>
+          </Container>
+        </div>
+      </Container>
 
-        <Container p={0} size={600}>
-          <Text size="lg" color="dimmed" className={classes.description}>
-            Découvrez nos solutions innovantes en matière de sécurité informatique.
-            Nous vous proposons des solutions adaptées à vos besoins et à votre budget.
-          </Text>
-        </Container>
-
-      </div>
-            </Container>
-            
-    <Carousel
-      slideSize="50%"
-      breakpoints={[{ maxWidth: 'sm', slideSize: '100%', slideGap: rem(2) }]}
-      slideGap="xl"
-      align="start"
-      slidesToScroll={mobile ? 1 : 2}
-        >
+      <Carousel
+        slideSize="50%"
+        breakpoints={[{ maxWidth: "sm", slideSize: "100%", slideGap: rem(2) }]}
+        slideGap="xl"
+        align="start"
+        slidesToScroll={mobile ? 1 : 2}
+      >
         {slides}
-        </Carousel>
-    </>  );
+      </Carousel>
+    </>
+  );
 }
-
