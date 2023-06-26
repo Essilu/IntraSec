@@ -1,4 +1,5 @@
-import { Container, Title, Text, rem } from '@mantine/core';
+/* eslint-disable react/no-unescaped-entities */
+import { Container, Title, Text } from '@mantine/core';
 import '../styles/Article.css';
 
 function Article() {
