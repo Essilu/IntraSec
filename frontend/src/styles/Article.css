@@ -1,0 +1,93 @@
+/* Define custom styles using createStyles */
+.article-root {
+    background-color: #11284b;
+    background-size: cover;
+    background-position: center;
+    background-image: linear-gradient(250deg, rgba(130, 201, 30, 0) 0%, #062343 70%), url(https://images.unsplash.com/photo-1508193638397-1c4234db14d8?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=400&q=80);
+    padding-top: 30px;
+    /* Example value */
+    padding-bottom: 30px;
+    /* Example value */
+}
+
+/* Styles for the inner content container */
+.article-inner {
+    display: flex;
+    justify-content: space-between;
+
+    @media (max-width: 768px) {
+        /* Example breakpoint */
+        flex-direction: column;
+    }
+}
+
+/* Styles for the image */
+.article-image {
+    @media (max-width: 768px) {
+        /* Example breakpoint */
+        display: none;
+    }
+}
+
+/* Styles for the content section */
+.article-content {
+    padding-top: 20px;
+    /* Example value */
+    padding-bottom: 20px;
+    /* Example value */
+    margin-right: 30px;
+    /* Example value */
+
+    @media (max-width: 768px) {
+        /* Example breakpoint */
+        margin-right: 0;
+    }
+}
+
+/* Styles for the title */
+.article-title {
+    color: #fff;
+    /* Example value */
+    font-family: 'Greycliff CF', Arial, sans-serif;
+    /* Example value */
+    font-weight: 900;
+    line-height: 1.05;
+    max-width: 500px;
+    font-size: 48px;
+
+    @media (max-width: 768px) {
+        /* Example breakpoint */
+        max-width: 100%;
+        font-size: 34px;
+        line-height: 1.15;
+    }
+}
+
+/* Styles for the description text */
+.article-description {
+    color: #333;
+    /* Example value */
+    opacity: 0.75;
+    max-width: 500px;
+
+    @media (max-width: 768px) {
+        /* Example breakpoint */
+        max-width: 100%;
+    }
+}
+
+/* Styles for the control section */
+.article-control {
+    padding-left: 50px;
+    /* Example value */
+    padding-right: 50px;
+    /* Example value */
+    font-family: 'Greycliff CF', Arial, sans-serif;
+    /* Example value */
+    font-size: 22px;
+
+    @media (max-width: 768px) {
+        /* Example breakpoint */
+        width: 100%;
+    }
+}

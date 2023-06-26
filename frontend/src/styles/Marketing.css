@@ -1,0 +1,140 @@
+/* Marketing.css */
+
+/* Classe wrapper */
+.marketing-wrapper {
+    position: relative;
+    padding-top: 120px;
+    padding-bottom: 80px;
+}
+
+@media (max-width: 600px) {
+    .marketing-wrapper {
+        padding-top: 80px;
+        padding-bottom: 60px;
+    }
+}
+
+/* Classe inner */
+.marketing-inner {
+    position: relative;
+    z-index: 1;
+}
+
+/* Classe title */
+.marketing-title {
+    text-align: center;
+    font-weight: 800;
+    font-size: 40px;
+    letter-spacing: -1px;
+    margin-bottom: 4px;
+    font-family: 'Greycliff CF', sans-serif;
+}
+
+@media (max-width: 480px) {
+    .marketing-title {
+        font-size: 28px;
+        text-align: left;
+    }
+}
+
+/* Classe highlight */
+.marketing-highlight {
+    color: #3f9fff;
+}
+
+/* Classe description */
+.marketing-description {
+    text-align: center;
+}
+
+@media (max-width: 480px) {
+    .marketing-description {
+        text-align: left;
+        font-size: 16px;
+    }
+}
+
+/* Classe controls */
+.marketing-controls {
+    margin-top: 32px;
+    display: flex;
+    justify-content: center;
+}
+
+@media (max-width: 480px) {
+    .marketing-controls {
+        flex-direction: column;
+    }
+}
+
+/* Classe control */
+.marketing-control {
+    &:not(:first-of-type) {
+        margin-left: 16px;
+    }
+
+    @media (max-width: 480px) {
+        height: 42px;
+        font-size: 16px;
+
+        &:not(:first-of-type) {
+            margin-top: 16px;
+            margin-left: 0;
+        }
+    }
+}
+
+/* Classe card */
+.marketing-card {
+    height: 440px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-start;
+    background-size: cover;
+    background-position: center;
+    padding: 24px;
+    margin-bottom: 24px;
+}
+
+/* Classe titleCard */
+.marketing-titleCard {
+    font-family: 'Greycliff CF', sans-serif;
+    font-weight: 900;
+    color: #ffffff;
+    line-height: 1.2;
+    font-size: 32px;
+    margin-top: 4px;
+}
+
+/* Classe category */
+.marketing-category {
+    color: #ffffff;
+    opacity: 0.7;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+/* Classe viewMoreButton */
+.marketing-viewMoreButton {
+    margin-left: 8px;
+    margin-right: 16px;
+}
+
+/* Classe editButton */
+.marketing-editButton {
+    margin-right: 16px;
+}
+
+/* Classe deleteButton */
+.marketing-deleteButton {
+    /* Styles pour la classe deleteButton */
+    /* Ajoutez vos styles ici */
+}
+
+/* Classe controlButtonsCard */
+.marketing-controlButtonsCard {
+    display: flex;
+    margin-top: 16px;
+}
+
