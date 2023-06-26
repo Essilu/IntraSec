@@ -1,9 +1,17 @@
+// style import
 import "../styles/Comptability.css";
+
+// component imports
 import DonutChart from "react-donut-chart";
-import { Table, Button } from "@mantine/core";
+import { Table, Button, Drawer, Group, Space, Divider } from "@mantine/core";
+import { useDisclosure } from "@mantine/hooks";
+
+// other imports
 import { Link } from "react-router-dom";
 
 export default function Comptability() {
+  const [opened, { open, close }] = useDisclosure(false);
+
   const elements = [
     {
       Company: "Total Energies",
@@ -12,13 +20,13 @@ export default function Comptability() {
       Amount: 1000,
     },
     {
-      Company: "Entreprise 1",
+      Company: "La caisse d'épargne",
       TransactionType: "Dépot",
       PayementMethod: "Chèque",
       Amount: 1000,
     },
     {
-      Company: "Entreprise 1",
+      Company: "ING Direct",
       TransactionType: "Dépot",
       PayementMethod: "Chèque",
       Amount: 1000,
@@ -120,7 +128,20 @@ export default function Comptability() {
       </div>
 
       <div>
+      <Space h="md" />
+      <Divider my="sm" />
+  
         <h3>Dernières transactions:</h3>
+        <Drawer position="right" opened={opened} onClose={close} title="Ajouter une transaction">
+          {/* Form ajouter une transaction */}
+        </Drawer>
+      
+
+        <Group position="right">
+          <Button  onClick={open}>Open Drawer</Button>
+        </Group>
+        <Space h="md" />
+        <Space h="md" />
         <div>
           <Table>
             <thead>
