@@ -29,7 +29,7 @@ export const useTransactionStore = create((set, get) => ({
   update: async (id, transaction) => {
     // Update a transaction, update it in the store (put it in 'transaction' and update it in the 'transactions'
     // array), and return the updated transaction
-    const response = await axios.put(`/transactions/${id}`, transaction);
+    const response = await axios.patch(`/transactions/${id}`, transaction);
     set({
       transaction: response.data,
       transactions: get().transactions.map((t) => {
