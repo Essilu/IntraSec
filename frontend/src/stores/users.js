@@ -24,12 +24,12 @@ export const useUserStore = create((set, get) => ({
     // Fetch all users, put them in the store (in 'users') and return them
     const response = await axios.get('/users');
     set({ users: response.data });
+    console.log(response.data);
     return response.data;
   },
   update: async (id, user) => {
     // Update a user, update it in the store (put it in 'user' and update it in the 'users'
     // array), and return the updated user
-    const user = await axios.patch(`/users/${id}`, user);
     set({
       user: response.data,
       users: get().users.map((t) => {
