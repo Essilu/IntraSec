@@ -29,11 +29,15 @@ model Session {
 }
 
 model Role {
-  id          Int     @id @default(autoincrement())
-  name        String  @unique
-  permissions BigInt
-  builtIn     Boolean @default(false)
-  users       User[]
+  id                     Int     @id @default(autoincrement())
+  name                   String  @unique
+  permissionTransactions Int
+  permissionPosts        Int
+  permissionComments     Int
+  permissionUsers        Int
+  permissionRoles        Int
+  builtIn                Boolean @default(false)
+  users                  User[]
 }
 
 model Transaction {

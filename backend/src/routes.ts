@@ -2,6 +2,7 @@ import { Router } from 'express';
 import * as auth from './controllers/auth';
 import * as comments from './controllers/comments';
 import * as posts from './controllers/posts';
+import * as roles from './controllers/roles';
 import * as transactions from './controllers/transactions';
 import * as users from './controllers/users';
 import ensureAuthenticated from './middlewares/ensureAuthenticated';
@@ -10,7 +11,7 @@ export const router = Router();
 
 // API root
 router.get('/', (_req, res) => {
-  res.json({ message: "Welcome to WashConnect! There's nothing here..." });
+  res.json({ message: "Welcome to IntraSec! There's nothing here..." });
 });
 
 // Authentication
@@ -41,6 +42,18 @@ router
   .get(ensureAuthenticated, transactions.findOne)
   .patch(ensureAuthenticated, transactions.update)
   .delete(ensureAuthenticated, transactions.remove);
+
+// Roles
+router
+  .route('/roles')
+  .get(ensureAuthenticated, roles.findAll)
+  .post(ensureAuthenticated, roles.create);
+
+router
+  .route('/roles/:id')
+  .get(ensureAuthenticated, roles.findOne)
+  .patch(ensureAuthenticated, roles.update)
+  .delete(ensureAuthenticated, roles.remove);
 
 // Posts
 router

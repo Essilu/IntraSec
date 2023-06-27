@@ -1,6 +1,13 @@
 import 'dotenv/config';
 import { PrismaClient } from '@prisma/client';
 import bcrypt from 'bcrypt';
+import {
+  CommentPermissions,
+  PermissionHelper,
+  PostPermissions,
+  TransactionPermissions,
+  UserPermissions,
+} from '../../src/utils/permissions';
 
 const prisma = new PrismaClient();
 
@@ -11,7 +18,17 @@ async function main(): Promise<void> {
     create: {
       name: 'user',
       builtIn: true,
-      permissions: 0b0000_0000_0000_0000_0000_0000_0000_0000,
+      permissionTransactions: TransactionPermissions.ReadTransaction,
+      permissionPosts: PostPermissions.ReadSupportPost
+        | PostPermissions.CreateSupportPost
+        | PostPermissions.UpdateOwnSupportPost
+        | PostPermissions.DeleteOwnSupportPost,
+      permissionComments: CommentPermissions.ReadSupportComment
+        | CommentPermissions.CreateSupportComment
+        | CommentPermissions.UpdateOwnSupportComment
+        | CommentPermissions.DeleteOwnSupportComment,
+      permissionUsers: UserPermissions.ReadUser,
+      permissionRoles: 0,
     },
   });
 
@@ -21,7 +38,11 @@ async function main(): Promise<void> {
     create: {
       name: 'admin',
       builtIn: true,
-      permissions: 0b1111_1111_1111_1111_1111_1111_1111_1111,
+      permissionTransactions: PermissionHelper.AllTransactions,
+      permissionPosts: PermissionHelper.AllPosts,
+      permissionComments: PermissionHelper.AllComments,
+      permissionUsers: PermissionHelper.AllUsers,
+      permissionRoles: PermissionHelper.AllRoles,
     },
   });
 
