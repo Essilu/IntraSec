@@ -34,7 +34,7 @@ export async function create(req: Request, res: Response): Promise<void> {
 
 // Retrieves all users
 export async function findAll(req: Request, res: Response): Promise<void> {
-  const users = await db.user.findMany();
+  const users = await db.user.findMany({ include: { roles: true } });
 
   res.status(200).json(users);
 }
@@ -45,6 +45,7 @@ export async function findOne(req: Request, res: Response): Promise<void> {
 
   const user = await db.user.findUnique({
     where: { id: userId },
+    include: { roles: true },
   });
 
   if (!user) {
@@ -61,6 +62,7 @@ export async function update(req: Request, res: Response): Promise<void> {
 
   const user = await db.user.findUnique({
     where: { id: userId },
+    include: { roles: true },
   });
 
   if (!user) {
