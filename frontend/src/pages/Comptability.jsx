@@ -3,85 +3,95 @@ import "../styles/Comptability.css";
 
 // component imports
 import DonutChart from "react-donut-chart";
-import { Table, Button, Drawer, Group, Space, Divider } from "@mantine/core";
+import {
+  Table,
+  Button,
+  Drawer,
+  Group,
+  Space,
+  Divider,
+  TextInput,
+  createStyles,
+  SegmentedControl,
+  rem,
+} from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
+import { useForm } from "@mantine/form";
+import { useState } from "react";
 
 // other imports
 import { Link } from "react-router-dom";
+import { useTransactionStore } from "../stores/transactions";
 
 export default function Comptability() {
   const [opened, { open, close }] = useDisclosure(false);
+  const [type, setType] = useState("react");
 
-  const elements = [
-    {
-      Company: "Total Energies",
-      TransactionType: "Dépot",
-      PayementMethod: "Chèque",
-      Amount: 1000,
+  const useStyles = createStyles((theme) => ({
+    root: {
+      backgroundColor:
+        theme.colorScheme === "dark" ? theme.colors.dark[6] : theme.white,
+      boxShadow: theme.shadows.md,
+      border: `${rem(1)} solid ${
+        theme.colorScheme === "dark"
+          ? theme.colors.dark[4]
+          : theme.colors.gray[1]
+      }`,
     },
-    {
-      Company: "La caisse d'épargne",
-      TransactionType: "Dépot",
-      PayementMethod: "Chèque",
-      Amount: 1000,
+
+    indicator: {
+      backgroundImage: theme.fn.gradient({ from: "pink", to: "orange" }),
     },
-    {
-      Company: "ING Direct",
-      TransactionType: "Dépot",
-      PayementMethod: "Chèque",
-      Amount: 1000,
+
+    control: {
+      border: "0 !important",
     },
-    {
-      Company: "Entreprise 1",
-      TransactionType: "Dépot",
-      PayementMethod: "Chèque",
-      Amount: 1000,
+
+    label: {
+      "&, &:hover": {
+        "&[data-active]": {
+          color: theme.white,
+        },
+      },
     },
-    {
-      Company: "Entreprise 1",
-      TransactionType: "Dépot",
-      PayementMethod: "Chèque",
-      Amount: 1000,
+  }));
+
+  // Get the transactions from the store and the fetchAllTransactions function
+  const [transactions, fetchAllTransactions, createTransaction] =
+    useTransactionStore((state) => [
+      state.transactions,
+      state.fetchAll,
+      state.create,
+    ]);
+
+  // useForm hook
+  const form = useForm({
+    initialValues: {
+      company: "",
+      type: "",
+      mean: "",
+      amount: "",
     },
-    {
-      Company: "Entreprise 1",
-      TransactionType: "Dépot",
-      PayementMethod: "Chèque",
-      Amount: 1000,
+
+    validate: {
+      company: (value) => value.trim().length === 0,
+      type: (value) => value.trim().length === 0,
+      mean: (value) => value.trim().length === 0,
+      amount: (value) => value.trim().length === 0,
     },
-    {
-      Company: "Entreprise 1",
-      TransactionType: "Dépot",
-      PayementMethod: "Chèque",
-      Amount: 1000,
-    },
-    {
-      Company: "Entreprise 1",
-      TransactionType: "Dépot",
-      PayementMethod: "Chèque",
-      Amount: 1000,
-    },
-    {
-      Company: "Entreprise 1",
-      TransactionType: "Dépot",
-      PayementMethod: "Chèque",
-      Amount: 1000,
-    },
-    {
-      Company: "Entreprise 1",
-      TransactionType: "Dépot",
-      PayementMethod: "Chèque",
-      Amount: 1000,
-    },
-  ];
-  const rows = elements.map((element) => (
+  });
+
+  // Fetch all transactions on page load
+  const rows = transactions.map((element) => (
     <tr key={element.name}>
-      <td>{element.Company}</td>
-      <td>{element.TransactionType}</td>
-      <td>{element.PayementMethod}</td>
-      <td>{element.Amount}</td>
+      <td>{element.company}</td>
+      <td>{element.type}</td>
+      <td>{element.mean}</td>
+      <td>{element.amount}</td>
     </tr>
   ));
+
+  const { classes } = useStyles();
   return (
     <div>
       <h1>Comptabilité</h1>
@@ -128,17 +138,63 @@ export default function Comptability() {
       </div>
 
       <div>
-      <Space h="md" />
-      <Divider my="sm" />
-  
+        <Space h="md" />
+        <Divider my="sm" />
+
         <h3>Dernières transactions:</h3>
-        <Drawer position="right" opened={opened} onClose={close} title="Ajouter une transaction">
-          {/* Form ajouter une transaction */}
+        <Drawer
+          position="right"
+          opened={opened}
+          onClose={close}
+          title="Ajouter une transaction"
+        >
+          <form onSubmit={form.onSubmit((values) => console.log(values))}>
+            <TextInput
+              withAsterisk
+              label="Entreprise"
+              placeholder="Nom de l'entreprise"
+              {...form.getInputProps("company")}
+            />
+            <Space h="md" />
+
+            <SegmentedControl
+              value={type}
+              onChange={setType}
+              radius="xl"
+              size="md"
+              data={["CARD", "CHECK", "CASH", "TRANSFER"]}
+              classNames={classes}
+              {...form.getInputProps("mean")}
+            />
+            <Space h="md" />
+            <TextInput
+              withAsterisk
+              label="Montant"
+              placeholder="10000"
+              {...form.getInputProps("amount")}
+            />
+            <Space h="md" />
+
+            <Space h="md" />
+            <SegmentedControl
+              value={type}
+              onChange={setType}
+              radius="xl"
+              size="md"
+              data={["DEBIT", "CREDIT"]}
+              classNames={classes}
+              {...form.getInputProps("type")}
+            />
+            <Space h="md" />
+
+            <Group position="right" mt="md">
+              <Button type="submit">Submit</Button>
+            </Group>
+          </form>
         </Drawer>
-      
 
         <Group position="right">
-          <Button  onClick={open}>Open Drawer</Button>
+          <Button onClick={open}>Open Drawer</Button>
         </Group>
         <Space h="md" />
         <Space h="md" />
