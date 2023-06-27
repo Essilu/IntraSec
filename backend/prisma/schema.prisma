@@ -49,6 +49,8 @@ model Post {
   title    String
   content  String
   kind     PostKind
+  category String?
+  imageUrl String?
   author   User      @relation(fields: [authorId], references: [id], onDelete: Cascade)
   authorId Int
   comments Comment[]
