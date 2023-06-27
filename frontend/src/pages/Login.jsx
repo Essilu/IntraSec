@@ -32,6 +32,9 @@ export default function Login() {
 
   return (
     <div className="parent">
+      <Box className="terminal">
+        <Image withPlaceholder src="/src/assets/terminal.gif" />
+      </Box>
       <Box maw={500} mx="auto" className="signin">
         <Image withPlaceholder src="/src/assets/logo.png" />
         <form className="text" onSubmit={form.onSubmit(doLogin)}>
