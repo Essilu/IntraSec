@@ -48,7 +48,7 @@ passport.serializeUser((user: User, done) => {
 // Deserialize the user from the session
 passport.deserializeUser((id: number, done) => {
   db.user
-    .findUnique({ where: { id } })
+    .findUnique({ where: { id }, include: { roles: true } })
     .then((user) => {
       done(null, user);
     })
