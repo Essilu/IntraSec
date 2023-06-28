@@ -14,11 +14,28 @@ import {
 import bcrypt from 'bcrypt';
 import {
   CommentPermissions,
-  PermissionHelper,
   PostPermissions,
   TransactionPermissions,
   UserPermissions,
 } from '../../src/utils/permissions';
+
+/* eslint-disable @typescript-eslint/no-duplicate-enum-values */
+export enum PermissionHelper {
+  AllTransactions = 63,         // (1 << 6) - 1
+
+  AllMarketingPosts = 63,       // (1 << 6) - 1
+  AllSupportPosts = 2048,       // (1 << 6 - 1) << 6
+  AllPartnerPosts = 131_072,    // (1 << 6 - 1) << 12
+  AllPosts = 262_143,           // (1 << 18) - 1
+
+  AllMarketingComments = 63,    // (1 << 6) - 1
+  AllSupportComments = 2048,    // (1 << 6 - 1) << 6
+  AllComments = 4095,           // (1 << 12) - 1
+
+  AllUsers = 15,                // (1 << 4) - 1
+
+  AllRoles = 15,                // (1 << 4) - 1
+}
 
 const prisma = new PrismaClient();
 
