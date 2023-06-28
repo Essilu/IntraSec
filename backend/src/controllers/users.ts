@@ -36,7 +36,7 @@ export async function create(req: Request, res: Response): Promise<void> {
 export async function findAll(req: Request, res: Response): Promise<void> {
   const users = await db.user.findMany({ include: { roles: true } });
 
-  res.status(200).json(users);
+  res.status(200).json(users.map(safeUser));
 }
 
 // Retrieves a specific user by their ID
@@ -90,6 +90,11 @@ export async function remove(req: Request, res: Response): Promise<void> {
 
   if (!user) {
     res.status(404).json({ message: 'User not found' });
+    return;
+  }
+
+  if (user.email === process.env.ADMIN_EMAIL) {
+    res.status(403).json({ message: 'Cannot delete admin user' });
     return;
   }
 
