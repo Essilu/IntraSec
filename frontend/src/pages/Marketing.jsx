@@ -1,4 +1,5 @@
-import { useState } from "react";
+/* eslint-disable react/prop-types */
+import { useEffect, useState } from "react";
 import {
   Title,
   Text,
@@ -7,46 +8,20 @@ import {
   Container,
   rem,
   TextInput,
+  Textarea,
 } from "@mantine/core";
 import { Carousel } from "@mantine/carousel";
 import { useMediaQuery } from "@mantine/hooks";
 import { Paper, useMantineTheme } from "@mantine/core";
 import { Link } from "react-router-dom";
 import "../styles/Marketing.css";
-
-// Define the initial carousel data
-const initialCarouselData = [
-  {
-    image:
-      "https://images.unsplash.com/photo-1508193638397-1c4234db14d8?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=400&q=80",
-    titleCard: "Audit et Sécurité Offensive",
-    category: "Sécurité",
-  },
-  {
-    image:
-      "https://images.unsplash.com/photo-1559494007-9f5847c49d94?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=400&q=80",
-    titleCard: "CyberSOC & Menace Intelligente",
-    category: "Prévention",
-  },
-  {
-    image:
-      "https://images.unsplash.com/photo-1608481337062-4093bf3ed404?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=400&q=80",
-    titleCard: "Centre de Gestion des Vulnérabilités",
-    category: "Prévention",
-  },
-  {
-    image:
-      "https://images.unsplash.com/photo-1507272931001-fc06c17e4f43?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=400&q=80",
-    titleCard: "Sécurité des réseaux et des infrastructures",
-    category: "Sûreté",
-  },
-];
+import { useMarketingStore } from "../stores/marketing";
 
 // Define the Card component
-function Card({ image, titleCard, category, onEdit, onDelete }) {
+function Card({ id, imageUrl, title, category, content, onEdit, onDelete }) {
   // Render the component
   const handleEdit = () => {
-    onEdit({ image, titleCard, category });
+    onEdit({ id, imageUrl, title, category, content });
   };
 
   // Event handler for deleting the card
@@ -59,21 +34,21 @@ function Card({ image, titleCard, category, onEdit, onDelete }) {
       shadow="md"
       padding="xl"
       radius="md"
-      style={{ backgroundImage: `url(${image})` }}
+      style={{ backgroundImage: `url(${imageUrl})` }}
       className="marketing-card"
     >
       <div>
         <Text className="marketing-category" size="xs">
           {category}
         </Text>
-        <Title order={3} className="marketing-titleCard">
-          {titleCard}
+        <Title order={3} className="marketing-title">
+          {title}
         </Title>
       </div>
       <div className="marketing-controlButtonsCard">
         {/* Update show more button to navigate to the corresponding page*/}
-        {/* <Link to={`/CardPage/${titleCard}`} className="marketing-seeArticle"> */}
-        <Link to="/Article" className="marketing-seeArticle">
+        {/* <Link to={`/CardPage/${title}`} className="marketing-seeArticle"> */}
+        <Link to={`/Article/${id}`} className="marketing-seeArticle">
           <Button
             variant="white"
             color="dark"
@@ -106,18 +81,42 @@ function Card({ image, titleCard, category, onEdit, onDelete }) {
 
 // Define the Marketing component
 function Marketing() {
+  const [
+    articles,
+    fetchAllMarketing,
+    createArticle,
+    deleteArticle,
+    updateArticle,
+  ] = useMarketingStore((state) => [
+    state.articles,
+    state.fetchAll,
+    state.create,
+    state.delete,
+    state.update,
+  ]);
+
+  // Fetch all transactions on page load
+  useEffect(() => {
+    async function fetchData() {
+      // Set loading to true and fetch all transactions
+
+      await fetchAllMarketing();
+    }
+    fetchData();
+  }, [fetchAllMarketing]);
+
   // Define state variables using the useState hook
   const theme = useMantineTheme();
   const mobile = useMediaQuery(`(max-width: ${theme.breakpoints.sm}px)`);
-  const [carouselData, setCarouselData] = useState(initialCarouselData);
   const [editModalOpen, setEditModalOpen] = useState(false);
   const [editedCard, setEditedCard] = useState(null);
   // Define state variables for the add modal
   const [showAddModal, setShowAddModal] = useState(false);
   const [newCardData, setNewCardData] = useState({
-    image: "",
-    titleCard: "",
+    imageUrl: "",
+    title: "",
     category: "",
+    content: "",
   });
   const [errorMessage, setErrorMessage] = useState("");
 
@@ -129,7 +128,7 @@ function Marketing() {
   // Event handler for closing the add modal
   const handleAddModalClose = () => {
     setShowAddModal(false);
-    setNewCardData({ image: "", titleCard: "", category: "" });
+    setNewCardData({ imageUrl: "", title: "", category: "", content: "" });
     setErrorMessage("");
   };
 
@@ -144,22 +143,27 @@ function Marketing() {
 
   // Event handler for saving the new card
   const handleSaveNewCard = () => {
-    if (!newCardData.image || !newCardData.titleCard || !newCardData.category) {
+    if (
+      !newCardData.imageUrl ||
+      !newCardData.title ||
+      !newCardData.category ||
+      !newCardData.content
+    ) {
       setErrorMessage("Veuillez remplir tous les champs");
       return;
     }
 
-    const newCard = { ...newCardData };
-    setCarouselData((prevData) => [...prevData, newCard]);
-
+    const newCard = {
+      ...newCardData,
+      kind: "MARKETING_POST",
+    };
+    createArticle(newCard);
     handleAddModalClose();
   };
 
   // Event handler for deleting a card
   const handleDeleteCard = (index) => {
-    const updatedCarouselData = [...carouselData];
-    updatedCarouselData.splice(index, 1);
-    setCarouselData(updatedCarouselData);
+    deleteArticle(articles[index].id);
   };
 
   // Event handler for closing the edit modal
@@ -170,24 +174,21 @@ function Marketing() {
 
   // Event handler for saving the changes
   const handleSaveChanges = (newCard) => {
-    const updatedCarouselData = [...carouselData];
-    updatedCarouselData[editedCard.index] = newCard;
-    setCarouselData(updatedCarouselData);
     setEditModalOpen(false);
     setEditedCard(null);
-    console.log(newCard);
+    updateArticle(newCard.id, {title:newCard.title, content:newCard.content, category: newCard.category, imageUrl: newCard.imageUrl});
   };
 
   // Event handler for opening the edit modal
   const handleEditCard = (card) => {
-    const index = carouselData.findIndex((item) => item === card);
+    const index = articles.findIndex((item) => item === card);
     setEditedCard({ ...card, index });
     setEditModalOpen(true);
   };
 
   // Render the component with the carrousel
-  const slides = carouselData.map((slide, index) => (
-    <Carousel.Slide key={slide.titleCard}>
+  const slides = articles.map((slide, index) => (
+    <Carousel.Slide key={slide.title}>
       <Card
         {...slide}
         onEdit={() => handleEditCard(slide)}
@@ -244,18 +245,18 @@ function Marketing() {
         <TextInput // Update the image
           label="Image"
           placeholder="URL de l'image"
-          value={editedCard?.image || ""}
+          value={editedCard?.imageUrl || ""}
           onChange={(event) =>
-            setEditedCard({ ...editedCard, image: event.target.value })
+            setEditedCard({ ...editedCard, imageUrl: event.target.value })
           }
           required
         />
         <TextInput // Update the title
           label="Titre"
           placeholder="Titre de la carte"
-          value={editedCard?.titleCard || ""}
+          value={editedCard?.title || ""}
           onChange={(event) =>
-            setEditedCard({ ...editedCard, titleCard: event.target.value })
+            setEditedCard({ ...editedCard, title: event.target.value })
           }
           required
         />
@@ -265,6 +266,15 @@ function Marketing() {
           value={editedCard?.category || ""}
           onChange={(event) =>
             setEditedCard({ ...editedCard, category: event.target.value })
+          }
+          required
+        />
+        <TextInput // Update the content
+          label="Contenu"
+          placeholder="Contenu de l'article"
+          value={editedCard?.content || ""}
+          onChange={(event) =>
+            setEditedCard({ ...editedCard, content: event.target.value })
           }
           required
         />
@@ -284,7 +294,7 @@ function Marketing() {
         <TextInput // Update the image
           label="Image"
           placeholder="URL de l'image"
-          value={newCardData.image}
+          value={newCardData.imageUrl}
           onChange={handleNewCardInputChange}
           name="image"
           required
@@ -292,9 +302,9 @@ function Marketing() {
         <TextInput // Update the title
           label="Titre"
           placeholder="Titre de la carte"
-          value={newCardData.titleCard}
+          value={newCardData.title}
           onChange={handleNewCardInputChange}
-          name="titleCard"
+          name="title"
           required
         />
         <TextInput // Update the category
@@ -304,6 +314,15 @@ function Marketing() {
           onChange={handleNewCardInputChange}
           name="category"
           required
+        />
+        <Textarea // Update the content
+          label="Corps de l'article"
+          placeholder="Contenu de l'article"
+          value={newCardData.content}
+          onChange={handleNewCardInputChange}
+          name="content"
+          required
+          rows={10}
         />
         {errorMessage && <div>{errorMessage}</div>}{" "}
         {/* Display the error message in case */}
