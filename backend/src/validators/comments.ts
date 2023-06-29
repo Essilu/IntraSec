@@ -10,15 +10,15 @@ export const createComment = z
 // Validation schema for finding a post
 export const findOnePost = z
   .object({
-    postId: z.coerce.number().int().positive(), // Validates the postId field as a positive integer
+    postId: z.coerce.number().int().nonnegative(), // Validates the postId field as a positive integer
   })
   .strict();
 
 // Validation schema for finding a comment with its associated post
 export const findOneCommentWithPost = z
   .object({
-    postId: z.coerce.number().int().positive(), // Validates the postId field as a positive integer
-    id: z.coerce.number().int().positive(), // Validates the id field as a positive integer
+    postId: z.coerce.number().int().nonnegative(), // Validates the postId field as a positive integer
+    id: z.coerce.number().int().nonnegative(), // Validates the id field as a positive integer
   })
   .strict();
 
