@@ -51,7 +51,7 @@ function App() {
           <Route path="/Tickets" element={makePage(<Tickets />)} />
           <Route path="/Marketing" element={makePage(<Marketing />)} />
           <Route path="/CompanyList" element={makePage(<CompanyList />)} />
-          <Route path="/Article" element={makePage(<Article/>)} />
+          <Route path="/Article/:id" element={makePage(<Article/>)} />
           <Route path="/SchoolList" element={makePage(<SchoolList />)} />
         </Routes>
       </BrowserRouter>
