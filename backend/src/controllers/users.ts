@@ -34,9 +34,9 @@ export async function create(req: Request, res: Response): Promise<void> {
 
 // Retrieves all users
 export async function findAll(req: Request, res: Response): Promise<void> {
-  const users = await db.user.findMany();
+  const users = await db.user.findMany({ include: { roles: true } });
 
-  res.status(200).json(users);
+  res.status(200).json(users.map(safeUser));
 }
 
 // Retrieves a specific user by their ID
@@ -45,6 +45,7 @@ export async function findOne(req: Request, res: Response): Promise<void> {
 
   const user = await db.user.findUnique({
     where: { id: userId },
+    include: { roles: true },
   });
 
   if (!user) {
@@ -61,6 +62,7 @@ export async function update(req: Request, res: Response): Promise<void> {
 
   const user = await db.user.findUnique({
     where: { id: userId },
+    include: { roles: true },
   });
 
   if (!user) {
@@ -88,6 +90,11 @@ export async function remove(req: Request, res: Response): Promise<void> {
 
   if (!user) {
     res.status(404).json({ message: 'User not found' });
+    return;
+  }
+
+  if (user.email === process.env.ADMIN_EMAIL) {
+    res.status(403).json({ message: 'Cannot delete admin user' });
     return;
   }
 

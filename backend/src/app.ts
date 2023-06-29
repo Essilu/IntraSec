@@ -2,12 +2,13 @@ import { PrismaSessionStore } from '@quixo3/prisma-session-store';
 import bodyParser from 'body-parser';
 import cors from 'cors';
 import express from 'express';
+import 'express-async-errors';
+
 import session from 'express-session';
 import helmet from 'helmet';
 import logger from 'morgan';
 import passport from 'passport';
 
-import 'express-async-errors';
 
 import { db } from './database';
 import { errorHandler, errorNotFoundHandler } from './middlewares/errorHandler';

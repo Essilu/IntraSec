@@ -1,7 +1,7 @@
 import type { NextFunction, Request, Response } from 'express';
 
 // Middleware function to ensure that the user is authenticated
-export default function ensureAuthenticated(
+export default function isAuthenticated(
   req: Request,
   res: Response,
   next: NextFunction,

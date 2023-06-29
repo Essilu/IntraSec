@@ -14,19 +14,28 @@ import {
   createStyles,
   SegmentedControl,
   rem,
+  NumberInput,
 } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { useForm } from "@mantine/form";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 // other imports
 import { Link } from "react-router-dom";
 import { useTransactionStore } from "../stores/transactions";
 
 export default function Comptability() {
+  //Drawer controller
   const [opened, { open, close }] = useDisclosure(false);
-  const [type, setType] = useState("react");
 
+  //SegmentedControl controller
+  const [type, setType] = useState("react");
+  const [mean, setMean] = useState("react");
+
+  //Loading controller
+  const [isLoading, setLoading] = useState(true);
+
+  //Styles
   const useStyles = createStyles((theme) => ({
     root: {
       backgroundColor:
@@ -67,24 +76,33 @@ export default function Comptability() {
   // useForm hook
   const form = useForm({
     initialValues: {
-      company: "",
+      otherCompany: "",
       type: "",
       mean: "",
-      amount: "",
+      amount: 0,
     },
 
     validate: {
-      company: (value) => value.trim().length === 0,
+      otherCompany: (value) => value.trim().length === 0,
       type: (value) => value.trim().length === 0,
       mean: (value) => value.trim().length === 0,
-      amount: (value) => value.trim().length === 0,
+      amount: (value) => value <= 0,
     },
   });
+  useEffect(() => {
+    async function fetchData() {
+      // Set loading to true and fetch all transactions
+      setLoading(true);
+      await fetchAllTransactions();
+      setLoading(false);
+    }
+    fetchData();
+  }, [fetchAllTransactions]);
 
   // Fetch all transactions on page load
   const rows = transactions.map((element) => (
     <tr key={element.name}>
-      <td>{element.company}</td>
+      <td>{element.otherCompany}</td>
       <td>{element.type}</td>
       <td>{element.mean}</td>
       <td>{element.amount}</td>
@@ -148,18 +166,18 @@ export default function Comptability() {
           onClose={close}
           title="Ajouter une transaction"
         >
-          <form onSubmit={form.onSubmit((values) => console.log(values))}>
+          <form onSubmit={form.onSubmit((values) => createTransaction(values))}>
             <TextInput
               withAsterisk
               label="Entreprise"
               placeholder="Nom de l'entreprise"
-              {...form.getInputProps("company")}
+              {...form.getInputProps("otherCompany")}
             />
             <Space h="md" />
 
             <SegmentedControl
-              value={type}
-              onChange={setType}
+              value={mean}
+              onChange={setMean}
               radius="xl"
               size="md"
               data={["CARD", "CHECK", "CASH", "TRANSFER"]}
@@ -167,7 +185,7 @@ export default function Comptability() {
               {...form.getInputProps("mean")}
             />
             <Space h="md" />
-            <TextInput
+            <NumberInput
               withAsterisk
               label="Montant"
               placeholder="10000"
@@ -194,7 +212,7 @@ export default function Comptability() {
         </Drawer>
 
         <Group position="right">
-          <Button onClick={open}>Open Drawer</Button>
+          <Button onClick={open}>Ajouter une transaction</Button>
         </Group>
         <Space h="md" />
         <Space h="md" />
@@ -210,6 +228,8 @@ export default function Comptability() {
             </thead>
             <tbody>{rows}</tbody>
           </Table>
+          <Space h="md" />
+          <Space h="md" />
           <Link to="/TransactionsHistory" className="seeTransactions">
             <Button variant="outline" color="indigo">
               Voir toutes les transactions

@@ -29,11 +29,15 @@ model Session {
 }
 
 model Role {
-  id          Int     @id @default(autoincrement())
-  name        String  @unique
-  permissions BigInt
-  builtIn     Boolean @default(false)
-  users       User[]
+  id                     Int     @id @default(autoincrement())
+  name                   String  @unique
+  permissionTransactions Int
+  permissionPosts        Int
+  permissionComments     Int
+  permissionUsers        Int
+  permissionRoles        Int
+  builtIn                Boolean @default(false)
+  users                  User[]
 }
 
 model Transaction {
@@ -49,6 +53,8 @@ model Post {
   title    String
   content  String
   kind     PostKind
+  category String?
+  imageUrl String?
   author   User      @relation(fields: [authorId], references: [id], onDelete: Cascade)
   authorId Int
   comments Comment[]
