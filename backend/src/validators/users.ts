@@ -16,3 +16,7 @@ export const findOneUser = z.object({
 
 // Validation schema for updating a user (partial schema)
 export const updateUser = createUser.partial().strict();
+
+export const changeRole = z.object({
+  roles: z.array(z.number().int().nonnegative()).min(1), // Validates the roles field as an array of strings
+}).strict();
