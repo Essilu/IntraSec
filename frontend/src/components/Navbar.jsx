@@ -117,10 +117,6 @@ export default function Navbar({ children }) {
                 {/* NavLink component for "Gestion des employés" link */}
                 <NavLink label="Gestion des employés" />
               </Link>
-              <Link to="/">
-                {/* NavLink component for "Logs" link */}
-                <NavLink label="Logs" />
-              </Link>
             </NavLink>
           </Shell.Section>
           <Shell.Section>

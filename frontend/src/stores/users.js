@@ -48,4 +48,32 @@ export const useUserStore = create((set, get) => ({
       users: get().users.filter((t) => t.id !== id),
     });
   },
+  addRoles: async (id, roleIds) => {
+    // Add roles to a user, update it in the store (put it in 'user' and update it in the 'users'
+    // array), and return the updated user
+    const response = await axios.post(`/users/${id}/roles`, { roles: roleIds });
+    set({
+      user: response.data,
+      users: get().users.map((t) => {
+        if (t.id === id) return response.data;
+        return t;
+      }),
+    });
+    return response.data;
+  },
+  removeRoles: async (id, roleIds) => {
+    // Remove roles from a user, update it in the store (put it in 'user' and update it in the 'users'
+    // array), and return the updated user
+    const response = await axios.delete(`/users/${id}/roles`, {
+      data: { roles: roleIds },
+    });
+    set({
+      user: response.data,
+      users: get().users.map((t) => {
+        if (t.id === id) return response.data;
+        return t;
+      }),
+    });
+    return response.data;
+  },
 }));
