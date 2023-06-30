@@ -1,4 +1,3 @@
-import { useState } from "react";
 import {
   createStyles,
   Table,
@@ -7,6 +6,8 @@ import {
   Title,
   Button,
 } from "@mantine/core";
+import { useTicketStore } from "../stores/tickets";
+import { useEffect, useState } from "react";
 
 // Create custom styles using the createStyles function
 const useStyles = createStyles((theme) => ({
@@ -38,88 +39,30 @@ const useStyles = createStyles((theme) => ({
 
 // Define the TableScrollArea component
 export default function TableScrollArea() {
-  // Define data for the table rows
-  const data = [
-    {
-      ti_number: 1,
-      ti_title: "Mouse bug",
-      name: "Pierre Ponce",
-    },
-    {
-      ti_number: 2,
-      ti_title: "Display glitch",
-      name: "Emma Evans",
-    },
-    {
-      ti_number: 3,
-      ti_title: "Network connection issue",
-      name: "Oliver Owens",
-    },
-    {
-      ti_number: 4,
-      ti_title: "Application crash",
-      name: "Sophia Saunders",
-    },
-    {
-      ti_number: 5,
-      ti_title: "Database error",
-      name: "Noah Newton",
-    },
-    {
-      ti_number: 6,
-      ti_title: "Print job failure",
-      name: "Ava Anderson",
-    },
-    {
-      ti_number: 7,
-      ti_title: "Slow system performance",
-      name: "Liam Lambert",
-    },
-    {
-      ti_number: 8,
-      ti_title: "Audio distortion",
-      name: "Isabella Ingram",
-    },
-    {
-      ti_number: 9,
-      ti_title: "File corruption",
-      name: "Mia Mitchell",
-    },
-    {
-      ti_number: 10,
-      ti_title: "Login authentication problem",
-      name: "Lucas Lawson",
-    },
-    {
-      ti_number: 11,
-      ti_title: "Data synchronization error",
-      name: "Sophie Spencer",
-    },
-    {
-      ti_number: 12,
-      ti_title: "Mobile app compatibility issue",
-      name: "Henry Hudson",
-    },
-  ];
-    // ... more data objects ...
+  const [isLoading, setLoading] = useState(true);
+  // Get the transactions from the store and the fetchAllTransactions function
+  const [tickets, fetchAllTicket] = useTicketStore((state) => [
+    state.tickets,
+    state.fetchAll,
+  ]);
+
+  // Fetch all transactions on page load
+  useEffect(() => {
+    async function fetchData() {
+      // Set loading to true and fetch all transactions
+
+      setLoading(true); 
+      await fetchAllTicket();
+      setLoading(false);
+    }
+    fetchData();
+    console.log(tickets); 
+  }, [fetchAllTicket]);
+
 
   // Get the styles and classes from the useStyles hook
   const { classes, cx } = useStyles();
   const [scrolled, setScrolled] = useState(false);
-
-  // Map the data to table rows
-  const rows = data.map((row) => (
-    <tr key={row.ti_number}>
-      <td>{row.ti_number}</td>
-      <td>{row.ti_title}</td>
-      <td>{row.name}</td>
-      <td>
-        <Button color="green" radius="xl" size="xs" compact>
-          Plus d'infos
-        </Button>
-      </td>
-    </tr>
-  ));
 
   return (
     <>
@@ -144,7 +87,20 @@ export default function TableScrollArea() {
             </tr>
           </thead>
           {/* Render the table body */}
-          <tbody>{rows}</tbody>
+          <tbody>
+            {tickets.map((row) => (
+              <tr key={row.id}>
+                <td>{row.title}</td>
+                <td>{row.id}</td>
+                <td>{row.author.firstname + " " + row.author.lastname}</td>
+                <td>
+                  <Button color="green" radius="xl" size="xs" compact>
+                    Plus d'infos
+                  </Button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
         </Table>
       </ScrollArea>
     </>

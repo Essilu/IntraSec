@@ -9,22 +9,31 @@ import {
   Group,
   ActionIcon,
   rem,
-} from '@mantine/core';
-import { IconBrandTwitter, IconBrandYoutube, IconBrandInstagram } from '@tabler/icons-react';
+  Space,
+  SegmentedControl,
+  NumberInput,
+} from "@mantine/core";
+import {
+  IconBrandTwitter,
+  IconBrandYoutube,
+  IconBrandInstagram,
+} from "@tabler/icons-react";
+import { useForm } from "@mantine/form";
+import { useTicketStore } from "../stores/tickets";
 
 // Define the component's styles using the createStyles function
 const useStyles = createStyles((theme) => ({
   wrapper: {
     minHeight: 400,
-    boxSizing: 'border-box',
+    boxSizing: "border-box",
     margin: 30,
-    backgroundImage: `linear-gradient(-60deg, ${theme.colors[theme.primaryColor][4]} 0%, ${
-      theme.colors[theme.primaryColor][7]
-    } 100%)`,
+    backgroundImage: `linear-gradient(-60deg, ${
+      theme.colors[theme.primaryColor][4]
+    } 0%, ${theme.colors[theme.primaryColor][7]} 100%)`,
     borderRadius: theme.radius.md,
     padding: `calc(${theme.spacing.xl} * 2.5)`,
 
-    [theme.fn.smallerThan('sm')]: {
+    [theme.fn.smallerThan("sm")]: {
       padding: `calc(${theme.spacing.xl} * 1.5)`,
     },
   },
@@ -39,8 +48,8 @@ const useStyles = createStyles((theme) => ({
     color: theme.colors[theme.primaryColor][0],
     maxWidth: rem(300),
 
-    [theme.fn.smallerThan('sm')]: {
-      maxWidth: '100%',
+    [theme.fn.smallerThan("sm")]: {
+      maxWidth: "100%",
     },
   },
 
@@ -54,7 +63,7 @@ const useStyles = createStyles((theme) => ({
   social: {
     color: theme.white,
 
-    '&:hover': {
+    "&:hover": {
       color: theme.colors[theme.primaryColor][1],
     },
   },
@@ -64,7 +73,7 @@ const useStyles = createStyles((theme) => ({
     borderColor: theme.colors.gray[4],
     color: theme.black,
 
-    '&::placeholder': {
+    "&::placeholder": {
       color: theme.colors.gray[5],
     },
   },
@@ -83,19 +92,41 @@ const social = [IconBrandTwitter, IconBrandYoutube, IconBrandInstagram];
 
 // Define the ContactUs component
 export default function ContactUs() {
-  const { classes } = useStyles();
+  const [tickets, createTicket,  fetchAllTicket] = useTicketStore((state) => [
+    state.tickets,
+    state.create,
+    state.fetchAll,
+  ]);
 
-  // Generate the social icons using the map function
-  const icons = social.map((Icon, index) => (
-    <ActionIcon key={index} size={28} className={classes.social} variant="transparent">
-      {/* Icon component */}
-    </ActionIcon>
-  ));
+  const form = useForm({
+    initialValues: {
+      title: "",
+      content: "",
+    },
+
+    validate: {
+      title: (value) => value.trim().length === 0,
+      content: (value) => value.trim().length === 0,
+    },
+  });
+
+  const { classes } = useStyles();
+  
+  const newTicket = async (values) => {
+    await createTicket(values);
+    await fetchAllTicket();
+  };
 
   return (
+
+    
     <div className={classes.wrapper}>
       {/* A SimpleGrid component with 2 columns, responsive to smaller screens */}
-      <SimpleGrid cols={2} spacing={50} breakpoints={[{ maxWidth: 'sm', cols: 1 }]}>
+      <SimpleGrid
+        cols={2}
+        spacing={50}
+        breakpoints={[{ maxWidth: "sm", cols: 1 }]}
+      >
         <div>
           {/* Title component for the form */}
           <Title className={classes.title}>Ouvrir un nouveau ticket</Title>
@@ -106,25 +137,19 @@ export default function ContactUs() {
 
           {/* Group component containing additional information */}
           <Group mt="xl">
-            <Text color="white">Nos équipes travaillent tous les jours pour régler vos problèmes. Contactez-nous et nous vous répondrons dans les plus brefs délais.</Text>
+            <Text color="white">
+              Nos équipes travaillent tous les jours pour régler vos problèmes.
+              Contactez-nous et nous vous répondrons dans les plus brefs délais.
+            </Text>
           </Group>
         </div>
-        <div className={classes.form}>
-          {/* TextInput component for the ticket title */}
+        <form onSubmit={form.onSubmit((values) => newTicket(values))}>
           <TextInput
-            label="Intitulé du ticket"
-            placeholder="Ex: Problème de facturation"
-            required
-            classNames={{ input: classes.input, label: classes.inputLabel }}
+            withAsterisk
+            label="Intitulé du problème"
+            placeholder="Bug souris"
+            {...form.getInputProps("title")}
           />
-          {/* TextInput component for the user's name */}
-          <TextInput
-            label="Name"
-            placeholder="John Doe"
-            mt="md"
-            classNames={{ input: classes.input, label: classes.inputLabel }}
-          />
-          {/* Textarea component for the message */}
           <Textarea
             required
             label="Your message"
@@ -132,13 +157,13 @@ export default function ContactUs() {
             minRows={4}
             mt="md"
             classNames={{ input: classes.input, label: classes.inputLabel }}
+            {...form.getInputProps("content")}
           />
 
-          {/* Group component for the submit button */}
           <Group position="right" mt="md">
-            <Button className={classes.control}>Poster le ticket.</Button>
+            <Button type="submit">Envoyer</Button>
           </Group>
-        </div>
+        </form>
       </SimpleGrid>
     </div>
   );
