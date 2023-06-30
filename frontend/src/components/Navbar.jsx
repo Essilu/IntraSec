@@ -29,14 +29,15 @@ export default function Navbar({ children }) {
         // Shell component for the navigation bar
         <Shell width={{ base: 300 }} p="xs">
           <Shell.Section grow>
+            {/* NavLink component for home link */}
             <Link to="/">
-              {/* NavLink component for home link */}
               <NavLink
                 label="Accueil"
                 icon={<IconHome2 size="1rem" stroke={1.5} />}
                 childrenOffset={28}
               />
             </Link>
+
             {/* NavLink component for "Comptabilité" section */}
             <NavLink
               label="Comptabilité"
@@ -44,17 +45,15 @@ export default function Navbar({ children }) {
               childrenOffset={28}
             >
               <Link to="/comptability">
-                {/* NavLink component for "Récentes" link */}
-                <NavLink label="Récentes" />
+                <NavLink label="Aperçu" />
               </Link>
-              <Link to="/TransactionsHistory">
-                {/* NavLink component for "Historiques des factures" link */}
-                <NavLink label="Historiques des factures" />
+              <Link to="/comptability/history">
+                <NavLink label="Historiques" />
               </Link>
             </NavLink>
 
-            <Link to="/Marketing">
-              {/* NavLink component for "Marketing" link */}
+            {/* NavLink component for "Marketing" link */}
+            <Link to="/articles">
               <NavLink
                 label="Marketing"
                 icon={<IconAd size="1rem" stroke={1.5} />}
@@ -62,24 +61,23 @@ export default function Navbar({ children }) {
                 defaultOpened
               />
             </Link>
-            {/* NavLink component for "International" section */}
+
+            {/* NavLink component for "Partenarias" section */}
             <NavLink
-              label="International"
+              label="Partenariats"
               icon={<IconWorld size="1rem" stroke={1.5} />}
               childrenOffset={28}
             >
-              <Link to="/companyList">
-                {/* NavLink component for "Entreprise partenaire" link */}
+              <Link to="/partners/companies">
                 <NavLink label="Entreprise partenaire" />
               </Link>
-              <Link to="/schoolList">
-                {/* NavLink component for "Ecole partenaire" link */}
+              <Link to="/partners/schools">
                 <NavLink label="Ecole partenaire" />
               </Link>
             </NavLink>
-            {/* NavLink component for "Relations Humaines" section */}
 
-            <Link to="/employeesList">
+            {/* NavLink component for "Relations Humaines" section */}
+            <Link to="/employees">
               <NavLink
                 label="Relations Humaines"
                 icon={<IconUsersGroup size="1rem" stroke={1.5} />}
@@ -93,13 +91,11 @@ export default function Navbar({ children }) {
               icon={<IconHelp size="1rem" stroke={1.5} />}
               childrenOffset={28}
             >
-              <Link to="/NewTicket">
-                {/* NavLink component for "Nouveau ticket" link */}
-                <NavLink label="Nouveau ticket" />
-              </Link>
-              <Link to="/Tickets">
-                {/* NavLink component for "Tickets ouverts" link */}
+              <Link to="/support">
                 <NavLink label="Tickets ouverts" />
+              </Link>
+              <Link to="/support/new">
+                <NavLink label="Nouveau ticket" />
               </Link>
             </NavLink>
 
@@ -109,16 +105,15 @@ export default function Navbar({ children }) {
               icon={<IconUserBolt size="1rem" stroke={1.5} />}
               childrenOffset={28}
             >
-              <Link to="/Roles">
-                {/* NavLink component for "Gestions des rôles" link */}
+              <Link to="/roles">
                 <NavLink label="Gestions des rôles" />
               </Link>
-              <Link to="/employeesAdmin">
-                {/* NavLink component for "Gestion des employés" link */}
+              <Link to="/roles/users">
                 <NavLink label="Gestion des employés" />
               </Link>
             </NavLink>
           </Shell.Section>
+
           <Shell.Section>
             {/* UserButton component */}
             <UserButton

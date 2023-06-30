@@ -225,7 +225,7 @@ export default function Comptability() {
           </Table>
           <Space h="md" />
           <Space h="md" />
-          <Link to="/TransactionsHistory" className="seeTransactions">
+          <Link to="/comptability/history" className="seeTransactions">
             <Button variant="outline" color="indigo">
               Voir toutes les transactions
             </Button>

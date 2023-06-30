@@ -50,24 +50,26 @@ function App() {
             />
             <Route path="/comptability" element={makePage(<Comptability />)} />
             <Route
-              path="/TransactionsHistory"
+              path="/comptability/history"
               element={makePage(<TransactionsHistory />)}
             />
+            <Route path="/articles" element={makePage(<Marketing />)} />
+            <Route path="/articles/:id" element={makePage(<Article />)} />
+            <Route path="/partners/companies" element={makePage(<CompanyList />)} />
+            <Route path="/partners/schools" element={makePage(<SchoolList />)} />
             <Route
-              path="/EmployeesAdmin"
-              element={makePage(<EmployeesAdmin />)}
-            />
-            <Route
-              path="/EmployeesList"
+              path="/employees"
               element={makePage(<EmployeesList />)}
             />
-            <Route path="/NewTicket" element={makePage(<NewTicket />)} />
-            <Route path="/Tickets" element={makePage(<Tickets />)} />
-            <Route path="/Marketing" element={makePage(<Marketing />)} />
-            <Route path="/CompanyList" element={makePage(<CompanyList />)} />
-            <Route path="/Article/:id" element={makePage(<Article />)} />
-            <Route path="/SchoolList" element={makePage(<SchoolList />)} />
-            <Route path="/Roles" element={makePage(<Roles />)} />
+            <Route path="/support" element={makePage(<Tickets />)} />
+            <Route path="/support/new" element={makePage(<NewTicket />)} />
+            <Route path="/manage/roles" element={makePage(<Roles />)} />
+            <Route
+              path="/manage/employees"
+              element={makePage(<EmployeesAdmin />)}
+            />
+
+            <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>
         </BrowserRouter>
       </ModalsProvider>
