@@ -21,6 +21,7 @@ import {
 } from '../utils/permissions';
 import PermissionsGroup from '../components/Roles/PermissionsGroup';
 import PermissionSection from '../components/Roles/PermissionSection';
+import { notifications } from '@mantine/notifications';
 
 const permissionLabels = ['create', 'read', 'update', 'delete'];
 const permissionLabelsOwn = [...permissionLabels, 'update-own', 'delete-own'];
@@ -59,11 +60,14 @@ export default function Roles() {
   // Fetch the data when the page loads
   useEffect(() => {
     async function fetchData() {
-      const result = await fetchAllRoles();
-      setPermissionsByRole(serializePermissionValues(result));
+      await fetchAllRoles();
     }
     fetchData();
   }, [fetchAllRoles]);
+
+  useEffect(() => {
+    setPermissionsByRole(serializePermissionValues(roles));
+  }, [roles]);
 
   // Modal shown when creating a new role, to enter the name
   const newRoleModal = () => {
@@ -106,6 +110,17 @@ export default function Roles() {
       labels: { confirm: 'Confirmer', cancel: 'Annuler' },
       onConfirm: async () => {
         await updateRole(id, { name: renameRoleTextInput.current.value });
+
+        notifications.show({
+          color: 'blue',
+          title: 'Rôle renommé',
+          message: (
+            <Text>
+              Vous avez bien renommé le rôle <b>{role.name}</b> en{' '}
+              <b>{renameRoleTextInput.current.value}</b>.
+            </Text>
+          ),
+        });
       },
     });
   };
@@ -126,6 +141,16 @@ export default function Roles() {
       confirmProps: { color: 'red' },
       onConfirm: async () => {
         await deleteRole(id);
+
+        notifications.show({
+          color: 'red',
+          title: 'Rôle supprimé',
+          message: (
+            <Text>
+              Vous avez bien supprimé le rôle <b>{role.name}</b>.
+            </Text>
+          ),
+        });
       },
     });
   };
@@ -143,6 +168,7 @@ export default function Roles() {
 
   // Save the permissions when the save button is clicked
   const handleSave = async () => {
+    let modifications = 0;
     const deserializedRoles = deserializePermissionValues(permissionsByRole);
     for (const { id, ...role } of deserializedRoles) {
       // Check if role has been modified
@@ -157,8 +183,19 @@ export default function Roles() {
         continue;
       }
 
+      // Update the role
       await updateRole(id, role);
+      modifications++;
     }
+
+    notifications.show({
+      color: 'green',
+      title: 'Modifications effectuées',
+      message:
+        modifications > 1
+          ? `${modifications} rôles ont été mis à jour.`
+          : `${modifications} rôle a été mis à jour.`,
+    });
   };
 
   return (
