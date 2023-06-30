@@ -152,11 +152,7 @@ function Marketing() {
       return;
     }
 
-    const newCard = {
-      ...newCardData,
-      kind: "MARKETING_POST",
-    };
-    createArticle(newCard);
+    createArticle(newCardData);
     handleAddModalClose();
   };
 
