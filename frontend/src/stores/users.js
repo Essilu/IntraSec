@@ -9,7 +9,7 @@ export const useUserStore = create((set, get) => ({
     // and return the created user
     const response = await axios.post('/users', users);
     set({
-      users: response.data,
+      user: response.data,
       users: [...get().users, response.data],
     });
     return response.data;
@@ -24,12 +24,13 @@ export const useUserStore = create((set, get) => ({
     // Fetch all users, put them in the store (in 'users') and return them
     const response = await axios.get('/users');
     set({ users: response.data });
-    console.log(response.data);
     return response.data;
   },
   update: async (id, user) => {
     // Update a user, update it in the store (put it in 'user' and update it in the 'users'
     // array), and return the updated user
+    const response = await axios.put(`/users/${id}`, user);
+
     set({
       user: response.data,
       users: get().users.map((t) => {
@@ -43,6 +44,7 @@ export const useUserStore = create((set, get) => ({
     // Delete a user, remove it from the store (remove it from the 'users' array)
     await axios.delete(`/users/${id}`);
     set({
+      user: null,
       users: get().users.filter((t) => t.id !== id),
     });
   },
