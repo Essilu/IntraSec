@@ -7,7 +7,10 @@ export const useTicketStore = create((set, get) => ({
   create: async (ticket) => {
     // Create a new ticket, put it in the store (in 'ticket' and in the 'tickets' array),
     // and return the created ticket
-    const response = await axios.post('/posts', ticket);
+    const response = await axios.post('/posts', {
+      ...ticket,
+      kind: "SUPPORT_TICKET",
+    });
     set({
       ticket: response.data,
       tickets: [...get().tickets, response.data],
