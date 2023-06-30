@@ -79,7 +79,7 @@ export default function Navbar({ children }) {
               </Link>
             </NavLink>
             {/* NavLink component for "Relations Humaines" section */}
-            
+
               <Link to="/employeesList">
               <NavLink
               label="Relations Humaines"
@@ -87,8 +87,6 @@ export default function Navbar({ children }) {
               childrenOffset={28}
             />
               </Link>
-              
-       
 
             {/* NavLink component for "Support" section */}
             <NavLink
@@ -112,7 +110,7 @@ export default function Navbar({ children }) {
               icon={<IconUserBolt size="1rem" stroke={1.5} />}
               childrenOffset={28}
             >
-              <Link to="/">
+              <Link to="/Roles">
                 {/* NavLink component for "Gestions des rôles" link */}
                 <NavLink label="Gestions des rôles" />
               </Link>
