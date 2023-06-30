@@ -29,7 +29,7 @@ export const useUserStore = create((set, get) => ({
   update: async (id, user) => {
     // Update a user, update it in the store (put it in 'user' and update it in the 'users'
     // array), and return the updated user
-    const response = await axios.put(`/users/${id}`, user);
+    const response = await axios.patch(`/users/${id}`, user);
 
     set({
       user: response.data,
