@@ -5,30 +5,30 @@ import {
   Box,
   Image,
   PasswordInput,
-} from "@mantine/core";
-import { useForm } from "@mantine/form";
+} from '@mantine/core';
+import { useForm } from '@mantine/form';
 
-import "../styles/login.css";
+import '../styles/login.css';
 import { useAuthStore } from '../stores/auth';
 import { redirect } from 'react-router-dom';
 
 export default function Login() {
-  const login = useAuthStore(state => state.login);
+  const login = useAuthStore((state) => state.login);
 
   const form = useForm({
     initialValues: {
-      email: "",
-      password: "",
+      email: '',
+      password: '',
     },
     validate: {
-      email: (value) => (/^\S+@\S+$/.test(value) ? null : "Invalid email"),
+      email: (value) => (/^\S+@\S+$/.test(value) ? null : 'Invalid email'),
     },
   });
 
   const doLogin = async (values) => {
     login(values);
     redirect('/');
-  }
+  };
 
   return (
     <div className="parent">
@@ -40,17 +40,17 @@ export default function Login() {
         <form className="text" onSubmit={form.onSubmit(doLogin)}>
           <TextInput
             withAsterisk
-            style={{ fontSize: "16px" }}
+            style={{ fontSize: '16px' }}
             label="email"
             placeholder="your@email.com"
-            {...form.getInputProps("email")}
+            {...form.getInputProps('email')}
           />
 
           <PasswordInput
             withAsterisk
             label="Password"
             placeholder="Password"
-            {...form.getInputProps("password")}
+            {...form.getInputProps('password')}
           />
 
           <Group position="right" mt="md">

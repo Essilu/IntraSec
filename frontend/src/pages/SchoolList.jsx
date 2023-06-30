@@ -1,4 +1,4 @@
-import { Card, Image, Text, Badge, Button, Group, Modal, useMantineTheme } from '@mantine/core';
+import { Card, Image, Text, Badge, Button, Group, Modal } from '@mantine/core';
 import { useState } from 'react';
 import '../styles/schoolList.css';
 
@@ -12,7 +12,6 @@ function SchoolList() {
     { id: 2, title: 'School 2' },
     { id: 3, title: 'School 3' },
   ]);
-  const theme = useMantineTheme();
 
   // Event handlers for opening the edit and info modals
   const handleEditButtonClick = () => {
@@ -67,15 +66,20 @@ function SchoolList() {
                 {/* Display the title of the box */}
                 <Text weight={500}>{box.title}</Text>
                 {/* Display a Badge component for editing */}
-                <Badge color="pink" variant="light" onClick={handleEditButtonClick}>
+                <Badge
+                  color="pink"
+                  variant="light"
+                  onClick={handleEditButtonClick}
+                >
                   Edit
                 </Badge>
               </Group>
 
               {/* Display a description text */}
               <Text size="sm" color="dimmed">
-                With Fjord Tours you can explore more of the magical fjord landscapes with tours and
-                activities on and around the fjords of Norway
+                With Fjord Tours you can explore more of the magical fjord
+                landscapes with tours and activities on and around the fjords of
+                Norway
               </Text>
 
               {/* Display a Button component for booking */}

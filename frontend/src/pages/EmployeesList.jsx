@@ -6,7 +6,7 @@ import {
   ActionIcon,
   Menu,
   ScrollArea,
-} from "@mantine/core";
+} from '@mantine/core';
 import {
   IconPencil,
   IconMessages,
@@ -14,12 +14,11 @@ import {
   IconReportAnalytics,
   IconTrash,
   IconDots,
-} from "@tabler/icons-react";
-import { useUserStore } from "../stores/users";
-import { useEffect, useState } from "react";
+} from '@tabler/icons-react';
+import { useUserStore } from '../stores/users';
+import { useEffect } from 'react';
 
 export default function UsersStack() {
-  const [isLoading, setLoading] = useState(true);
   // Get the transactions from the store and the fetchAllTransactions function
   const [employes, fetchAllUsers] = useUserStore((state) => [
     state.users,
@@ -28,17 +27,13 @@ export default function UsersStack() {
 
   // Fetch all transactions on page load
   useEffect(() => {
-    console.log("fetching data");
     async function fetchData() {
       // Set loading to true and fetch all transactions
-
-      setLoading(true);
       await fetchAllUsers();
-      setLoading(false);
     }
     fetchData();
   }, [fetchAllUsers]);
-  
+
   return (
     <>
       <div>
@@ -85,7 +80,7 @@ export default function UsersStack() {
                       <IconPencil size="1rem" stroke={1.5} />
                     </ActionIcon>
                     <Menu
-                      transitionProps={{ transition: "pop" }}
+                      transitionProps={{ transition: 'pop' }}
                       withArrow
                       position="bottom-end"
                       withinPortal

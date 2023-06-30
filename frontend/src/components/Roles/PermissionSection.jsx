@@ -2,10 +2,16 @@ import { Grid, Text } from '@mantine/core';
 import React from 'react';
 import PermissionsGroup from './PermissionsGroup';
 
-export default function PermissionSection({ section, subsections, permissionsByRole, handleChange, roleId }) {
+export default function PermissionSection({
+  section,
+  subsections,
+  permissionsByRole,
+  handleChange,
+  roleId,
+}) {
   return (
     <Grid columns={7}>
-      {subsections.map(subsection => (
+      {subsections.map((subsection) => (
         <React.Fragment key={subsection.name}>
           <Grid.Col span={1}>
             <Text>{subsection.displayName}</Text>

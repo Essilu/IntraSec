@@ -54,40 +54,51 @@ export const getPermissionNames = (role, scope, subscope) => {
   const permissions = [];
   const permission = role[`permission${scope}`];
   if (subscope) {
-    const offset = subscope === 'marketing' ? 0
-      : subscope === 'support' ? 6
-      : 12;
-    if (permission & (1 << (offset + 0))) permissions.push(`${scope.toLowerCase()}.${subscope}.create`);
-    if (permission & (1 << (offset + 1))) permissions.push(`${scope.toLowerCase()}.${subscope}.read`);
-    if (permission & (1 << (offset + 2))) permissions.push(`${scope.toLowerCase()}.${subscope}.update`);
-    if (permission & (1 << (offset + 3))) permissions.push(`${scope.toLowerCase()}.${subscope}.update-own`);
-    if (permission & (1 << (offset + 4))) permissions.push(`${scope.toLowerCase()}.${subscope}.delete`);
-    if (permission & (1 << (offset + 5))) permissions.push(`${scope.toLowerCase()}.${subscope}.delete-own`);
+    const offset =
+      subscope === 'marketing' ? 0 : subscope === 'support' ? 6 : 12;
+    if (permission & (1 << (offset + 0)))
+      permissions.push(`${scope.toLowerCase()}.${subscope}.create`);
+    if (permission & (1 << (offset + 1)))
+      permissions.push(`${scope.toLowerCase()}.${subscope}.read`);
+    if (permission & (1 << (offset + 2)))
+      permissions.push(`${scope.toLowerCase()}.${subscope}.update`);
+    if (permission & (1 << (offset + 3)))
+      permissions.push(`${scope.toLowerCase()}.${subscope}.update-own`);
+    if (permission & (1 << (offset + 4)))
+      permissions.push(`${scope.toLowerCase()}.${subscope}.delete`);
+    if (permission & (1 << (offset + 5)))
+      permissions.push(`${scope.toLowerCase()}.${subscope}.delete-own`);
   } else {
-    if (permission & 1 << 0) permissions.push(`${scope.toLowerCase()}.create`);
-    if (permission & 1 << 1) permissions.push(`${scope.toLowerCase()}.read`);
-    if (permission & 1 << 2) permissions.push(`${scope.toLowerCase()}.update`);
-    if (permission & 1 << 3) permissions.push(`${scope.toLowerCase()}.delete`);
+    if (permission & (1 << 0))
+      permissions.push(`${scope.toLowerCase()}.create`);
+    if (permission & (1 << 1)) permissions.push(`${scope.toLowerCase()}.read`);
+    if (permission & (1 << 2))
+      permissions.push(`${scope.toLowerCase()}.update`);
+    if (permission & (1 << 3))
+      permissions.push(`${scope.toLowerCase()}.delete`);
   }
 
   return permissions;
-}
+};
 
 export const serializePermissionValues = (roles) => {
   const permissions = {};
   roles.forEach((role) => {
     permissions[role.id] = {};
-    permissions[role.id].transactions = getPermissionNames(role, 'Transactions');
-    permissions[role.id].posts = [
+    permissions[role.id].transactions = getPermissionNames(
+      role,
+      'Transactions'
+    );
+    (permissions[role.id].posts = [
       ...getPermissionNames(role, 'Posts', 'marketing'),
       ...getPermissionNames(role, 'Posts', 'support'),
       ...getPermissionNames(role, 'Posts', 'partner'),
-    ],
-    permissions[role.id].comments = [
-      ...getPermissionNames(role, 'Comments', 'marketing'),
-      ...getPermissionNames(role, 'Comments', 'support'),
-    ],
-    permissions[role.id].users = getPermissionNames(role, 'Users');
+    ]),
+      (permissions[role.id].comments = [
+        ...getPermissionNames(role, 'Comments', 'marketing'),
+        ...getPermissionNames(role, 'Comments', 'support'),
+      ]),
+      (permissions[role.id].users = getPermissionNames(role, 'Users'));
     permissions[role.id].roles = getPermissionNames(role, 'Roles');
   });
   return permissions;
@@ -105,11 +116,22 @@ export const deserializePermissionValues = (values) => {
       permissionRoles: 0,
     };
 
-    value.transactions.forEach((permission) => role.permissionTransactions |= PermissionTable[permission]);
-    value.posts.forEach((permission) => role.permissionPosts |= PermissionTable[permission]);
-    value.comments.forEach((permission) => role.permissionComments |= PermissionTable[permission]);
-    value.users.forEach((permission) => role.permissionUsers |= PermissionTable[permission]);
-    value.roles.forEach((permission) => role.permissionRoles |= PermissionTable[permission]);
+    value.transactions.forEach(
+      (permission) =>
+        (role.permissionTransactions |= PermissionTable[permission])
+    );
+    value.posts.forEach(
+      (permission) => (role.permissionPosts |= PermissionTable[permission])
+    );
+    value.comments.forEach(
+      (permission) => (role.permissionComments |= PermissionTable[permission])
+    );
+    value.users.forEach(
+      (permission) => (role.permissionUsers |= PermissionTable[permission])
+    );
+    value.roles.forEach(
+      (permission) => (role.permissionRoles |= PermissionTable[permission])
+    );
 
     roles.push(role);
   });

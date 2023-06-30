@@ -7,25 +7,16 @@ import {
   Textarea,
   Button,
   Group,
-  ActionIcon,
   rem,
-  Space,
-  SegmentedControl,
-  NumberInput,
-} from "@mantine/core";
-import {
-  IconBrandTwitter,
-  IconBrandYoutube,
-  IconBrandInstagram,
-} from "@tabler/icons-react";
-import { useForm } from "@mantine/form";
-import { useTicketStore } from "../stores/tickets";
+} from '@mantine/core';
+import { useForm } from '@mantine/form';
+import { useTicketStore } from '../stores/tickets';
 
 // Define the component's styles using the createStyles function
 const useStyles = createStyles((theme) => ({
   wrapper: {
     minHeight: 400,
-    boxSizing: "border-box",
+    boxSizing: 'border-box',
     margin: 30,
     backgroundImage: `linear-gradient(-60deg, ${
       theme.colors[theme.primaryColor][4]
@@ -33,7 +24,7 @@ const useStyles = createStyles((theme) => ({
     borderRadius: theme.radius.md,
     padding: `calc(${theme.spacing.xl} * 2.5)`,
 
-    [theme.fn.smallerThan("sm")]: {
+    [theme.fn.smallerThan('sm')]: {
       padding: `calc(${theme.spacing.xl} * 1.5)`,
     },
   },
@@ -48,8 +39,8 @@ const useStyles = createStyles((theme) => ({
     color: theme.colors[theme.primaryColor][0],
     maxWidth: rem(300),
 
-    [theme.fn.smallerThan("sm")]: {
-      maxWidth: "100%",
+    [theme.fn.smallerThan('sm')]: {
+      maxWidth: '100%',
     },
   },
 
@@ -63,7 +54,7 @@ const useStyles = createStyles((theme) => ({
   social: {
     color: theme.white,
 
-    "&:hover": {
+    '&:hover': {
       color: theme.colors[theme.primaryColor][1],
     },
   },
@@ -73,7 +64,7 @@ const useStyles = createStyles((theme) => ({
     borderColor: theme.colors.gray[4],
     color: theme.black,
 
-    "&::placeholder": {
+    '&::placeholder': {
       color: theme.colors.gray[5],
     },
   },
@@ -87,12 +78,9 @@ const useStyles = createStyles((theme) => ({
   },
 }));
 
-// Define an array of social icons
-const social = [IconBrandTwitter, IconBrandYoutube, IconBrandInstagram];
-
 // Define the ContactUs component
-export default function ContactUs() {
-  const [tickets, createTicket,  fetchAllTicket] = useTicketStore((state) => [
+export default function NewTicket() {
+  const [createTicket, fetchAllTicket] = useTicketStore((state) => [
     state.tickets,
     state.create,
     state.fetchAll,
@@ -100,8 +88,8 @@ export default function ContactUs() {
 
   const form = useForm({
     initialValues: {
-      title: "",
-      content: "",
+      title: '',
+      content: '',
     },
 
     validate: {
@@ -111,21 +99,19 @@ export default function ContactUs() {
   });
 
   const { classes } = useStyles();
-  
+
   const newTicket = async (values) => {
     await createTicket(values);
     await fetchAllTicket();
   };
 
   return (
-
-    
     <div className={classes.wrapper}>
       {/* A SimpleGrid component with 2 columns, responsive to smaller screens */}
       <SimpleGrid
         cols={2}
         spacing={50}
-        breakpoints={[{ maxWidth: "sm", cols: 1 }]}
+        breakpoints={[{ maxWidth: 'sm', cols: 1 }]}
       >
         <div>
           {/* Title component for the form */}
@@ -148,7 +134,7 @@ export default function ContactUs() {
             withAsterisk
             label="Intitulé du problème"
             placeholder="Bug souris"
-            {...form.getInputProps("title")}
+            {...form.getInputProps('title')}
           />
           <Textarea
             required
@@ -157,7 +143,7 @@ export default function ContactUs() {
             minRows={4}
             mt="md"
             classNames={{ input: classes.input, label: classes.inputLabel }}
-            {...form.getInputProps("content")}
+            {...form.getInputProps('content')}
           />
 
           <Group position="right" mt="md">

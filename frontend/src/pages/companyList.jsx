@@ -1,28 +1,16 @@
-import {
-  Card,
-  Image,
-  Text,
-  Badge,
-  Button,
-  Group,
-  Modal,
-  useMantineTheme,
-} from "@mantine/core";
-import { useState } from "react";
-import "../styles/companyList.css";
+import { Card, Image, Text, Badge, Button, Group, Modal } from '@mantine/core';
+import { useState } from 'react';
+import '../styles/companyList.css';
 
 function CompanyList() {
   // State variables
   const [isEditModalOpen, setEditModalOpen] = useState(false);
   const [isInfoModalOpen, setInfoModalOpen] = useState(false);
   const [boxes, setBoxes] = useState([
-    { id: 1, title: "Company 1" },
-    { id: 2, title: "Company 2" },
-    { id: 3, title: "Company 3" },
+    { id: 1, title: 'Company 1' },
+    { id: 2, title: 'Company 2' },
+    { id: 3, title: 'Company 3' },
   ]);
-
-  // Mantine theme
-  const theme = useMantineTheme();
 
   // Event handlers
   const handleEditButtonClick = () => {

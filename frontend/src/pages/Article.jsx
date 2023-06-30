@@ -1,9 +1,8 @@
-/* eslint-disable react/no-unescaped-entities */
-import { Container, Title, Text, Button, Modal, Textarea } from "@mantine/core";
-import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
-import { useMarketingStore } from "../stores/marketing";
-import "../styles/Article.css";
+import { Container, Title, Text, Button, Modal, Textarea } from '@mantine/core';
+import { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
+import { useMarketingStore } from '../stores/marketing';
+import '../styles/Article.css';
 
 function Article() {
   const { id: rawId } = useParams();
@@ -26,19 +25,19 @@ function Article() {
   const [editModalOpen, setEditModalOpen] = useState(false);
   const [editedTitle, setEditedTitle] = useState(article?.title);
   const [editedContent, setEditedContent] = useState(article?.content);
-  const [errorMessage, setErrorMessage] = useState("");
+  const [errorMessage, setErrorMessage] = useState('');
 
   // Event handlers for opening the edit and info modals
   const handleEditModalClose = () => {
     setEditModalOpen(false);
-    setErrorMessage("");
+    setErrorMessage('');
   };
 
   // Event handler for saving the changes
   const handleSaveChanges = async () => {
     // Effectuer les actions de sauvegarde ici
     setEditModalOpen(false);
-    setErrorMessage("");
+    setErrorMessage('');
     await updateArticle(id, { title: editedTitle, content: editedContent });
   };
 
@@ -62,10 +61,10 @@ function Article() {
                     component="span"
                     inherit
                     variant="gradient"
-                    gradient={{ from: "pink", to: "yellow" }}
+                    gradient={{ from: 'pink', to: 'yellow' }}
                   >
                     {article?.title || "Titre de l'article"}
-                  </Text>{" "}
+                  </Text>{' '}
                   {/* Maximisez la robustesse de votre système informatique ! */}
                 </Title>
                 {/* Display modification button for the article */}
@@ -116,9 +115,7 @@ function Article() {
         {/* Display the error message if there is one */}
         {errorMessage && <div>{errorMessage}</div>}
 
-        <Button onClick={handleSaveChanges}>
-          Enregistrer
-        </Button>
+        <Button onClick={handleSaveChanges}>Enregistrer</Button>
       </Modal>
     </>
   );

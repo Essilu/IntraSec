@@ -1,5 +1,4 @@
-/* eslint-disable react/prop-types */
-import { useEffect, useState } from "react";
+import { useEffect, useState } from 'react';
 import {
   Title,
   Text,
@@ -9,13 +8,13 @@ import {
   rem,
   TextInput,
   Textarea,
-} from "@mantine/core";
-import { Carousel } from "@mantine/carousel";
-import { useMediaQuery } from "@mantine/hooks";
-import { Paper, useMantineTheme } from "@mantine/core";
-import { Link } from "react-router-dom";
-import "../styles/Marketing.css";
-import { useMarketingStore } from "../stores/marketing";
+} from '@mantine/core';
+import { Carousel } from '@mantine/carousel';
+import { useMediaQuery } from '@mantine/hooks';
+import { Paper, useMantineTheme } from '@mantine/core';
+import { Link } from 'react-router-dom';
+import '../styles/Marketing.css';
+import { useMarketingStore } from '../stores/marketing';
 
 // Define the Card component
 function Card({ id, imageUrl, title, category, content, onEdit, onDelete }) {
@@ -113,12 +112,12 @@ function Marketing() {
   // Define state variables for the add modal
   const [showAddModal, setShowAddModal] = useState(false);
   const [newCardData, setNewCardData] = useState({
-    imageUrl: "",
-    title: "",
-    category: "",
-    content: "",
+    imageUrl: '',
+    title: '',
+    category: '',
+    content: '',
   });
-  const [errorMessage, setErrorMessage] = useState("");
+  const [errorMessage, setErrorMessage] = useState('');
 
   // Event handler for opening the add modal
   const handleAddCard = () => {
@@ -128,8 +127,8 @@ function Marketing() {
   // Event handler for closing the add modal
   const handleAddModalClose = () => {
     setShowAddModal(false);
-    setNewCardData({ imageUrl: "", title: "", category: "", content: "" });
-    setErrorMessage("");
+    setNewCardData({ imageUrl: '', title: '', category: '', content: '' });
+    setErrorMessage('');
   };
 
   // Event handler for updating the new card data
@@ -149,7 +148,7 @@ function Marketing() {
       !newCardData.category ||
       !newCardData.content
     ) {
-      setErrorMessage("Veuillez remplir tous les champs");
+      setErrorMessage('Veuillez remplir tous les champs');
       return;
     }
 
@@ -176,7 +175,12 @@ function Marketing() {
   const handleSaveChanges = (newCard) => {
     setEditModalOpen(false);
     setEditedCard(null);
-    updateArticle(newCard.id, {title:newCard.title, content:newCard.content, category: newCard.category, imageUrl: newCard.imageUrl});
+    updateArticle(newCard.id, {
+      title: newCard.title,
+      content: newCard.content,
+      category: newCard.category,
+      imageUrl: newCard.imageUrl,
+    });
   };
 
   // Event handler for opening the edit modal
@@ -202,10 +206,10 @@ function Marketing() {
       <Container className="marketing-wrapper" size={1400}>
         <div className="marketing-inner">
           <Title className="marketing-title">
-            Découvrez le{" "}
+            Découvrez le{' '}
             <Text component="span" className="marketing-highlight" inherit>
               future de la cybersecurité
-            </Text>{" "}
+            </Text>{' '}
             avec SecureCorp
           </Title>
 
@@ -223,7 +227,7 @@ function Marketing() {
 
       <Carousel // Update the Carousel component
         slideSize="50%"
-        breakpoints={[{ maxWidth: "sm", slideSize: "100%", slideGap: rem(2) }]}
+        breakpoints={[{ maxWidth: 'sm', slideSize: '100%', slideGap: rem(2) }]}
         slideGap="xl"
         align="start"
         slidesToScroll={mobile ? 1 : 2}
@@ -245,7 +249,7 @@ function Marketing() {
         <TextInput // Update the image
           label="Image"
           placeholder="URL de l'image"
-          value={editedCard?.imageUrl || ""}
+          value={editedCard?.imageUrl || ''}
           onChange={(event) =>
             setEditedCard({ ...editedCard, imageUrl: event.target.value })
           }
@@ -254,7 +258,7 @@ function Marketing() {
         <TextInput // Update the title
           label="Titre"
           placeholder="Titre de la carte"
-          value={editedCard?.title || ""}
+          value={editedCard?.title || ''}
           onChange={(event) =>
             setEditedCard({ ...editedCard, title: event.target.value })
           }
@@ -263,7 +267,7 @@ function Marketing() {
         <TextInput // Update the category
           label="Catégorie"
           placeholder="Catégorie de la carte"
-          value={editedCard?.category || ""}
+          value={editedCard?.category || ''}
           onChange={(event) =>
             setEditedCard({ ...editedCard, category: event.target.value })
           }
@@ -272,13 +276,13 @@ function Marketing() {
         <TextInput // Update the content
           label="Contenu"
           placeholder="Contenu de l'article"
-          value={editedCard?.content || ""}
+          value={editedCard?.content || ''}
           onChange={(event) =>
             setEditedCard({ ...editedCard, content: event.target.value })
           }
           required
         />
-        {errorMessage && <div>{errorMessage}</div>}{" "}
+        {errorMessage && <div>{errorMessage}</div>}{' '}
         {/* Display the error message in case */}
         <Button onClick={() => handleSaveChanges(editedCard)}>
           Enregistrer
@@ -324,7 +328,7 @@ function Marketing() {
           required
           rows={10}
         />
-        {errorMessage && <div>{errorMessage}</div>}{" "}
+        {errorMessage && <div>{errorMessage}</div>}{' '}
         {/* Display the error message in case */}
         <Button onClick={handleSaveNewCard}>Ajouter</Button>
       </Modal>

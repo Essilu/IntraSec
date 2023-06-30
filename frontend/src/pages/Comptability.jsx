@@ -1,8 +1,8 @@
 // style import
-import "../styles/Comptability.css";
+import '../styles/Comptability.css';
 
 // component imports
-import DonutChart from "react-donut-chart";
+import DonutChart from 'react-donut-chart';
 import {
   Table,
   Button,
@@ -15,50 +15,47 @@ import {
   SegmentedControl,
   rem,
   NumberInput,
-} from "@mantine/core";
-import { useDisclosure } from "@mantine/hooks";
-import { useForm } from "@mantine/form";
-import { useState, useEffect } from "react";
+} from '@mantine/core';
+import { useDisclosure } from '@mantine/hooks';
+import { useForm } from '@mantine/form';
+import { useState, useEffect } from 'react';
 
 // other imports
-import { Link } from "react-router-dom";
-import { useTransactionStore } from "../stores/transactions";
+import { Link } from 'react-router-dom';
+import { useTransactionStore } from '../stores/transactions';
 
 export default function Comptability() {
   //Drawer controller
   const [opened, { open, close }] = useDisclosure(false);
 
   //SegmentedControl controller
-  const [type, setType] = useState("react");
-  const [mean, setMean] = useState("react");
-
-  //Loading controller
-  const [isLoading, setLoading] = useState(true);
+  const [type, setType] = useState('react');
+  const [mean, setMean] = useState('react');
 
   //Styles
   const useStyles = createStyles((theme) => ({
     root: {
       backgroundColor:
-        theme.colorScheme === "dark" ? theme.colors.dark[6] : theme.white,
+        theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.white,
       boxShadow: theme.shadows.md,
       border: `${rem(1)} solid ${
-        theme.colorScheme === "dark"
+        theme.colorScheme === 'dark'
           ? theme.colors.dark[4]
           : theme.colors.gray[1]
       }`,
     },
 
     indicator: {
-      backgroundImage: theme.fn.gradient({ from: "pink", to: "orange" }),
+      backgroundImage: theme.fn.gradient({ from: 'pink', to: 'orange' }),
     },
 
     control: {
-      border: "0 !important",
+      border: '0 !important',
     },
 
     label: {
-      "&, &:hover": {
-        "&[data-active]": {
+      '&, &:hover': {
+        '&[data-active]': {
           color: theme.white,
         },
       },
@@ -76,9 +73,9 @@ export default function Comptability() {
   // useForm hook
   const form = useForm({
     initialValues: {
-      otherCompany: "",
-      type: "",
-      mean: "",
+      otherCompany: '',
+      type: '',
+      mean: '',
       amount: 0,
     },
 
@@ -92,9 +89,7 @@ export default function Comptability() {
   useEffect(() => {
     async function fetchData() {
       // Set loading to true and fetch all transactions
-      setLoading(true);
       await fetchAllTransactions();
-      setLoading(false);
     }
     fetchData();
   }, [fetchAllTransactions]);
@@ -122,27 +117,27 @@ export default function Comptability() {
               width={550}
               data={[
                 {
-                  label: "Entreprise 1",
+                  label: 'Entreprise 1',
                   value: 13750,
                 },
                 {
-                  label: "Entreprise 2",
+                  label: 'Entreprise 2',
                   value: 7300,
                 },
                 {
-                  label: "Entreprise 3",
+                  label: 'Entreprise 3',
                   value: 15600,
                 },
                 {
-                  label: "Entreprise 4",
+                  label: 'Entreprise 4',
                   value: 13200,
                 },
                 {
-                  label: "Entreprise 5",
+                  label: 'Entreprise 5',
                   value: 20700,
                 },
                 {
-                  label: "Autres",
+                  label: 'Autres',
                   value: 6000,
                 },
               ]}
@@ -150,7 +145,7 @@ export default function Comptability() {
           </div>
         </div>
         <div className="Balance">
-          <h2>Revenus totaux sur l'année : </h2>
+          <h2>Revenus totaux sur l’année : </h2>
           <h1 className="money">197 800 $ </h1>
         </div>
       </div>
@@ -171,7 +166,7 @@ export default function Comptability() {
               withAsterisk
               label="Entreprise"
               placeholder="Nom de l'entreprise"
-              {...form.getInputProps("otherCompany")}
+              {...form.getInputProps('otherCompany')}
             />
             <Space h="md" />
 
@@ -180,16 +175,16 @@ export default function Comptability() {
               onChange={setMean}
               radius="xl"
               size="md"
-              data={["CARD", "CHECK", "CASH", "TRANSFER"]}
+              data={['CARD', 'CHECK', 'CASH', 'TRANSFER']}
               classNames={classes}
-              {...form.getInputProps("mean")}
+              {...form.getInputProps('mean')}
             />
             <Space h="md" />
             <NumberInput
               withAsterisk
               label="Montant"
               placeholder="10000"
-              {...form.getInputProps("amount")}
+              {...form.getInputProps('amount')}
             />
             <Space h="md" />
 
@@ -199,9 +194,9 @@ export default function Comptability() {
               onChange={setType}
               radius="xl"
               size="md"
-              data={["DEBIT", "CREDIT"]}
+              data={['DEBIT', 'CREDIT']}
               classNames={classes}
-              {...form.getInputProps("type")}
+              {...form.getInputProps('type')}
             />
             <Space h="md" />
 

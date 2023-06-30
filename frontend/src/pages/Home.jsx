@@ -1,12 +1,11 @@
-import React, { useState, useEffect } from "react";
-import "../styles/home.css";
-import { useAuthStore } from "../stores/auth";
+import { useState, useEffect } from 'react';
+import '../styles/home.css';
+import { useAuthStore } from '../stores/auth';
 
 export default function Home() {
   // Define state variables
   const [currentTime, setCurrentTime] = useState(new Date());
   const user = useAuthStore((state) => state.user);
-
 
   useEffect(() => {
     // Set up interval to update current time every second

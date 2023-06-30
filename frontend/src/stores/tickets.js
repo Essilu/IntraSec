@@ -9,7 +9,7 @@ export const useTicketStore = create((set, get) => ({
     // and return the created ticket
     const response = await axios.post('/posts', {
       ...ticket,
-      kind: "SUPPORT_TICKET",
+      kind: 'SUPPORT_TICKET',
     });
     set({
       ticket: response.data,

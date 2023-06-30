@@ -6,24 +6,24 @@ import {
   createStyles,
   Modal,
   Button,
-} from "@mantine/core";
-import { useDisclosure } from "@mantine/hooks";
-import { IconChevronRight } from "@tabler/icons-react";
-import { Link, redirect } from "react-router-dom";
-import "../styles/components.css";
+} from '@mantine/core';
+import { useDisclosure } from '@mantine/hooks';
+import { IconChevronRight } from '@tabler/icons-react';
+import { Link, redirect } from 'react-router-dom';
+import '../styles/components.css';
 import { useAuthStore } from '../stores/auth';
 
 // Define custom styles using createStyles
 const useStyles = createStyles((theme) => ({
   user: {
-    display: "block",
-    width: "100%",
+    display: 'block',
+    width: '100%',
     padding: theme.spacing.md,
-    color: theme.colorScheme === "dark" ? theme.colors.dark[0] : theme.black,
+    color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
 
-    "&:hover": {
+    '&:hover': {
       backgroundColor:
-        theme.colorScheme === "dark"
+        theme.colorScheme === 'dark'
           ? theme.colors.dark[8]
           : theme.colors.gray[0],
     },
@@ -35,12 +35,12 @@ export default function UserButton({ image, name, email, icon, ...others }) {
   const { classes } = useStyles();
   const [opened, { open, close }] = useDisclosure(false);
 
-  const logout = useAuthStore(state => state.logout);
+  const logout = useAuthStore((state) => state.logout);
 
   const doLogout = async () => {
     await logout();
     redirect('/login');
-  }
+  };
 
   return (
     <>
@@ -64,7 +64,11 @@ export default function UserButton({ image, name, email, icon, ...others }) {
 
             <Link to="/login">
               {/* Button for confirming logout */}
-              <Button className="modal_confirmation_button" color="red" onClick={doLogout}>
+              <Button
+                className="modal_confirmation_button"
+                color="red"
+                onClick={doLogout}
+              >
                 Log Out
               </Button>
             </Link>

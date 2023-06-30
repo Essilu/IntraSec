@@ -1,24 +1,24 @@
 a {
-    text-decoration: none;
-  }
-
-.modal_parent{
-  display: flex;
-  justify-content: flex-end;
-  gap:6px;
+  text-decoration: none;
 }
 
-.modal_confirmation_button{
+.modal_parent {
+  display: flex;
+  justify-content: flex-end;
+  gap: 6px;
+}
+
+.modal_confirmation_button {
   margin-right: 10px;
 }
 
-.modal_subtext{
+.modal_subtext {
   display: flex;
   flex-direction: column;
-  gap:15px;
+  gap: 15px;
 }
 
-.navbarLogo{
-  height:60px;
-  margin-left:10px;
+.navbarLogo {
+  height: 60px;
+  margin-left: 10px;
 }

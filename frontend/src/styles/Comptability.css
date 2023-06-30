@@ -1,34 +1,31 @@
 .transactionBlock {
-    border: solid 2px gray ;
-    border-radius: 5px;
-    margin: 10px;
-    padding: 10px;
-    height: 100px;
-
+  border: solid 2px gray;
+  border-radius: 5px;
+  margin: 10px;
+  padding: 10px;
+  height: 100px;
 }
 
 .Revenue {
-    display: flex
-    ;
+  display: flex;
 }
 
 .Balance {
-    margin-left: 10%;
+  margin-left: 10%;
 
-    border-radius: 5px;
-    padding: 50px;
-
+  border-radius: 5px;
+  padding: 50px;
 }
 
-.money{
-    color: green;
+.money {
+  color: green;
 }
 
 .button {
-    justify-content: right;
-    margin-left: 70%;
+  justify-content: right;
+  margin-left: 70%;
 }
 
-.seeTransactions{
-    margin-left : 80%;
+.seeTransactions {
+  margin-left: 80%;
 }

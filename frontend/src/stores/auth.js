@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 import axios from '../axios';
-import { persist, createJSONStorage } from 'zustand/middleware'
+import { persist, createJSONStorage } from 'zustand/middleware';
 
 export const useAuthStore = create(
   persist(
@@ -8,7 +8,7 @@ export const useAuthStore = create(
       user: null,
       isLogged: () => {
         // Check if the user is logged in
-        return get().user !== null
+        return get().user !== null;
       },
       fetchMe: async () => {
         // Fetch the current user (owning the currently defined cookie), put it in the store (in 'user'), and return it
@@ -19,7 +19,7 @@ export const useAuthStore = create(
         // Login a user, put it in the store (in 'user'), and return it
         const response = await axios.post('/auth/login', {
           email,
-          password
+          password,
         });
         set({ user: response.data });
       },
@@ -33,5 +33,5 @@ export const useAuthStore = create(
       name: 'user-storage', // Name of the item in the storage (must be unique)
       storage: createJSONStorage(() => sessionStorage), // Use sessionStorage as the storage (same as localStorage but the data is removed when the tab is closed)
     }
-  ),
+  )
 );

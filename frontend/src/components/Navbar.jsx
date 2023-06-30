@@ -1,4 +1,4 @@
-import { AppShell, Navbar as Shell, Header, NavLink } from "@mantine/core";
+import { AppShell, Navbar as Shell, Header, NavLink } from '@mantine/core';
 import {
   IconHome2,
   IconUserBolt,
@@ -7,12 +7,11 @@ import {
   IconWorld,
   IconAd,
   Icon123,
-} from "@tabler/icons-react";
-import { Link } from "react-router-dom";
-import "../styles/components.css";
-import UserButton from "./UserButton";
-import { useAuthStore } from "../stores/auth";
-
+} from '@tabler/icons-react';
+import { Link } from 'react-router-dom';
+import '../styles/components.css';
+import UserButton from './UserButton';
+import { useAuthStore } from '../stores/auth';
 
 export default function Navbar({ children }) {
   const user = useAuthStore((state) => state.user);
@@ -80,13 +79,13 @@ export default function Navbar({ children }) {
             </NavLink>
             {/* NavLink component for "Relations Humaines" section */}
 
-              <Link to="/employeesList">
+            <Link to="/employeesList">
               <NavLink
-              label="Relations Humaines"
-              icon={<IconUsersGroup size="1rem" stroke={1.5} />}
-              childrenOffset={28}
-            />
-              </Link>
+                label="Relations Humaines"
+                icon={<IconUsersGroup size="1rem" stroke={1.5} />}
+                childrenOffset={28}
+              />
+            </Link>
 
             {/* NavLink component for "Support" section */}
             <NavLink
@@ -137,7 +136,7 @@ export default function Navbar({ children }) {
       styles={(theme) => ({
         main: {
           backgroundColor:
-            theme.colorScheme === "dark"
+            theme.colorScheme === 'dark'
               ? theme.colors.dark[8]
               : theme.colors.gray[0],
         },

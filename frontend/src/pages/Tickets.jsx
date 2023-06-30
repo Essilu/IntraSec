@@ -5,27 +5,27 @@ import {
   rem,
   Title,
   Button,
-} from "@mantine/core";
-import { useTicketStore } from "../stores/tickets";
-import { useEffect, useState } from "react";
+} from '@mantine/core';
+import { useTicketStore } from '../stores/tickets';
+import { useEffect, useState } from 'react';
 
 // Create custom styles using the createStyles function
 const useStyles = createStyles((theme) => ({
   header: {
-    position: "sticky",
+    position: 'sticky',
     top: 0,
     backgroundColor:
-      theme.colorScheme === "dark" ? theme.colors.dark[7] : theme.white,
-    transition: "box-shadow 150ms ease",
+      theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.white,
+    transition: 'box-shadow 150ms ease',
 
-    "&::after": {
+    '&::after': {
       content: '""',
-      position: "absolute",
+      position: 'absolute',
       left: 0,
       right: 0,
       bottom: 0,
       borderBottom: `${rem(1)} solid ${
-        theme.colorScheme === "dark"
+        theme.colorScheme === 'dark'
           ? theme.colors.dark[3]
           : theme.colors.gray[2]
       }`,
@@ -39,7 +39,6 @@ const useStyles = createStyles((theme) => ({
 
 // Define the TableScrollArea component
 export default function TableScrollArea() {
-  const [isLoading, setLoading] = useState(true);
   // Get the transactions from the store and the fetchAllTransactions function
   const [tickets, fetchAllTicket] = useTicketStore((state) => [
     state.tickets,
@@ -49,16 +48,11 @@ export default function TableScrollArea() {
   // Fetch all transactions on page load
   useEffect(() => {
     async function fetchData() {
-      // Set loading to true and fetch all transactions
-
-      setLoading(true); 
+      // Fetch all transactions
       await fetchAllTicket();
-      setLoading(false);
     }
     fetchData();
-    console.log(tickets); 
   }, [fetchAllTicket]);
-
 
   // Get the styles and classes from the useStyles hook
   const { classes, cx } = useStyles();
@@ -92,10 +86,10 @@ export default function TableScrollArea() {
               <tr key={row.id}>
                 <td>{row.title}</td>
                 <td>{row.id}</td>
-                <td>{row.author.firstname + " " + row.author.lastname}</td>
+                <td>{row.author.firstname + ' ' + row.author.lastname}</td>
                 <td>
                   <Button color="green" radius="xl" size="xs" compact>
-                    Plus d'infos
+                    Plus d’infos
                   </Button>
                 </td>
               </tr>
