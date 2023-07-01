@@ -11,7 +11,7 @@ export const createTransaction = z.object({
 
 // Validation schema for finding a transaction
 export const findOneTransaction = z.object({
-  id: z.coerce.number().int().positive(), // Validates the id field as a positive integer
+  id: z.coerce.number().int().nonnegative(), // Validates the id field as a positive integer
 }).strict();
 
 // Validation schema for updating a transaction (partial schema)

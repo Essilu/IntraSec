@@ -1,16 +1,6 @@
-import {
-  createStyles,
-  Text,
-  Title,
-  SimpleGrid,
-  TextInput,
-  Textarea,
-  Button,
-  Group,
-  ActionIcon,
-  rem,
-} from '@mantine/core';
-import { IconBrandTwitter, IconBrandYoutube, IconBrandInstagram } from '@tabler/icons-react';
+import { createStyles, Text, Title, SimpleGrid, TextInput, Textarea, Button, Group, rem } from '@mantine/core';
+import { useForm } from '@mantine/form';
+import { useTicketStore } from '../stores/tickets';
 
 // Define the component's styles using the createStyles function
 const useStyles = createStyles((theme) => ({
@@ -70,7 +60,7 @@ const useStyles = createStyles((theme) => ({
   },
 
   inputLabel: {
-    color: theme.black,
+    color: theme.white,
   },
 
   control: {
@@ -78,19 +68,28 @@ const useStyles = createStyles((theme) => ({
   },
 }));
 
-// Define an array of social icons
-const social = [IconBrandTwitter, IconBrandYoutube, IconBrandInstagram];
-
 // Define the ContactUs component
-export default function ContactUs() {
+export default function SupportTicketNew() {
+  const [createTicket, fetchAllTicket] = useTicketStore((state) => [state.tickets, state.create, state.fetchAll]);
+
+  const form = useForm({
+    initialValues: {
+      title: '',
+      content: '',
+    },
+
+    validate: {
+      title: (value) => value.trim().length === 0,
+      content: (value) => value.trim().length === 0,
+    },
+  });
+
   const { classes } = useStyles();
 
-  // Generate the social icons using the map function
-  const icons = social.map((Icon, index) => (
-    <ActionIcon key={index} size={28} className={classes.social} variant="transparent">
-      {/* Icon component */}
-    </ActionIcon>
-  ));
+  const newTicket = async (values) => {
+    await createTicket(values);
+    await fetchAllTicket();
+  };
 
   return (
     <div className={classes.wrapper}>
@@ -106,25 +105,20 @@ export default function ContactUs() {
 
           {/* Group component containing additional information */}
           <Group mt="xl">
-            <Text color="white">Nos équipes travaillent tous les jours pour régler vos problèmes. Contactez-nous et nous vous répondrons dans les plus brefs délais.</Text>
+            <Text color="white">
+              Nos équipes travaillent tous les jours pour régler vos problèmes. Contactez-nous et nous vous répondrons
+              dans les plus brefs délais.
+            </Text>
           </Group>
         </div>
-        <div className={classes.form}>
-          {/* TextInput component for the ticket title */}
+        <form onSubmit={form.onSubmit((values) => newTicket(values))}>
           <TextInput
-            label="Intitulé du ticket"
-            placeholder="Ex: Problème de facturation"
-            required
+            withAsterisk
+            label="Intitulé du problème"
+            placeholder="Bug souris"
             classNames={{ input: classes.input, label: classes.inputLabel }}
+            {...form.getInputProps('title')}
           />
-          {/* TextInput component for the user's name */}
-          <TextInput
-            label="Name"
-            placeholder="John Doe"
-            mt="md"
-            classNames={{ input: classes.input, label: classes.inputLabel }}
-          />
-          {/* Textarea component for the message */}
           <Textarea
             required
             label="Your message"
@@ -132,13 +126,13 @@ export default function ContactUs() {
             minRows={4}
             mt="md"
             classNames={{ input: classes.input, label: classes.inputLabel }}
+            {...form.getInputProps('content')}
           />
 
-          {/* Group component for the submit button */}
           <Group position="right" mt="md">
-            <Button className={classes.control}>Poster le ticket.</Button>
+            <Button type="submit">Envoyer</Button>
           </Group>
-        </div>
+        </form>
       </SimpleGrid>
     </div>
   );

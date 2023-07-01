@@ -58,6 +58,19 @@ router
     users.remove,
   );
 
+router
+  .route('/users/:id/roles')
+  .post(
+    isAuthenticated,
+    isAuthorized(UserPermissions.UpdateUser, PermissionSubject.User),
+    users.addRole,
+  )
+  .delete(
+    isAuthenticated,
+    isAuthorized(UserPermissions.UpdateUser, PermissionSubject.User),
+    users.removeRole,
+  );
+
 // Transactions
 router
   .route('/transactions')

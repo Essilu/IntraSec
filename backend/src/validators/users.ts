@@ -11,8 +11,12 @@ export const createUser = z.object({
 
 // Validation schema for finding a user
 export const findOneUser = z.object({
-  id: z.coerce.number().int().positive(), // Validates the id field as a positive integer
+  id: z.coerce.number().int().nonnegative(), // Validates the id field as a positive integer
 }).strict();
 
 // Validation schema for updating a user (partial schema)
 export const updateUser = createUser.partial().strict();
+
+export const changeRole = z.object({
+  roles: z.array(z.number().int().nonnegative()).min(1), // Validates the roles field as an array of strings
+}).strict();

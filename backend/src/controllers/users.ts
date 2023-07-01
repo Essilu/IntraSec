@@ -3,7 +3,12 @@ import type { Response } from 'express';
 import { db } from '../database';
 import { safeUser } from '../utils/safeUser';
 import type { Request } from '../utils/types';
-import { createUser, findOneUser, updateUser } from '../validators/users';
+import {
+  changeRole,
+  createUser,
+  findOneUser,
+  updateUser,
+} from '../validators/users';
 
 // Creates a new user
 export async function create(req: Request, res: Response): Promise<void> {
@@ -103,4 +108,66 @@ export async function remove(req: Request, res: Response): Promise<void> {
   });
 
   res.status(204).json();
+}
+
+
+// Add roles to a user by their ID
+export async function updateRole(req: Request, res: Response, action: 'connect' | 'disconnect'): Promise<void> {
+  // 1. Parse the user params input
+  const { id: userId } = findOneUser.parse(req.params);
+
+  // 2. Find the user by their ID
+  const user = await db.user.findUnique({
+    where: { id: userId },
+    include: { roles: true },
+  });
+  if (!user) {
+    res.status(404).json({ message: 'User not found' });
+    return;
+  }
+  if (user.email === process.env.ADMIN_EMAIL) {
+    res.status(403).json({ message: 'Cannot change admin user' });
+    return;
+  }
+
+  // 3. Parse the user body input
+  const { roles: roleIds } = changeRole.parse(req.body);
+
+  // 4. Find the roles by their IDs
+  const roles = await db.role.findMany({
+    where: { id: { in: roleIds } },
+    select: { id: true },
+  });
+  if (roles.length === 0) {
+    res.status(400).json({ message: 'No valid role given' });
+    return;
+  }
+
+  // 5.a If we want to disconnect, check that we aren't removing the last role of the user
+  if (action === 'disconnect' && user.roles.length === roles.length) {
+    res.status(400).json({ message: 'Cannot remove last role of the user' });
+    return;
+  }
+
+  // 5.b Update the user with the new roles
+  const updatedUser = await db.user.update({
+    where: { id: userId },
+    data: {
+      roles: { [action]: roles },
+    },
+    include: { roles: true },
+  });
+
+  // 6. Return the updated user
+  res.status(200).json(safeUser(updatedUser));
+}
+
+// Add roles to a user by their ID
+export async function addRole(req: Request, res: Response): Promise<void> {
+  await updateRole(req, res, 'connect');
+}
+
+// Remove roles from a user by their ID
+export async function removeRole(req: Request, res: Response): Promise<void> {
+  await updateRole(req, res, 'disconnect');
 }

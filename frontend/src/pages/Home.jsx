@@ -1,12 +1,11 @@
-import React, { useState, useEffect } from "react";
-import "../styles/home.css";
-import { useAuthStore } from "../stores/auth";
+import { Container, Title } from '@mantine/core';
+import { useState, useEffect } from 'react';
+import { useAuthStore } from '../stores/auth';
 
 export default function Home() {
   // Define state variables
   const [currentTime, setCurrentTime] = useState(new Date());
   const user = useAuthStore((state) => state.user);
-
 
   useEffect(() => {
     // Set up interval to update current time every second
@@ -21,11 +20,16 @@ export default function Home() {
   }, []);
 
   return (
-    <div className="Home">
+    <Container style={{ textAlign: 'center', marginTop: '100px' }}>
       {/* Display current time */}
-      <h1 className="time">{currentTime.toLocaleTimeString()}</h1>
+      <Title order={1} style={{ fontSize: '5rem' }}>
+        {currentTime.toLocaleTimeString()}
+      </Title>
+      <br />
       {/* Display welcome message with user's name */}
-      <h2 className="welcome">Welcome Back, {user.firstname}</h2>
-    </div>
+      <Title order={2} style={{ fontSize: '4rem' }}>
+        Bienvenue, {user.firstname}
+      </Title>
+    </Container>
   );
 }

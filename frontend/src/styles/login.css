@@ -1,28 +1,24 @@
 .signin {
-    
-    border-radius: 10px;
-    box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.75);
-    margin-right: 5vw;
-    padding: 40px;
-    background-color:  #FFFFFF;
-    
+  border-radius: 10px;
+  box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.75);
+  margin-right: 5vw;
+  padding: 40px;
+  background-color: #ffffff;
 }
 
 .terminal {
-    
-    border-radius: 20px;
-    box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.75);
-    margin-left: 5vw;
-    
+  border-radius: 20px;
+  box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.75);
+  margin-left: 5vw;
 }
 
 .parent {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    background-image: url("src/assets/background.jpg");
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: cover;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-image: url('src/assets/background.jpg');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
 }

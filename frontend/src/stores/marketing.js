@@ -1,5 +1,5 @@
-import axios from '../axios';
 import { create } from 'zustand';
+import axios from '../axios';
 
 export const useMarketingStore = create((set, get) => ({
   articles: [],
@@ -7,7 +7,10 @@ export const useMarketingStore = create((set, get) => ({
   create: async (article) => {
     // Create a new article, put it in the store (in 'article' and in the 'articles' array),
     // and return the created article
-    const response = await axios.post('/posts', article);
+    const response = await axios.post('/posts', {
+      ...article,
+      kind: 'MARKETING_POST',
+    });
     set({
       article: response.data,
       articles: [...get().articles, response.data],
