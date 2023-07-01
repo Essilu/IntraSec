@@ -14,8 +14,7 @@ import ManageEmployees from './pages/ManageEmployees';
 import ManageRoles from './pages/ManageRoles';
 import MarketingArticle from './pages/MarketingArticle';
 import MarketingArticleList from './pages/MarketingArticleList';
-import PartnerCompanyList from './pages/PartnerCompanyList';
-import PartnerSchoolList from './pages/PartnerSchoolList';
+import PartnerList from './pages/PartnerList';
 import SupportTicketList from './pages/SupportTicketList';
 import SupportTicketNew from './pages/SupportTicketNew';
 import Protected from './components/Protected';
@@ -46,8 +45,7 @@ function App() {
             <Route path="/comptability/history" element={makePage(<ComptabilityHistory />)} />
             <Route path="/articles" element={makePage(<MarketingArticleList />)} />
             <Route path="/articles/:id" element={makePage(<MarketingArticle />)} />
-            <Route path="/partners/companies" element={makePage(<PartnerCompanyList />)} />
-            <Route path="/partners/schools" element={makePage(<PartnerSchoolList />)} />
+            <Route path="/partners/:kind" element={makePage(<PartnerList />)} />
             <Route path="/employees" element={makePage(<EmployeeList />)} />
             <Route path="/support" element={makePage(<SupportTicketList />)} />
             <Route path="/support/new" element={makePage(<SupportTicketNew />)} />

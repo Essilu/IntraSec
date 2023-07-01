@@ -1,36 +1,48 @@
-import { Card, Image, Text, Badge, Button, Group } from '@mantine/core';
+import { Card, Image, Text, Button, Grid, ActionIcon, Flex, Badge } from '@mantine/core';
+import { IconPencil, IconTrash } from '@tabler/icons-react';
 
-export default function PartnerCard({ company, onEdit, onInfo }) {
+export default function PartnerCard({ partner, onSeeMore, onEdit, onRemove }) {
   return (
     <Card shadow="sm" padding="lg" radius="md" withBorder>
       <Card.Section>
-        {/* Company image */}
-        <Image
-          src="https://images.unsplash.com/photo-1527004013197-933c4bb611b3?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=720&q=80"
-          height={160}
-          alt="Norway"
-        />
+        {/* Partner image */}
+        <Image src={partner.imageUrl} height={160} withPlaceholder alt="Norway" />
       </Card.Section>
 
-      <Group position="apart" mt="md" mb="xs">
-        {/* Company title */}
-        <Text weight={500}>{company.title}</Text>
-        {/* Edit button */}
-        <Badge color="pink" variant="light" onClick={onEdit}>
-          Edit
-        </Badge>
-      </Group>
+      <Flex justify="space-between" mt="md" mb="xs">
+        <Text weight={500}>{partner.title}</Text>
+        {partner.category && (
+          <Badge color="blue" variant="light">
+            {partner.category}
+          </Badge>
+        )}
+      </Flex>
 
-      {/* Company description */}
-      <Text size="sm" color="dimmed">
-        With Fjord Tours you can explore more of the magical fjord landscapes with tours and activities on and around
-        the fjords of Norway
+      {/* Partner description */}
+      <Text size="sm" color="dimmed" lineClamp={3}>
+        {partner.content}
       </Text>
 
       {/* Button for booking */}
-      <Button variant="light" color="blue" fullWidth mt="md" radius="md" onClick={onInfo}>
-        Book classic tour now
-      </Button>
+      <Grid columns={6} mt="sm" gutter={10}>
+        <Grid.Col span={4} pl={0} pr={10}>
+          <Button variant="light" color="blue" fullWidth onClick={onSeeMore}>
+            Voir plus
+          </Button>
+        </Grid.Col>
+
+        <Grid.Col span={1} pl={0} pr={10}>
+          <ActionIcon variant="light" color="blue" size="lg" w="100%" h="100%" onClick={onEdit}>
+            <IconPencil />
+          </ActionIcon>
+        </Grid.Col>
+
+        <Grid.Col span={1} px={0}>
+          <ActionIcon variant="light" color="red" size="lg" w="100%" h="100%" onClick={onRemove}>
+            <IconTrash />
+          </ActionIcon>
+        </Grid.Col>
+      </Grid>
     </Card>
   );
 }
