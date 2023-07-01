@@ -197,7 +197,7 @@ export default function MarketingArticleList() {
           placeholder="URL de l'image"
           value={newCardData.imageUrl}
           onChange={handleNewCardInputChange}
-          name="image"
+          name="imageUrl"
           required
         />
         <TextInput // Update the title
@@ -216,7 +216,8 @@ export default function MarketingArticleList() {
           name="category"
           required
         />
-        <Textarea // Update the content
+        <Textarea
+          className="marketing-textarea" // Update the content
           label="Corps de l'article"
           placeholder="Contenu de l'article"
           value={newCardData.content}
@@ -224,6 +225,7 @@ export default function MarketingArticleList() {
           name="content"
           required
           rows={10}
+          multiline={true}
         />
         {errorMessage && <div>{errorMessage}</div>} {/* Display the error message in case */}
         <Button onClick={handleSaveNewCard}>Ajouter</Button>

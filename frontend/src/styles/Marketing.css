@@ -126,14 +126,11 @@
   margin-right: 16px;
 }
 
-/* Classe deleteButton */
-.marketing-deleteButton {
-  /* Styles pour la classe deleteButton */
-  /* Ajoutez vos styles ici */
-}
 
 /* Classe controlButtonsCard */
 .marketing-controlButtonsCard {
   display: flex;
   margin-top: 16px;
 }
+
+

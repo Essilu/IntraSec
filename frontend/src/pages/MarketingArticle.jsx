@@ -56,15 +56,16 @@ export default function MarketingArticle() {
     setEditModalOpen(true);
   };
 
-  // Update the image style when editedImageUrl changes
-  useEffect(() => {
-    setImageStyle({ backgroundImage: `url(${editedImageUrl})` });
-  }, [editedImageUrl]);
 
   // Render the component
   return (
     <>
-      <div className="article-root" style={imageStyle}>
+      <div
+        className="article-root"
+        style={{
+          '--article-image-background': `linear-gradient(250deg, rgba(130, 201, 30, 0) 0%, #062343 70%), url(${editedImageUrl})`,
+        }}
+      >
         <Container size="lg">
           <div className="article-inner">
             <div className="article-content">
@@ -74,7 +75,7 @@ export default function MarketingArticle() {
                   {/* Display the article title here */}
                   <Text component="span" inherit variant="gradient" gradient={{ from: 'pink', to: 'yellow' }}>
                     {article?.title || "Titre de l'article"}
-                  </Text>{" "}
+                  </Text>{' '}
                 </Title>
                 <div className="article-button">
                   <Button variant="white" color="blue" onClick={handleEditContent}>
@@ -96,7 +97,16 @@ export default function MarketingArticle() {
 
       {/* Display the edit modal */}
       <Modal opened={editModalOpen} onClose={handleEditModalClose} title="Modifier le contenu de l'article">
-        <Textarea
+        <TextInput // Update the image
+          label="Image"
+          placeholder="URL de l'image"
+          value={editedImageUrl}
+          onChange={(event) => setEditedImageUrl(event.target.value)}
+          name="image"
+          required
+        />
+
+        <TextInput // Update the title
           label="Titre"
           placeholder="Titre de l'article"
           value={editedTitle}
@@ -110,7 +120,6 @@ export default function MarketingArticle() {
           value={editedContent}
           onChange={(event) => setEditedContent(event.target.value)}
           required
-          autosize
           rows={10}
         />
         {/* Display the error message if there is one */}
@@ -118,6 +127,14 @@ export default function MarketingArticle() {
 
         <Button onClick={handleSaveChanges}>Enregistrer</Button>
       </Modal>
+
+      {/* Display the contact us section */}
+      <Container className="article-contact-us">
+        <Title className="article-contact-us-title">Contact Us</Title>
+        <Text>
+          Si vous souhaitez avoir un devis ou des informations sur nos services, n'hésitez pas à nous contacter.
+        </Text>
+      </Container>
     </>
   );
 }
