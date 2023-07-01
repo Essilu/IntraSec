@@ -1,14 +1,4 @@
-import {
-  createStyles,
-  Text,
-  Title,
-  SimpleGrid,
-  TextInput,
-  Textarea,
-  Button,
-  Group,
-  rem,
-} from '@mantine/core';
+import { createStyles, Text, Title, SimpleGrid, TextInput, Textarea, Button, Group, rem } from '@mantine/core';
 import { useForm } from '@mantine/form';
 import { useTicketStore } from '../stores/tickets';
 
@@ -18,9 +8,9 @@ const useStyles = createStyles((theme) => ({
     minHeight: 400,
     boxSizing: 'border-box',
     margin: 30,
-    backgroundImage: `linear-gradient(-60deg, ${
-      theme.colors[theme.primaryColor][4]
-    } 0%, ${theme.colors[theme.primaryColor][7]} 100%)`,
+    backgroundImage: `linear-gradient(-60deg, ${theme.colors[theme.primaryColor][4]} 0%, ${
+      theme.colors[theme.primaryColor][7]
+    } 100%)`,
     borderRadius: theme.radius.md,
     padding: `calc(${theme.spacing.xl} * 2.5)`,
 
@@ -70,7 +60,7 @@ const useStyles = createStyles((theme) => ({
   },
 
   inputLabel: {
-    color: theme.black,
+    color: theme.white,
   },
 
   control: {
@@ -79,12 +69,8 @@ const useStyles = createStyles((theme) => ({
 }));
 
 // Define the ContactUs component
-export default function NewTicket() {
-  const [createTicket, fetchAllTicket] = useTicketStore((state) => [
-    state.tickets,
-    state.create,
-    state.fetchAll,
-  ]);
+export default function SupportTicketNew() {
+  const [createTicket, fetchAllTicket] = useTicketStore((state) => [state.tickets, state.create, state.fetchAll]);
 
   const form = useForm({
     initialValues: {
@@ -108,11 +94,7 @@ export default function NewTicket() {
   return (
     <div className={classes.wrapper}>
       {/* A SimpleGrid component with 2 columns, responsive to smaller screens */}
-      <SimpleGrid
-        cols={2}
-        spacing={50}
-        breakpoints={[{ maxWidth: 'sm', cols: 1 }]}
-      >
+      <SimpleGrid cols={2} spacing={50} breakpoints={[{ maxWidth: 'sm', cols: 1 }]}>
         <div>
           {/* Title component for the form */}
           <Title className={classes.title}>Ouvrir un nouveau ticket</Title>
@@ -124,8 +106,8 @@ export default function NewTicket() {
           {/* Group component containing additional information */}
           <Group mt="xl">
             <Text color="white">
-              Nos équipes travaillent tous les jours pour régler vos problèmes.
-              Contactez-nous et nous vous répondrons dans les plus brefs délais.
+              Nos équipes travaillent tous les jours pour régler vos problèmes. Contactez-nous et nous vous répondrons
+              dans les plus brefs délais.
             </Text>
           </Group>
         </div>
@@ -134,6 +116,7 @@ export default function NewTicket() {
             withAsterisk
             label="Intitulé du problème"
             placeholder="Bug souris"
+            classNames={{ input: classes.input, label: classes.inputLabel }}
             {...form.getInputProps('title')}
           />
           <Textarea

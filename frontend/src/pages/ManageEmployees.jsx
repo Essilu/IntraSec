@@ -1,24 +1,17 @@
-import {
-  Avatar,
-  Table,
-  Group,
-  Text,
-  ScrollArea,
-  MultiSelect,
-} from '@mantine/core';
+import { Avatar, Table, Group, Text, ScrollArea, MultiSelect } from '@mantine/core';
+import { notifications } from '@mantine/notifications';
+import { useEffect, useState } from 'react';
 import { useUserStore } from '../stores/users';
 import { useRoleStore } from '../stores/roles';
-import { useEffect, useState } from 'react';
-import { notifications } from '@mantine/notifications';
 
-export default function UsersRolesTable() {
-  const [users, fetchAllUsers, addRoles, removeRoles] = useUserStore(
-    (state) => [state.users, state.fetchAll, state.addRoles, state.removeRoles]
-  );
-  const [roles, fetchAllRoles] = useRoleStore((state) => [
-    state.roles,
+export default function ManageEmployees() {
+  const [users, fetchAllUsers, addRoles, removeRoles] = useUserStore((state) => [
+    state.users,
     state.fetchAll,
+    state.addRoles,
+    state.removeRoles,
   ]);
+  const [roles, fetchAllRoles] = useRoleStore((state) => [state.roles, state.fetchAll]);
   const [roleData, setRoleData] = useState([]);
 
   useEffect(() => {
@@ -29,9 +22,7 @@ export default function UsersRolesTable() {
   }, [fetchAllUsers, fetchAllRoles]);
 
   useEffect(() => {
-    setRoleData(
-      roles.map((role) => ({ value: role.id.toString(), label: role.name }))
-    );
+    setRoleData(roles.map((role) => ({ value: role.id.toString(), label: role.name })));
   }, [roles]);
 
   const updateRoles = async (userId, rawRoleIds) => {
@@ -40,9 +31,7 @@ export default function UsersRolesTable() {
     const userRoles = user.roles.map((role) => role.id);
 
     const rolesToAdd = roleIds.filter((roleId) => !userRoles.includes(roleId));
-    const rolesToRemove = userRoles.filter(
-      (roleId) => !roleIds.includes(roleId)
-    );
+    const rolesToRemove = userRoles.filter((roleId) => !roleIds.includes(roleId));
 
     // If we're trying to remove all roles, we can't do that
     if (rolesToRemove.length === userRoles.length) {
@@ -76,11 +65,7 @@ export default function UsersRolesTable() {
               <tr key={user.id}>
                 <td>
                   <Group spacing="sm">
-                    <Avatar
-                      size={40}
-                      src="https://thispersondoesnotexist.com"
-                      radius={40}
-                    />
+                    <Avatar size={40} src="https://thispersondoesnotexist.com" radius={40} />
                     <div>
                       <Text fz="sm" fw={500}>
                         {`${user.firstname} ${user.lastname}`}

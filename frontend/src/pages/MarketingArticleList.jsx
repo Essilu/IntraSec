@@ -1,92 +1,14 @@
-import { useEffect, useState } from 'react';
-import {
-  Title,
-  Text,
-  Button,
-  Modal,
-  Container,
-  rem,
-  TextInput,
-  Textarea,
-} from '@mantine/core';
+import { Title, Text, Button, Modal, Container, rem, TextInput, Textarea } from '@mantine/core';
 import { Carousel } from '@mantine/carousel';
 import { useMediaQuery } from '@mantine/hooks';
-import { Paper, useMantineTheme } from '@mantine/core';
-import { Link } from 'react-router-dom';
-import '../styles/Marketing.css';
+import { useMantineTheme } from '@mantine/core';
+import { useEffect, useState } from 'react';
 import { useMarketingStore } from '../stores/marketing';
+import ArticleCard from '../components/Marketing/ArticleCard';
+import '../styles/Marketing.css';
 
-// Define the Card component
-function Card({ id, imageUrl, title, category, content, onEdit, onDelete }) {
-  // Render the component
-  const handleEdit = () => {
-    onEdit({ id, imageUrl, title, category, content });
-  };
-
-  // Event handler for deleting the card
-  const handleDeleteCard = () => {
-    onDelete();
-  };
-
-  return (
-    <Paper
-      shadow="md"
-      padding="xl"
-      radius="md"
-      style={{ backgroundImage: `url(${imageUrl})` }}
-      className="marketing-card"
-    >
-      <div>
-        <Text className="marketing-category" size="xs">
-          {category}
-        </Text>
-        <Title order={3} className="marketing-title">
-          {title}
-        </Title>
-      </div>
-      <div className="marketing-controlButtonsCard">
-        {/* Update show more button to navigate to the corresponding page*/}
-        {/* <Link to={`/CardPage/${title}`} className="marketing-seeArticle"> */}
-        <Link to={`/Article/${id}`} className="marketing-seeArticle">
-          <Button
-            variant="white"
-            color="dark"
-            className="marketing-viewMoreButton"
-          >
-            Voir plus
-          </Button>
-        </Link>
-        <Button
-          variant="white"
-          color="blue"
-          onClick={handleEdit} // Update the event handler
-          className="marketing-editButton"
-        >
-          Modifier
-        </Button>
-
-        <Button
-          variant="white"
-          color="red"
-          onClick={handleDeleteCard} // Update the event handler
-          className="marketing-deleteButton"
-        >
-          Supprimer
-        </Button>
-      </div>
-    </Paper>
-  );
-}
-
-// Define the Marketing component
-function Marketing() {
-  const [
-    articles,
-    fetchAllMarketing,
-    createArticle,
-    deleteArticle,
-    updateArticle,
-  ] = useMarketingStore((state) => [
+export default function MarketingArticleList() {
+  const [articles, fetchAllMarketing, createArticle, deleteArticle, updateArticle] = useMarketingStore((state) => [
     state.articles,
     state.fetchAll,
     state.create,
@@ -142,12 +64,7 @@ function Marketing() {
 
   // Event handler for saving the new card
   const handleSaveNewCard = () => {
-    if (
-      !newCardData.imageUrl ||
-      !newCardData.title ||
-      !newCardData.category ||
-      !newCardData.content
-    ) {
+    if (!newCardData.imageUrl || !newCardData.title || !newCardData.category || !newCardData.content) {
       setErrorMessage('Veuillez remplir tous les champs');
       return;
     }
@@ -189,11 +106,7 @@ function Marketing() {
   // Render the component with the carrousel
   const slides = articles.map((slide, index) => (
     <Carousel.Slide key={slide.title}>
-      <Card
-        {...slide}
-        onEdit={() => handleEditCard(slide)}
-        onDelete={() => handleDeleteCard(index)}
-      />
+      <ArticleCard {...slide} onEdit={() => handleEditCard(slide)} onDelete={() => handleDeleteCard(index)} />
     </Carousel.Slide>
   ));
 
@@ -211,15 +124,14 @@ function Marketing() {
 
           <Container p={0} size={600}>
             <Text size="lg" color="dimmed" className="marketing-description">
-              Découvrez nos solutions innovantes en matière de sécurité
-              informatique. Nous vous proposons des solutions adaptées à vos
-              besoins et à votre budget.
+              Découvrez nos solutions innovantes en matière de sécurité informatique. Nous vous proposons des solutions
+              adaptées à vos besoins et à votre budget.
             </Text>
           </Container>
         </div>
       </Container>
 
-      <h1> Nos solutions </h1>
+      <h1>Nos solutions </h1>
 
       <Carousel // Update the Carousel component
         slideSize="50%"
@@ -246,43 +158,32 @@ function Marketing() {
           label="Image"
           placeholder="URL de l'image"
           value={editedCard?.imageUrl || ''}
-          onChange={(event) =>
-            setEditedCard({ ...editedCard, imageUrl: event.target.value })
-          }
+          onChange={(event) => setEditedCard({ ...editedCard, imageUrl: event.target.value })}
           required
         />
         <TextInput // Update the title
           label="Titre"
           placeholder="Titre de la carte"
           value={editedCard?.title || ''}
-          onChange={(event) =>
-            setEditedCard({ ...editedCard, title: event.target.value })
-          }
+          onChange={(event) => setEditedCard({ ...editedCard, title: event.target.value })}
           required
         />
         <TextInput // Update the category
           label="Catégorie"
           placeholder="Catégorie de la carte"
           value={editedCard?.category || ''}
-          onChange={(event) =>
-            setEditedCard({ ...editedCard, category: event.target.value })
-          }
+          onChange={(event) => setEditedCard({ ...editedCard, category: event.target.value })}
           required
         />
         <TextInput // Update the content
           label="Contenu"
           placeholder="Contenu de l'article"
           value={editedCard?.content || ''}
-          onChange={(event) =>
-            setEditedCard({ ...editedCard, content: event.target.value })
-          }
+          onChange={(event) => setEditedCard({ ...editedCard, content: event.target.value })}
           required
         />
-        {errorMessage && <div>{errorMessage}</div>}{' '}
-        {/* Display the error message in case */}
-        <Button onClick={() => handleSaveChanges(editedCard)}>
-          Enregistrer
-        </Button>
+        {errorMessage && <div>{errorMessage}</div>} {/* Display the error message in case */}
+        <Button onClick={() => handleSaveChanges(editedCard)}>Enregistrer</Button>
       </Modal>
 
       <Modal // Update the Modal component to add a card to the carrousel
@@ -324,12 +225,9 @@ function Marketing() {
           required
           rows={10}
         />
-        {errorMessage && <div>{errorMessage}</div>}{' '}
-        {/* Display the error message in case */}
+        {errorMessage && <div>{errorMessage}</div>} {/* Display the error message in case */}
         <Button onClick={handleSaveNewCard}>Ajouter</Button>
       </Modal>
     </>
   );
 }
-
-export default Marketing;

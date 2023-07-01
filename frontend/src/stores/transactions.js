@@ -1,5 +1,5 @@
-import axios from '../axios';
 import { create } from 'zustand';
+import axios from '../axios';
 
 export const useTransactionStore = create((set, get) => ({
   transactions: [],

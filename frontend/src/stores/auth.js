@@ -1,6 +1,6 @@
 import { create } from 'zustand';
-import axios from '../axios';
 import { persist, createJSONStorage } from 'zustand/middleware';
+import axios from '../axios';
 
 export const useAuthStore = create(
   persist(

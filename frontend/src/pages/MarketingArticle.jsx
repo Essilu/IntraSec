@@ -4,7 +4,7 @@ import { useParams } from 'react-router-dom';
 import { useMarketingStore } from '../stores/marketing';
 import '../styles/Article.css';
 
-function Article() {
+export default function MarketingArticle() {
   const { id: rawId } = useParams();
   const id = Number(rawId);
   const [article, fetchArticle, updateArticle] = useMarketingStore((state) => [
@@ -35,7 +35,6 @@ function Article() {
 
   // Event handler for saving the changes
   const handleSaveChanges = async () => {
-    // Effectuer les actions de sauvegarde ici
     setEditModalOpen(false);
     setErrorMessage('');
     await updateArticle(id, { title: editedTitle, content: editedContent });
@@ -57,23 +56,14 @@ function Article() {
                 <div className="article-title-background" />
                 <Title className="article-title">
                   {/* Display the article title here */}
-                  <Text
-                    component="span"
-                    inherit
-                    variant="gradient"
-                    gradient={{ from: 'pink', to: 'yellow' }}
-                  >
+                  <Text component="span" inherit variant="gradient" gradient={{ from: 'pink', to: 'yellow' }}>
                     {article?.title || "Titre de l'article"}
                   </Text>{' '}
                   {/* Maximisez la robustesse de votre système informatique ! */}
                 </Title>
                 {/* Display modification button for the article */}
                 <div className="article-button">
-                  <Button
-                    variant="white"
-                    color="blue"
-                    onClick={handleEditContent}
-                  >
+                  <Button variant="white" color="blue" onClick={handleEditContent}>
                     Modifier
                   </Button>
                 </div>
@@ -91,11 +81,7 @@ function Article() {
       </Container>
 
       {/* Display the edit modal */}
-      <Modal
-        opened={editModalOpen}
-        onClose={handleEditModalClose}
-        title="Modifier le contenu de l'article"
-      >
+      <Modal opened={editModalOpen} onClose={handleEditModalClose} title="Modifier le contenu de l'article">
         <Textarea
           label="Titre"
           placeholder="Titre de l'article"
@@ -120,5 +106,3 @@ function Article() {
     </>
   );
 }
-
-export default Article;

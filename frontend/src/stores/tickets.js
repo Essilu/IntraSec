@@ -1,5 +1,5 @@
-import axios from '../axios';
 import { create } from 'zustand';
+import axios from '../axios';
 
 export const useTicketStore = create((set, get) => ({
   tickets: [],
