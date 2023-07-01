@@ -1,5 +1,5 @@
 /* eslint-disable react/no-unescaped-entities */
-import { Container, Title, Text, Button, Modal, Textarea } from "@mantine/core";
+import { Container, Title, Text, Button, Modal, Textarea, TextInput } from "@mantine/core";
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { useMarketingStore } from "../stores/marketing";
@@ -19,6 +19,7 @@ function Article() {
       const response = await fetchArticle(id);
       setEditedContent(response.content);
       setEditedTitle(response.title);
+      setEditedImageUrl(response.imageUrl);
     }
     fetchData();
   }, [fetchArticle, id]);
@@ -26,6 +27,10 @@ function Article() {
   const [editModalOpen, setEditModalOpen] = useState(false);
   const [editedTitle, setEditedTitle] = useState(article?.title);
   const [editedContent, setEditedContent] = useState(article?.content);
+  const [editedImageUrl, setEditedImageUrl] = useState(article?.imageUrl);
+  const [imageStyle, setImageStyle] = useState({
+    backgroundImage: `url(${editedImageUrl})`,
+  });
   const [errorMessage, setErrorMessage] = useState("");
 
   // Event handlers for opening the edit and info modals
@@ -39,7 +44,12 @@ function Article() {
     // Effectuer les actions de sauvegarde ici
     setEditModalOpen(false);
     setErrorMessage("");
-    await updateArticle(id, { title: editedTitle, content: editedContent });
+    await updateArticle(id, {
+      title: editedTitle,
+      content: editedContent,
+      imageUrl: editedImageUrl,
+    });
+    console.log(editedImageUrl);
   };
 
   // Event handler for opening the edit modal
@@ -47,10 +57,15 @@ function Article() {
     setEditModalOpen(true);
   };
 
+  // Update the image style when editedImageUrl changes
+  useEffect(() => {
+    setImageStyle({ backgroundImage: `url(${editedImageUrl})` });
+  }, [editedImageUrl]);
+
   // Render the component
   return (
     <>
-      <div className="article-root">
+      <div className="article-root" style={imageStyle}>
         <Container size="lg">
           <div className="article-inner">
             <div className="article-content">
@@ -66,9 +81,7 @@ function Article() {
                   >
                     {article?.title || "Titre de l'article"}
                   </Text>{" "}
-                  {/* Maximisez la robustesse de votre système informatique ! */}
                 </Title>
-                {/* Display modification button for the article */}
                 <div className="article-button">
                   <Button
                     variant="white"
@@ -97,6 +110,13 @@ function Article() {
         onClose={handleEditModalClose}
         title="Modifier le contenu de l'article"
       >
+        <TextInput // Update the image
+          label="Image"
+          placeholder="URL de l'image"
+          value={editedImageUrl}
+          onChange={(event) => setEditedImageUrl(event.target.value)}
+          required
+        />
         <Textarea
           label="Titre"
           placeholder="Titre de l'article"
@@ -112,13 +132,12 @@ function Article() {
           onChange={(event) => setEditedContent(event.target.value)}
           required
           autosize
+          rows={10}
         />
         {/* Display the error message if there is one */}
         {errorMessage && <div>{errorMessage}</div>}
 
-        <Button onClick={handleSaveChanges}>
-          Enregistrer
-        </Button>
+        <Button onClick={handleSaveChanges}>Enregistrer</Button>
       </Modal>
     </>
   );
