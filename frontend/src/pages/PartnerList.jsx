@@ -4,9 +4,9 @@ import { notifications } from '@mantine/notifications';
 import { useDisclosure } from '@mantine/hooks';
 import { IconPlus } from '@tabler/icons-react';
 import { useEffect, useRef, useState } from 'react';
+import { redirect, useParams } from 'react-router-dom';
 import PartnerCard from '../components/Partner/PartnerCard';
 import { usePartnerStore } from '../stores/partners';
-import { redirect, useParams } from 'react-router-dom';
 
 export default function PartnerList() {
   const { kind } = useParams();

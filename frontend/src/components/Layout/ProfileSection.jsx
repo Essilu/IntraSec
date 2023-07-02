@@ -1,8 +1,8 @@
 import { UnstyledButton, Group, Avatar, Text, createStyles } from '@mantine/core';
+import { modals } from '@mantine/modals';
 import { IconChevronRight } from '@tabler/icons-react';
 import { redirect } from 'react-router-dom';
 import { useAuthStore } from '../../stores/auth';
-import { modals } from '@mantine/modals';
 
 // Define custom styles using createStyles
 const useStyles = createStyles((theme) => ({

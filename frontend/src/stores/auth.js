@@ -12,8 +12,16 @@ export const useAuthStore = create(
       },
       fetchMe: async () => {
         // Fetch the current user (owning the currently defined cookie), put it in the store (in 'user'), and return it
-        const response = await axios.get('/auth/me');
-        set({ user: response.data });
+        try {
+          const response = await axios.get('/auth/me');
+          set({ user: response.data });
+        } catch (error) {
+          if (error.response.status === 401) {
+            set({ user: null });
+          } else {
+            throw error;
+          }
+        }
       },
       login: async ({ email, password }) => {
         // Login a user, put it in the store (in 'user'), and return it
@@ -25,8 +33,16 @@ export const useAuthStore = create(
       },
       logout: async () => {
         // Logout the user, remove it from the store (remove it from 'user')
-        await axios.post('/auth/logout');
-        set({ user: null });
+        try {
+          await axios.post('/auth/logout');
+          set({ user: null });
+        } catch (error) {
+          if (error.response.status === 401) {
+            set({ user: null });
+          } else {
+            throw error;
+          }
+        }
       },
     }),
     {

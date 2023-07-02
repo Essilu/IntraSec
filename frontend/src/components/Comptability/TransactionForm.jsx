@@ -16,7 +16,7 @@ const typeData = [
 
 export default function TransactionForm() {
   // Get the transactions from the store and the fetchAllTransactions function
-  const [createTransaction] = useTransactionStore((state) => [state.transactions, state.fetchAll, state.create]);
+  const createTransaction = useTransactionStore((state) => state.create);
 
   // useForm hook
   const form = useForm({

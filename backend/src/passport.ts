@@ -14,6 +14,7 @@ passport.use(
         // Find the user by email or username in the database
         const user = await db.user.findFirst({
           where: { email: emailOrUsername },
+          include: { roles: true },
         });
 
         if (!user) {

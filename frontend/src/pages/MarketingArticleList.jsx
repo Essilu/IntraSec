@@ -114,7 +114,7 @@ export default function MarketingArticleList() {
     <>
       <Container className="marketing-wrapper" size={1400}>
         <div className="marketing-inner">
-          <Title className="marketing-title">
+          <Title align="center" size={40}>
             Découvrez le{' '}
             <Text component="span" className="marketing-highlight" inherit>
               future de la cybersecurité

@@ -13,7 +13,7 @@ export default function TransactionTable({ transactions }) {
       </thead>
       <tbody>
         {transactions.map((transaction) => (
-          <tr key={transaction.name}>
+          <tr key={transaction.id}>
             <td>{transaction.otherCompany}</td>
             <td>{transaction.type}</td>
             <td>{transaction.mean}</td>
