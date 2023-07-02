@@ -8,6 +8,7 @@ export const createRole = z.object({
   permissionComments: z.number().int().nonnegative(), // Validates the permissions field as a positive bigint
   permissionUsers: z.number().int().nonnegative(), // Validates the permissions field as a positive bigint
   permissionRoles: z.number().int().nonnegative(), // Validates the permissions field as a positive bigint
+  isDefault: z.boolean().default(false), // Validates the isDefault field as a boolean
 }).strict();
 
 // Validation schema for finding a role

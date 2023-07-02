@@ -36,7 +36,8 @@ model Role {
   permissionComments     Int
   permissionUsers        Int
   permissionRoles        Int
-  builtIn                Boolean @default(false)
+  deletable              Boolean @default(true)
+  isDefault              Boolean @default(false)
   users                  User[]
 }
 

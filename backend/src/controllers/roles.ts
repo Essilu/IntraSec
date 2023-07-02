@@ -11,7 +11,7 @@ import {
 export async function create(req: Request, res: Response): Promise<void> {
   const data = createRole.parse(req.body);
 
-  const role = await db.role.create({ data: { ...data, builtIn: false } });
+  const role = await db.role.create({ data: { ...data, deletable: true } });
 
   res.status(201).json(role);
 }
@@ -50,6 +50,14 @@ export async function update(req: Request, res: Response): Promise<void> {
 
   const data = updateRole.parse(req.body);
 
+  if (data.isDefault === false && role.isDefault) {
+    const defaultRoles = await db.role.count({ where: { isDefault: true } });
+    if (defaultRoles === 1) {
+      res.status(403).json({ message: 'Cannot remove last default role' });
+      return;
+    }
+  }
+
   const updatedRole = await db.role.update({
     where: { id: roleId },
     data,
@@ -69,8 +77,14 @@ export async function remove(req: Request, res: Response): Promise<void> {
     return;
   }
 
-  if (role.builtIn) {
+  if (!role.deletable) {
     res.status(403).json({ message: 'Cannot delete built-in role' });
+    return;
+  }
+
+  const defaultRoles = await db.role.count({ where: { isDefault: true } });
+  if (role.isDefault && defaultRoles === 1) {
+    res.status(403).json({ message: 'Cannot delete last default role' });
     return;
   }
 

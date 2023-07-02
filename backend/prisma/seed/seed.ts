@@ -257,7 +257,7 @@ async function main(): Promise<void> {
     update: {},
     create: {
       name: 'user',
-      builtIn: true,
+      isDefault: true,
       permissionTransactions: TransactionPermissions.ReadTransaction,
       permissionPosts: PostPermissions.ReadSupportPost
         | PostPermissions.CreateSupportPost
@@ -277,7 +277,7 @@ async function main(): Promise<void> {
     update: {},
     create: {
       name: 'admin',
-      builtIn: true,
+      deletable: false,
       permissionTransactions: PermissionHelper.AllTransactions,
       permissionPosts: PermissionHelper.AllPosts,
       permissionComments: PermissionHelper.AllComments,

@@ -23,12 +23,17 @@ export async function create(req: Request, res: Response): Promise<void> {
     return;
   }
 
+  const defaultRoles = await db.role.findMany({
+    where: { isDefault: true },
+    select: { id: true },
+  });
+
   const password = await bcrypt.hash(data.password, 10);
   const user = await db.user.create({
     data: {
       ...data,
       roles: {
-        connect: [{ name: 'user' }],
+        connect: defaultRoles,
       },
       password,
     },
@@ -109,7 +114,6 @@ export async function remove(req: Request, res: Response): Promise<void> {
 
   res.status(204).json();
 }
-
 
 // Add roles to a user by their ID
 export async function updateRole(req: Request, res: Response, action: 'connect' | 'disconnect'): Promise<void> {
