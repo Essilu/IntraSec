@@ -1,11 +1,16 @@
-import { Avatar, Table, Group, Text, ActionIcon, Menu, ScrollArea } from '@mantine/core';
+import { Avatar, Table, Group, Text, ActionIcon, Menu, ScrollArea, Flex, Button, Drawer } from '@mantine/core';
 import { IconPencil, IconMessages, IconNote, IconReportAnalytics, IconTrash, IconDots } from '@tabler/icons-react';
 import { useEffect } from 'react';
 import { useUserStore } from '../stores/users';
+import Can from '../components/Can';
+import { PermissionSubject, UserPermissions } from '../utils/permissions';
+import { useDisclosure } from '@mantine/hooks';
+import EmployeeForm from '../components/Employees/EmployeeForm';
 
 export default function EmployeeList() {
   // Get the transactions from the store and the fetchAllTransactions function
   const [employes, fetchAllUsers] = useUserStore((state) => [state.users, state.fetchAll]);
+  const [opened, { open, close }] = useDisclosure(false);
 
   // Fetch all transactions on page load
   useEffect(() => {
@@ -19,6 +24,17 @@ export default function EmployeeList() {
   return (
     <>
       <h1>Liste des employés</h1>
+
+      <Flex justify="space-between" align="center">
+        <h3>Toutes les employés</h3>
+        <Can
+          perform={UserPermissions.CreateUser}
+          on={PermissionSubject.User}
+          yes={
+            <Button onClick={open}>Créer un compte utilisateur</Button>
+          }
+        />
+      </Flex>
 
       <ScrollArea>
         <Table sx={{ minWidth: 800 }} verticalSpacing="md">
@@ -77,6 +93,11 @@ export default function EmployeeList() {
           </tbody>
         </Table>
       </ScrollArea>
+
+
+      <Drawer position="right" opened={opened} onClose={close} title="Créer un compte utilisateur">
+        <EmployeeForm close={close} />
+      </Drawer>
     </>
   );
 }
