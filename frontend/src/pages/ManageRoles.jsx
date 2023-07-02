@@ -15,7 +15,7 @@ import {
 } from '@mantine/core';
 import { modals } from '@mantine/modals';
 import { notifications } from '@mantine/notifications';
-import { IconPlus, IconPencil, IconTrash } from '@tabler/icons-react';
+import { IconPlus, IconPencil, IconTrash, IconAccessible, IconAccessibleOff } from '@tabler/icons-react';
 import { useEffect, useRef, useState } from 'react';
 import { serializePermissionValues, deserializePermissionValues } from '../utils/permissions';
 import PermissionsGroup from '../components/Roles/PermissionsGroup';
@@ -152,6 +152,11 @@ export default function ManageRoles() {
     });
   };
 
+  // Toggle whether a role is the default role or not
+  const changeDefaultRole = async (id, isDefault) => {
+    await updateRole(id, { isDefault });
+  };
+
   // Save the permissions when the save button is clicked
   const handleSave = async () => {
     let modifications = 0;
@@ -206,119 +211,167 @@ export default function ManageRoles() {
 
           {roles
             .sort((a, b) => a.name.localeCompare(b.name))
-            .map((role) => (
-              <Tabs.Panel key={role.id} value={role.id.toString()} mx="md">
-                <Container px={0} mb="sm">
-                  <Title order={2}>{role.name}</Title>
+            .map((role) => {
+              const isLastDefault = roles.filter(r => r.isDefault).length === 1 && role.isDefault;
+              const isDeletable = role.deletable  && !isLastDefault;
+              const notDeletableTooltip = isLastDefault
+                ? 'Vous ne pouvez pas supprimer le dernier rôle par défaut.'
+                : 'Ce rôle est requis par le système et ne peut pas être supprimé';
 
-                  <Group my="lg">
-                    <Button
-                      variant="light"
-                      color="blue"
-                      leftIcon={<IconPencil size="0.9rem" />}
-                      onClick={() => openRenameModal(role.id)}
-                    >
-                      Renommer
-                    </Button>
+              return (
+                <Tabs.Panel key={role.id} value={role.id.toString()} mx="md">
+                  <Container px={0} mb="sm">
+                    <Title order={2}>{role.name}</Title>
 
-                    {role.builtIn ? (
-                      <Tooltip label="Rôle par défaut, ne peut pas être supprimé">
-                        <Button
-                          variant="light"
-                          color="red"
-                          leftIcon={<IconTrash size="0.9rem" />}
-                          data-disabled
-                          sx={{ '&[data-disabled]': { pointerEvents: 'all' } }}
-                        >
-                          Supprimer
-                        </Button>
-                      </Tooltip>
-                    ) : (
+                    <Group my="lg">
+                      {role.isDefault
+                        ?
+                          isLastDefault
+                            ? (
+                              <Tooltip label="Vous ne pouvez pas retirer le dernier rôle par défaut">
+                                <Button
+                                  variant="light"
+                                  color="blue"
+                                  leftIcon={<IconAccessibleOff size="0.9rem" />}
+                                  data-disabled
+                                  sx={{ '&[data-disabled]': { pointerEvents: 'all' } }}
+                                >
+                                  Enlever des défauts
+                                </Button>
+                              </Tooltip>
+                            ) : (
+                              <Tooltip label="Enlever des rôles par défaut des nouveaux utilisateurs">
+                                <Button
+                                  variant="light"
+                                  color="blue"
+                                  leftIcon={<IconAccessibleOff size="0.9rem" />}
+                                  onClick={() => changeDefaultRole(role.id, false)}
+                                >
+                                  Enlever des défauts
+                                </Button>
+                              </Tooltip>
+                        ) : (
+                          <Tooltip label="Ajouter aux rôles par défaut des nouveaux utilisateurs">
+                            <Button
+                              variant="light"
+                              color="blue"
+                              leftIcon={<IconAccessible size="0.9rem" />}
+                              onClick={() => changeDefaultRole(role.id, true)}
+                            >
+                              Mettre en défaut
+                            </Button>
+                          </Tooltip>
+                        )}
+
                       <Button
                         variant="light"
-                        color="red"
-                        leftIcon={<IconTrash size="0.9rem" />}
-                        onClick={() => openDeleteModal(role.id)}
+                        color="blue"
+                        leftIcon={<IconPencil size="0.9rem" />}
+                        onClick={() => openRenameModal(role.id)}
                       >
-                        Supprimer
+                        Renommer
                       </Button>
-                    )}
-                  </Group>
-                </Container>
 
-                <Space h="xl" />
+                      {isDeletable
+                        ? (
+                          <Button
+                            variant="light"
+                            color="red"
+                            leftIcon={<IconTrash size="0.9rem" />}
+                            onClick={() => openDeleteModal(role.id)}
+                          >
+                            Supprimer
+                          </Button>
+                        ) : (
+                          <Tooltip label={notDeletableTooltip}>
+                            <Button
+                              variant="light"
+                              color="red"
+                              leftIcon={<IconTrash size="0.9rem" />}
+                              data-disabled
+                              sx={{ '&[data-disabled]': { pointerEvents: 'all' } }}
+                            >
+                              Supprimer
+                            </Button>
+                          </Tooltip>
+                        )}
+                    </Group>
+                  </Container>
 
-                <Title order={4} style={{ textTransform: 'uppercase' }} mb="sm">
-                  Transactions
-                </Title>
-                <PermissionsGroup
-                  permissionsByRole={permissionsByRole}
-                  handleChange={handleChange}
-                  permissionType="transactions"
-                  labels={permissionLabels}
-                  roleId={role.id}
-                />
+                  <Space h="xl" />
 
-                <Divider my="lg" />
+                  <Title order={4} style={{ textTransform: 'uppercase' }} mb="sm">
+                    Transactions
+                  </Title>
+                  <PermissionsGroup
+                    permissionsByRole={permissionsByRole}
+                    handleChange={handleChange}
+                    permissionType="transactions"
+                    labels={permissionLabels}
+                    roleId={role.id}
+                  />
 
-                <Title order={4} style={{ textTransform: 'uppercase' }} mb="sm">
-                  Posts
-                </Title>
-                <PermissionSection
-                  section="posts"
-                  subsections={[subsections.marketing, subsections.support, subsections.partner]}
-                  permissionsByRole={permissionsByRole}
-                  handleChange={handleChange}
-                  roleId={role.id}
-                />
+                  <Divider my="lg" />
 
-                <Divider my="lg" />
+                  <Title order={4} style={{ textTransform: 'uppercase' }} mb="sm">
+                    Posts
+                  </Title>
+                  <PermissionSection
+                    section="posts"
+                    subsections={[subsections.marketing, subsections.support, subsections.partner]}
+                    permissionsByRole={permissionsByRole}
+                    handleChange={handleChange}
+                    roleId={role.id}
+                  />
 
-                <Title order={4} style={{ textTransform: 'uppercase' }} mb="sm">
-                  Commentaires
-                </Title>
-                <PermissionSection
-                  section="comments"
-                  subsections={[subsections.marketing, subsections.support]}
-                  permissionsByRole={permissionsByRole}
-                  handleChange={handleChange}
-                  roleId={role.id}
-                />
+                  <Divider my="lg" />
 
-                <Divider my="lg" />
+                  <Title order={4} style={{ textTransform: 'uppercase' }} mb="sm">
+                    Commentaires
+                  </Title>
+                  <PermissionSection
+                    section="comments"
+                    subsections={[subsections.marketing, subsections.support]}
+                    permissionsByRole={permissionsByRole}
+                    handleChange={handleChange}
+                    roleId={role.id}
+                  />
 
-                <Title order={4} style={{ textTransform: 'uppercase' }} mb="sm">
-                  Utilisateurs
-                </Title>
-                <PermissionsGroup
-                  permissionsByRole={permissionsByRole}
-                  handleChange={handleChange}
-                  permissionType="users"
-                  labels={permissionLabels}
-                  roleId={role.id}
-                />
+                  <Divider my="lg" />
 
-                <Divider my="lg" />
+                  <Title order={4} style={{ textTransform: 'uppercase' }} mb="sm">
+                    Utilisateurs
+                  </Title>
+                  <PermissionsGroup
+                    permissionsByRole={permissionsByRole}
+                    handleChange={handleChange}
+                    permissionType="users"
+                    labels={permissionLabels}
+                    roleId={role.id}
+                  />
 
-                <Title order={4} style={{ textTransform: 'uppercase' }} mb="sm">
-                  Rôles
-                </Title>
-                <PermissionsGroup
-                  permissionsByRole={permissionsByRole}
-                  handleChange={handleChange}
-                  permissionType="roles"
-                  labels={permissionLabels}
-                  roleId={role.id}
-                />
-              </Tabs.Panel>
-            ))}
+                  <Divider my="lg" />
+
+                  <Title order={4} style={{ textTransform: 'uppercase' }} mb="sm">
+                    Rôles
+                  </Title>
+                  <PermissionsGroup
+                    permissionsByRole={permissionsByRole}
+                    handleChange={handleChange}
+                    permissionType="roles"
+                    labels={permissionLabels}
+                    roleId={role.id}
+                  />
+                </Tabs.Panel>
+              );
+          })}
         </Tabs>
 
         <Space h="xl" />
 
         <Center my="xl">
           <Button color="green" onClick={handleSave}>
-            Enregistrer
+            Enregistrer les permissions
           </Button>
         </Center>
         <Space h="xl" />
