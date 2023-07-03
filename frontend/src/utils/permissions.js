@@ -1,3 +1,86 @@
+export const TransactionPermissions = {
+  CreateTransaction: 1 << 0,
+  ReadTransaction: 1 << 1,
+  UpdateTransaction: 1 << 2,
+  DeleteTransaction: 1 << 4,
+}
+
+export const PostPermissions = {
+  // Posts: Marketing
+  CreateMarketingPost: 1 << 0,
+  ReadMarketingPost: 1 << 1,
+  UpdateMarketingPost: 1 << 2,
+  UpdateOwnMarketingPost: 1 << 3,
+  DeleteMarketingPost: 1 << 4,
+  DeleteOwnMarketingPost: 1 << 5,
+
+  // Posts: Support
+  CreateSupportPost: 1 << 6,
+  ReadSupportPost: 1 << 7,
+  UpdateSupportPost: 1 << 8,
+  UpdateOwnSupportPost: 1 << 9,
+  DeleteSupportPost: 1 << 10,
+  DeleteOwnSupportPost: 1 << 11,
+
+  // Posts: Partner
+  CreatePartnerPost: 1 << 12,
+  ReadPartnerPost: 1 << 13,
+  UpdatePartnerPost: 1 << 14,
+  UpdateOwnPartnerPost: 1 << 15,
+  DeletePartnerPost: 1 << 16,
+  DeleteOwnPartnerPost: 1 << 17,
+}
+
+export const CommentPermissions = {
+  // Comments: Marketing
+  CreateMarketingComment: 1 << 0,
+  ReadMarketingComment: 1 << 1,
+  UpdateMarketingComment: 1 << 2,
+  UpdateOwnMarketingComment: 1 << 3,
+  DeleteMarketingComment: 1 << 4,
+  DeleteOwnMarketingComment: 1 << 5,
+
+  // Comments: Support
+  CreateSupportComment: 1 << 6,
+  ReadSupportComment: 1 << 7,
+  UpdateSupportComment: 1 << 8,
+  UpdateOwnSupportComment: 1 << 9,
+  DeleteSupportComment: 1 << 10,
+  DeleteOwnSupportComment: 1 << 11,
+
+  // No comments for partner posts
+}
+
+export const UserPermissions = {
+  CreateUser: 1 << 0,
+  ReadUser: 1 << 1,
+  UpdateUser: 1 << 2,
+  DeleteUser: 1 << 3,
+}
+
+export const RolePermissions = {
+  CreateRole: 1 << 0,
+  ReadRole: 1 << 1,
+  UpdateRole: 1 << 2,
+  DeleteRole: 1 << 3,
+}
+
+/* HELPERS */
+export const PermissionSubject = {
+  Transaction: 'transaction',
+  Post: 'post',
+  Comment: 'comment',
+  User: 'user',
+  Role: 'role',
+}
+
+export const GenericAction = {
+  Create: 'create',
+  Read: 'read',
+  Update: 'update',
+  Delete: 'delete',
+}
+
 export const PermissionTable = {
   'transactions.create': 1 << 0,
   'transactions.read': 1 << 1,

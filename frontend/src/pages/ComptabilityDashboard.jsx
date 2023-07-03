@@ -6,6 +6,8 @@ import { Link } from 'react-router-dom';
 import { useTransactionStore } from '../stores/transactions';
 import TransactionForm from '../components/Comptability/TransactionForm';
 import TransactionTable from '../components/Comptability/TransactionTable';
+import Can from '../components/Can';
+import { PermissionSubject, TransactionPermissions } from '../utils/permissions';
 
 export default function ComptabilityDashboard() {
   // Drawer controller
@@ -62,7 +64,7 @@ export default function ComptabilityDashboard() {
         <div>
           <Title order={2}>Revenus totaux sur l’année</Title>
           <Title order={1} color="teal">
-            $197 800
+            $197 800 981
           </Title>
         </div>
       </Flex>
@@ -75,15 +77,25 @@ export default function ComptabilityDashboard() {
           <Link to="/comptability/history">
             <Button variant="outline">Voir toutes les transactions</Button>
           </Link>
-          <Button onClick={open}>Ajouter une transaction</Button>
+          <Can
+            perform={TransactionPermissions.CreateTransaction}
+            on={PermissionSubject.Transaction}
+            yes={<Button onClick={open}>Ajouter une transaction</Button>}
+          />
         </Flex>
       </Flex>
 
       <TransactionTable transactions={transactions.slice(0, 10)} />
 
-      <Drawer position="right" opened={opened} onClose={close} title="Ajouter une transaction">
-        <TransactionForm />
-      </Drawer>
+      <Can
+        perform={TransactionPermissions.CreateTransaction}
+        on={PermissionSubject.Transaction}
+        yes={
+          <Drawer position="right" opened={opened} onClose={close} title="Ajouter une transaction">
+            <TransactionForm />
+          </Drawer>
+        }
+      />
     </div>
   );
 }
