@@ -28,9 +28,6 @@ export default function MarketingArticle() {
   const [editedTitle, setEditedTitle] = useState(article?.title);
   const [editedContent, setEditedContent] = useState(article?.content);
   const [editedImageUrl, setEditedImageUrl] = useState(article?.imageUrl);
-  const [imageStyle, setImageStyle] = useState({
-    backgroundImage: `url(${editedImageUrl})`,
-  });
   const [errorMessage, setErrorMessage] = useState("");
 
   // Event handlers for opening the edit and info modals

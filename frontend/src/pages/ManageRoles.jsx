@@ -195,7 +195,7 @@ export default function ManageRoles() {
         <LoadingOverlay visible={loading} overlayBlur={2} />
 
         <Tabs defaultValue={roles[0]?.id.toString()} orientation="vertical">
-          <Tabs.List>
+          <Tabs.List miw="150px">
             {roles.map((role) => (
               <Tabs.Tab key={role.id} value={role.id.toString()}>
                 {role.name}
