@@ -4,7 +4,7 @@ import { useEffect } from 'react';
 import { useTransactionStore } from '../stores/transactions';
 import TransactionTable from '../components/Comptability/TransactionTable';
 import TransactionForm from '../components/Comptability/TransactionForm';
-import Can from '../components/Can';
+import Can from '../components/Authorization/Can';
 import { PermissionSubject, TransactionPermissions } from '../utils/permissions';
 
 export default function ComptabilityHistory() {

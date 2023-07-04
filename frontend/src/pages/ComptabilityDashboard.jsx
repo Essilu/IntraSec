@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 import { useTransactionStore } from '../stores/transactions';
 import TransactionForm from '../components/Comptability/TransactionForm';
 import TransactionTable from '../components/Comptability/TransactionTable';
-import Can from '../components/Can';
+import Can from '../components/Authorization/Can';
 import { PermissionSubject, TransactionPermissions } from '../utils/permissions';
 
 export default function ComptabilityDashboard() {

@@ -6,6 +6,8 @@ import { useEffect, useState } from 'react';
 import { useMarketingStore } from '../stores/marketing';
 import ArticleCard from '../components/Marketing/ArticleCard';
 import '../styles/Marketing.css';
+import Can from '../components/Authorization/Can';
+import { PermissionSubject, PostPermissions } from '../utils/permissions';
 
 export default function MarketingArticleList() {
   const [articles, fetchAllMarketing, createArticle, deleteArticle, updateArticle] = useMarketingStore((state) => [
@@ -103,13 +105,6 @@ export default function MarketingArticleList() {
     setEditModalOpen(true);
   };
 
-  // Render the component with the carrousel
-  const slides = articles.map((slide, index) => (
-    <Carousel.Slide key={slide.title}>
-      <ArticleCard {...slide} onEdit={() => handleEditCard(slide)} onDelete={() => handleDeleteCard(index)} />
-    </Carousel.Slide>
-  ));
-
   return (
     <>
       <Container className="marketing-wrapper" size={1400}>
@@ -140,14 +135,24 @@ export default function MarketingArticleList() {
         align="start"
         slidesToScroll={mobile ? 1 : 2}
       >
-        {slides}
+        {articles.map((post, index) => (
+          <Carousel.Slide key={post.id}>
+            <ArticleCard post={post} onEdit={() => handleEditCard(post)} onDelete={() => handleDeleteCard(index)} />
+          </Carousel.Slide>
+        ))}
       </Carousel>
 
-      <div id="marketing-buttonChange">
-        <Button variant="outline" color="green" onClick={handleAddCard}>
-          Ajouter
-        </Button>
-      </div>
+      <Can
+        perform={PostPermissions.CreateMarketingPost}
+        on={PermissionSubject.Post}
+        yes={
+          <div id="marketing-buttonChange">
+            <Button variant="outline" color="green" onClick={handleAddCard}>
+              Ajouter
+            </Button>
+          </div>
+        }
+      />
 
       <Modal // Update the Modal component to modify a card of the carrousel
         opened={editModalOpen}

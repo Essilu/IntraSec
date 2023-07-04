@@ -17,7 +17,7 @@ import MarketingArticleList from './pages/MarketingArticleList';
 import PartnerList from './pages/PartnerList';
 import SupportTicketList from './pages/SupportTicketList';
 import SupportTicketNew from './pages/SupportTicketNew';
-import Protected from './components/Protected';
+import Protected from './components/Authorization/Protected';
 
 function App() {
   const [isLogged, fetchMe] = useAuthStore((state) => [state.isLogged, state.fetchMe]);

@@ -4,7 +4,8 @@ import { Link } from 'react-router-dom';
 import ProfileSection from './ProfileSection';
 import { useAuthStore } from '../../stores/auth';
 import { PermissionSubject, PostPermissions, RolePermissions, TransactionPermissions, UserPermissions } from '../../utils/permissions';
-import Can from '../Can';
+import Can from '../Authorization/Can';
+import { can } from '../../utils/can';
 
 export default function Sidebar() {
   const user = useAuthStore((state) => state.user);
@@ -84,24 +85,26 @@ export default function Sidebar() {
           } />
 
         {/* NavLink component for "Administration" section */}
-        <NavLink label="Administration" icon={<IconUserBolt size="1rem" stroke={1.5} />} childrenOffset={28}>
-          <Can
-            perform={RolePermissions.ReadRole}
-            on={PermissionSubject.Role}
-            yes={
-              <Link to="/manage/roles">
-                <NavLink label="Gestions des rôles" />
-              </Link>
-            } />
-          <Can
-            perform={UserPermissions.ReadUser}
-            on={PermissionSubject.User}
-            yes={
-              <Link to="/manage/employees">
-                <NavLink label="Gestion des employés" />
-              </Link>
-            } />
-        </NavLink>
+        {(can({ user, perform: RolePermissions.ReadRole, on: PermissionSubject.Role }) || can({ user, perform: UserPermissions.ReadUser, on: PermissionSubject.User })) &&
+          <NavLink label="Administration" icon={<IconUserBolt size="1rem" stroke={1.5} />} childrenOffset={28}>
+            <Can
+              perform={RolePermissions.ReadRole}
+              on={PermissionSubject.Role}
+              yes={
+                <Link to="/manage/roles">
+                  <NavLink label="Gestions des rôles" />
+                </Link>
+              } />
+            <Can
+              perform={UserPermissions.ReadUser}
+              on={PermissionSubject.User}
+              yes={
+                <Link to="/manage/employees">
+                  <NavLink label="Gestion des employés" />
+                </Link>
+              } />
+          </NavLink>
+        }
       </Navbar.Section>
 
       <Navbar.Section>

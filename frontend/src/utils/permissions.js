@@ -133,6 +133,85 @@ export const PermissionTable = {
   'roles.delete': 1 << 3,
 };
 
+export const PostKind = {
+  MARKETING_POST: 'MARKETING_POST',
+  PARTNER_COMPANY: 'PARTNER_COMPANY',
+  PARTNER_SCHOOL: 'PARTNER_SCHOOL',
+  SUPPORT_TICKET: 'SUPPORT_TICKET'
+};
+
+export const PostPermissionActionMap = {
+  [GenericAction.Create]: {
+    [PostKind.MARKETING_POST]: PostPermissions.CreateMarketingPost,
+    [PostKind.SUPPORT_TICKET]: PostPermissions.CreateSupportPost,
+    [PostKind.PARTNER_COMPANY]: PostPermissions.CreatePartnerPost,
+    [PostKind.PARTNER_SCHOOL]: PostPermissions.CreatePartnerPost,
+  },
+  [GenericAction.Read]: {
+    [PostKind.MARKETING_POST]: PostPermissions.ReadMarketingPost,
+    [PostKind.SUPPORT_TICKET]: PostPermissions.ReadSupportPost,
+    [PostKind.PARTNER_COMPANY]: PostPermissions.ReadPartnerPost,
+    [PostKind.PARTNER_SCHOOL]: PostPermissions.ReadPartnerPost,
+  },
+  [GenericAction.Update]: {
+    [PostKind.MARKETING_POST]: PostPermissions.UpdateMarketingPost,
+    [PostKind.SUPPORT_TICKET]: PostPermissions.UpdateSupportPost,
+    [PostKind.PARTNER_COMPANY]: PostPermissions.UpdatePartnerPost,
+    [PostKind.PARTNER_SCHOOL]: PostPermissions.UpdatePartnerPost,
+  },
+  [GenericAction.Delete]: {
+    [PostKind.MARKETING_POST]: PostPermissions.DeleteMarketingPost,
+    [PostKind.SUPPORT_TICKET]: PostPermissions.DeleteSupportPost,
+    [PostKind.PARTNER_COMPANY]: PostPermissions.DeletePartnerPost,
+    [PostKind.PARTNER_SCHOOL]: PostPermissions.DeletePartnerPost,
+  },
+};
+
+export const PostPermissionOwnActionMap = {
+  [GenericAction.Update]: {
+    [PostKind.MARKETING_POST]: PostPermissions.UpdateOwnMarketingPost,
+    [PostKind.SUPPORT_TICKET]: PostPermissions.UpdateOwnSupportPost,
+    [PostKind.PARTNER_COMPANY]: PostPermissions.UpdateOwnPartnerPost,
+    [PostKind.PARTNER_SCHOOL]: PostPermissions.UpdateOwnPartnerPost,
+  },
+  [GenericAction.Delete]: {
+    [PostKind.MARKETING_POST]: PostPermissions.DeleteOwnMarketingPost,
+    [PostKind.SUPPORT_TICKET]: PostPermissions.DeleteOwnSupportPost,
+    [PostKind.PARTNER_COMPANY]: PostPermissions.DeleteOwnPartnerPost,
+    [PostKind.PARTNER_SCHOOL]: PostPermissions.DeleteOwnPartnerPost,
+  },
+};
+
+export const CommentPermissionActionMap = {
+  [GenericAction.Create]: {
+    [PostKind.MARKETING_POST]: CommentPermissions.CreateMarketingComment,
+    [PostKind.SUPPORT_TICKET]: CommentPermissions.CreateSupportComment,
+  },
+  [GenericAction.Read]: {
+    [PostKind.MARKETING_POST]: CommentPermissions.ReadMarketingComment,
+    [PostKind.SUPPORT_TICKET]: CommentPermissions.ReadSupportComment,
+  },
+  [GenericAction.Update]: {
+    [PostKind.MARKETING_POST]: CommentPermissions.UpdateMarketingComment,
+    [PostKind.SUPPORT_TICKET]: CommentPermissions.UpdateSupportComment,
+  },
+  [GenericAction.Delete]: {
+    [PostKind.MARKETING_POST]: CommentPermissions.DeleteMarketingComment,
+    [PostKind.SUPPORT_TICKET]: CommentPermissions.DeleteSupportComment,
+  },
+};
+
+export const CommentPermissionOwnActionMap = {
+  [GenericAction.Update]: {
+    [PostKind.MARKETING_POST]: CommentPermissions.UpdateOwnMarketingComment,
+    [PostKind.SUPPORT_TICKET]: CommentPermissions.UpdateOwnSupportComment,
+  },
+  [GenericAction.Delete]: {
+    [PostKind.MARKETING_POST]: CommentPermissions.DeleteOwnMarketingComment,
+    [PostKind.SUPPORT_TICKET]: CommentPermissions.DeleteOwnSupportComment,
+  },
+};
+
 export const getPermissionNames = (role, scope, subscope) => {
   const permissions = [];
   const permission = role[`permission${scope}`];

@@ -2,7 +2,7 @@ import { Avatar, Table, Group, Text, ActionIcon, Menu, ScrollArea, Flex, Button,
 import { IconPencil, IconMessages, IconNote, IconReportAnalytics, IconTrash, IconDots } from '@tabler/icons-react';
 import { useEffect } from 'react';
 import { useUserStore } from '../stores/users';
-import Can from '../components/Can';
+import Can from '../components/Authorization/Can';
 import { PermissionSubject, UserPermissions } from '../utils/permissions';
 import { useDisclosure } from '@mantine/hooks';
 import EmployeeForm from '../components/Employees/EmployeeForm';
